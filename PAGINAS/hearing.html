@@ -29,7 +29,7 @@ section{position:relative;z-index:1}
 
 /* menu */
 .menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2.4vw,32px);padding:calc(2*var(--vh)) 3vw calc(4*var(--vh))}
-.mcard{width:clamp(170px,21vw,270px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 14px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.mcard{width:clamp(150px,17.5vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 14px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
 .mcard:hover{transform:translateY(-6px) rotate(-1deg)}
 .mcard:active{transform:scale(.96)}
 .mcard .ic{width:100%;aspect-ratio:1.15;border-radius:24px;display:grid;place-items:center;font-size:clamp(60px,7vw,100px)}
@@ -44,6 +44,35 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 .themes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:calc(2*var(--vh))}
 .theme{background:#fff;border-radius:50px;padding:10px 22px;font-size:clamp(18px,2.8vh,26px);font-weight:700;box-shadow:0 4px 12px #0002;border:4px solid #fff}
 .theme.on{border-color:var(--pink);background:#ffe3ec}
+
+/* how do I hear */
+.storybox{display:flex;justify-content:center;padding:0 3vw;margin-top:calc(1.5*var(--vh))}
+#story{width:min(94vw,calc(118*var(--vh)));height:auto;background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;display:block}
+#story text.em{text-anchor:middle;dominant-baseline:central}
+#story .waves path{fill:none;stroke:#3488e8;stroke-width:9;stroke-linecap:round;opacity:0}
+#story .waves.show path{animation:travel 1.5s linear infinite}
+#story .waves.show path:nth-child(2){animation-delay:.5s}#story .waves.show path:nth-child(3){animation-delay:1s}
+@keyframes travel{0%{transform:translateX(0);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(300px);opacity:0}}
+#story.covered .waves.show path{animation-name:travelBlocked}
+@keyframes travelBlocked{0%{transform:translateX(0);opacity:0}15%{opacity:.5}60%{opacity:.25}100%{transform:translateX(250px);opacity:0}}
+#hands{opacity:0;transform:translateY(-60px);transition:all .5s cubic-bezier(.3,1.5,.5,1)}
+#story.covered #hands{opacity:1;transform:none}
+#sSrc{transform-box:fill-box;transform-origin:center}
+#sSrc.buzz{animation:jig .3s infinite}
+#drum{transform-box:fill-box;transform-origin:center}
+#drum.buzz{animation:drum .18s infinite}
+@keyframes drum{50%{transform:scaleX(.55)}}
+#story .hl{opacity:0;transition:opacity .4s}#story .hl.show{opacity:1}
+#story .msg{stroke:var(--pink);stroke-width:8;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
+#story .msg.show{opacity:1;animation:march .8s linear infinite}
+@keyframes march{to{stroke-dashoffset:-32}}
+#story .bubbleS{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:bottom right;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+#story .bubbleS.show{opacity:1;transform:scale(1)}
+#story .tag{font-family:Fredoka,Arial;font-weight:700;font-size:30px;fill:#8d55c7;opacity:0;transition:opacity .4s}
+#story .tag.show{opacity:1}
+.steptext{text-align:center;font-size:clamp(22px,calc(4.4*var(--vh)),38px);font-weight:700;min-height:2.4em;margin:calc(1.4*var(--vh)) 16px 0;line-height:1.2}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#cfd6e4}.dots i.on{background:var(--pink)}
 
 /* gift boxes */
 .boxes{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,3vw,44px) clamp(14px,2.5vw,36px);padding:calc(5*var(--vh)) 3vw calc(5*var(--vh))}
@@ -146,6 +175,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 <section id="s-menu">
   <p class="lead">👂 I hear with my ears! What can you hear?</p>
   <div class="menu">
+    <button class="mcard" data-go="how"><div class="ic" style="background:#f0e6ff">🦻</div><div class="t">How Do I Hear?</div><div class="d">Sound, ear, brain</div></button>
     <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff">📺</div><div class="t">Watch</div><div class="d">The sense of hearing</div></button>
     <button class="mcard" data-go="boxes"><div class="ic" style="background:#ffe3ec">🎁</div><div class="t">Secret Boxes</div><div class="d">Listen… what's inside?</div></button>
     <button class="mcard" data-go="guess"><div class="ic" style="background:#e7f8e3">🎯</div><div class="t">Guess the Sound</div><div class="d">Listen and choose</div></button>
@@ -157,6 +187,46 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 <section id="s-watch" class="hidden">
   <p class="lead">📺 Watch and listen!</p>
   <div class="videowrap"><video id="vid" controls preload="metadata" playsinline src="../VIDEOS/sense_of_hearing.mp4"></video></div>
+</section>
+
+<!-- HOW DO I HEAR -->
+<section id="s-how" class="hidden">
+  <div class="storybox">
+    <svg id="story" viewBox="0 0 1000 470" aria-label="How we hear">
+      <g class="waves" id="waves">
+        <path d="M230 230 q40 70 0 140"/><path d="M230 230 q40 70 0 140"/><path d="M230 230 q40 70 0 140"/>
+      </g>
+      <text class="em" id="sSrc" x="130" y="300" font-size="130">🐕</text>
+      <!-- the ear -->
+      <g id="ear">
+        <circle class="hl" id="hlOuter" cx="610" cy="300" r="120" fill="#ffe26a" opacity=".5"/>
+        <path d="M640 170 C540 160 520 260 560 300 C590 330 560 360 590 400 C620 440 680 420 680 380" fill="#ffc9a8" stroke="#d98c66" stroke-width="10" stroke-linecap="round"/>
+        <path d="M630 215 C585 215 580 270 610 290" fill="none" stroke="#d98c66" stroke-width="8" stroke-linecap="round"/>
+        <rect x="640" y="285" width="130" height="40" rx="20" fill="#ffb995" stroke="#d98c66" stroke-width="6"/>
+        <rect class="hl" id="hlCanal" x="640" y="285" width="130" height="40" rx="20" fill="#ffe26a"/>
+        <ellipse id="drum" cx="782" cy="305" rx="12" ry="40" fill="#ff6fa3" stroke="#c43d72" stroke-width="5"/>
+      </g>
+      <text class="tag" id="tagOuter" x="600" y="455" text-anchor="middle">my ear</text>
+      <text class="tag" id="tagDrum" x="800" y="380" text-anchor="middle">eardrum</text>
+      <path class="msg" id="m1" d="M800 262 C 860 220, 800 190, 860 150"/>
+      <text class="em" x="880" y="85" font-size="105">🧠</text>
+      <g id="hands"><text class="em" x="560" y="300" font-size="150">✋</text></g>
+      <g class="bubbleS" id="bub">
+        <rect x="560" y="15" width="220" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
+        <path d="M770 70 L835 85 L775 95Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
+        <rect x="762" y="66" width="14" height="32" fill="#fff"/>
+        <text id="bubText" x="670" y="62" text-anchor="middle" dominant-baseline="central" font-size="36" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">A dog!</text>
+      </g>
+    </svg>
+  </div>
+  <div class="steptext" id="stepText"></div>
+  <div class="dots" id="dots"></div>
+  <div class="btns">
+    <button class="big blue" id="stBack">⬅</button>
+    <button class="big green" id="stNext">Next ➡</button>
+    <button class="big orange hidden" id="stOther">🔁 Another one</button>
+    <button class="big pink hidden" id="stCover">🙉 Cover my ears!</button>
+  </div>
 </section>
 
 <!-- SECRET BOXES -->
@@ -279,7 +349,7 @@ const pic=s=>s.img?`<img src="${s.img}" alt="${s.word}">`:s.emoji;
 
 const player=new Audio();let onEnd=null;
 player.addEventListener('ended',()=>{onEnd&&onEnd();onEnd=null});
-function play(s,whenDone){stopSound();player.src=SND+s.id+'.mp3';onEnd=whenDone||null;player.play().catch(()=>{});}
+function play(s,whenDone){stopSound();player.volume=1;player.src=SND+s.id+'.mp3';onEnd=whenDone||null;player.play().catch(()=>{});}
 function stopSound(){player.pause();if(onEnd){const f=onEnd;onEnd=null;f();}try{speechSynthesis.cancel()}catch(e){}}
 
 let voice=null;
@@ -313,12 +383,59 @@ function go(name){
   if(name==='menu'){back.textContent='⬅ 5 Senses';back.href='five_senses.html';}
   else{back.textContent='⬅ Back';back.href='#';}
   if(name==='boxes')showTheme(curTheme);
+  if(name==='how')startStory();
   if(name==='guess')startGuess();
   if(name==='loud')startLoud();
   scrollTo(0,0);
 }
 $('backBtn').addEventListener('click',e=>{if(current!=='menu'){e.preventDefault();go('menu');}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go)});
+
+/* ---------- HOW DO I HEAR? ---------- */
+const STORY_SOUNDS=['dog','bell','cow','piano','ambulance','baby'];  // ids from SOUNDS
+const HSTEPS=[
+  {t:'How do I hear? 🤔', s:"How do I hear? Let's find out!", on:[]},
+  {t:'1. The {w} makes a sound 🔊', s:'The {w} makes a sound.', on:['src'], play:1},
+  {t:'2. The sound travels through the air 〰️', s:'The sound travels through the air, like little waves.', on:['src','waves'], play:1},
+  {t:'3. My ear catches the sound 👂', s:'My ear catches the sound.', on:['waves','hlOuter','tagOuter','hlCanal'], play:1},
+  {t:'4. The eardrum wiggles! 🥁', s:'Inside my ear there is a tiny drum. The eardrum! It wiggles.', on:['waves','drum','tagDrum'], play:1},
+  {t:'5. My ear sends a message to my brain 🧠', s:'My ear sends a message to my brain.', on:['drum','m1']},
+  {t:'6. My brain says…', s:'My brain says… {b}', on:['m1','bub']},
+];
+let hs=0,hObj=0;
+$('dots').innerHTML=HSTEPS.map(()=>'<i></i>').join('');
+const curStory=()=>SOUNDS.find(x=>x.id===STORY_SOUNDS[hObj]);
+function startStory(){hs=0;showHStep();}
+function showHStep(){
+  const o=curStory(),st=HSTEPS[hs],on=st.on,story=$('story');
+  story.classList.remove('covered');$('stCover').textContent='🙉 Cover my ears!';player.volume=1;
+  $('sSrc').textContent=o.emoji;$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
+  $('stepText').textContent=st.t.replace('{w}',o.word+' '+o.emoji);
+  $('sSrc').classList.toggle('buzz',on.includes('src'));
+  $('waves').classList.toggle('show',on.includes('waves'));
+  $('drum').classList.toggle('buzz',on.includes('drum'));
+  ['hlOuter','hlCanal','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
+  document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=hs));
+  $('stBack').disabled=hs===0;
+  const last=hs===HSTEPS.length-1;
+  $('stNext').classList.toggle('hidden',last);$('stOther').classList.toggle('hidden',!last);$('stCover').classList.toggle('hidden',!last);
+  const text=st.s.replace('{w}',o.word).replace('{b}',o.word+'!');
+  if(st.play){play(o);setTimeout(()=>{if(current==='how'&&HSTEPS[hs]===st){player.volume=.35;say(text);}},900);}
+  else{stopSound();say(text);}
+  if(last)confetti(30);
+}
+$('stNext').onclick=()=>{if(hs<HSTEPS.length-1){hs++;showHStep();}};
+$('stBack').onclick=()=>{if(hs>0){hs--;showHStep();}};
+$('stOther').onclick=()=>{hObj=(hObj+1)%STORY_SOUNDS.length;hs=1;showHStep();};
+$('stCover').onclick=()=>{
+  const story=$('story'),cov=!story.classList.contains('covered');
+  ['m1','bub'].forEach(id=>$(id).classList.remove('show'));
+  story.classList.toggle('covered',cov);
+  if(cov){$('stCover').textContent='👂 Open my ears';$('stepText').textContent='Ears covered… the sound is very quiet! 🤫';
+    $('waves').classList.add('show');$('drum').classList.remove('buzz');play(curStory());player.volume=.12;
+    setTimeout(()=>{if(story.classList.contains('covered'))say('I covered my ears. Now the sound is very quiet!')},1200);}
+  else showHStep();
+};
 
 /* ---------- SECRET BOXES ---------- */
 let curTheme='animals',boxList=[],opened=new Set(),stIdx=-1;
