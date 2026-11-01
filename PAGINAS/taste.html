@@ -1,0 +1,418 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taste – Yummy Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ef3d45;--yellow:#ffd52a;--blue:#3488e8;--orange:#f28b24;--green:#35b64a;--purple:#8d55c7;--pink:#ff6fa3;--ink:#202020;--vh:1vh}
+@supports(height:1dvh){:root{--vh:1dvh}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Fredoka,"Arial Rounded MT Bold",Arial,sans-serif;color:var(--ink);background:#fff8ec;-webkit-tap-highlight-color:transparent;user-select:none;overflow-x:hidden}
+button{font-family:inherit;color:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+img{-webkit-user-drag:none}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;bottom:-120px;border-radius:50%;opacity:.14;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(calc(-120*var(--vh) - 200px))}}
+.top{position:relative;z-index:3;display:flex;align-items:center;gap:12px;padding:12px 14px 0}
+.pill{background:#fff;border-radius:50px;padding:10px 20px;font-size:clamp(18px,2.6vh,24px);font-weight:700;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px #0002;white-space:nowrap}
+.pill:active{transform:scale(.95)}
+.top h1{flex:1;text-align:center;margin:0;font-size:clamp(34px,calc(8*var(--vh)),72px);line-height:1}
+h1 span{display:inline-block;-webkit-text-stroke:3px #fff;paint-order:stroke;text-shadow:0 4px 0 #0001}
+h1 span:nth-child(6n+1){color:var(--red)}h1 span:nth-child(6n+2){color:var(--orange)}h1 span:nth-child(6n+3){color:var(--yellow)}
+h1 span:nth-child(6n+4){color:var(--green)}h1 span:nth-child(6n+5){color:var(--blue)}h1 span:nth-child(6n+6){color:var(--purple)}
+h1 .sp{width:.3em}
+.spacer{width:110px}
+.hidden{display:none!important}
+section{position:relative;z-index:1}
+.lead{text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);color:#755;margin:calc(1.2*var(--vh)) 10px calc(1.6*var(--vh))}
+
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2.4vw,32px);padding:calc(2*var(--vh)) 3vw calc(4*var(--vh))}
+.mcard{width:clamp(160px,19vw,250px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 12px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.mcard:hover{transform:translateY(-6px) rotate(-1deg)}
+.mcard:active{transform:scale(.96)}
+.mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(58px,7vw,98px)}
+.mcard .t{font-size:clamp(20px,2.2vw,29px);font-weight:700;margin-top:8px;text-align:center;line-height:1.1}
+.mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:2px 8px 0}
+
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:calc(1.5*var(--vh)) 0}
+.big{border-radius:50px;padding:12px 26px;font-size:clamp(18px,calc(3.3*var(--vh)),28px);font-weight:700;color:#fff;box-shadow:0 6px 0 #0003;transition:transform .1s}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
+.big.blue{background:var(--blue)}.big.pink{background:var(--pink)}.big.green{background:var(--green)}.big.orange{background:var(--orange)}.big.purple{background:var(--purple)}
+.big[disabled]{opacity:.35;pointer-events:none}
+
+/* watch */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:calc(1.5*var(--vh))}
+.tab{background:#fff;border-radius:50px;padding:9px 20px;font-size:clamp(16px,2.6vh,23px);font-weight:700;box-shadow:0 4px 12px #0002;border:4px solid #fff}
+.tab.on{border-color:var(--orange);background:#fff0d9}
+.videowrap{display:flex;justify-content:center;padding:0 3vw}
+video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-radius:24px;background:#000;box-shadow:0 8px 24px #0003;border:6px solid #fff}
+
+/* how do I taste */
+.storybox{display:flex;justify-content:center;padding:0 3vw;margin-top:calc(1.5*var(--vh))}
+#story{width:min(94vw,calc(118*var(--vh)));height:auto;background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;display:block}
+#story text.em{text-anchor:middle;dominant-baseline:central}
+#sFood{transition:transform 1s cubic-bezier(.4,1.3,.5,1),opacity .6s}
+#story.inmouth #sFood{transform:translate(0,215px) scale(.55);transform-box:fill-box;transform-origin:center}
+#story.chewed #sFood{opacity:0}
+#jaw{transform-box:fill-box;transform-origin:top}
+#story.chew #jaw{animation:chew .45s ease-in-out infinite}
+@keyframes chew{50%{transform:scaleY(.55)}}
+#buds circle{transition:fill .4s}
+#story.budsOn #buds circle{fill:#ffe14d;animation:twinkle 1s ease-in-out infinite}
+#buds circle:nth-child(3n){animation-delay:.3s}#buds circle:nth-child(3n+1){animation-delay:.6s}
+@keyframes twinkle{50%{opacity:.5}}
+#zoomBub{opacity:0;transform:scale(.3);transform-box:fill-box;transform-origin:bottom right;transition:all .5s cubic-bezier(.3,1.6,.5,1)}
+#story.budsOn #zoomBub{opacity:1;transform:scale(1)}
+#story .msg{stroke:var(--pink);stroke-width:8;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
+#story.msgOn .msg{opacity:1;animation:march .8s linear infinite}
+@keyframes march{to{stroke-dashoffset:-32}}
+#bub{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:bottom right;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+#story.bubOn #bub{opacity:1;transform:scale(1)}
+#noseG{opacity:0;transition:opacity .4s}
+#story.nose #noseG{opacity:1}
+.steptext{text-align:center;font-size:clamp(22px,calc(4.4*var(--vh)),38px);font-weight:700;min-height:2.4em;margin:calc(1.4*var(--vh)) 16px 0;line-height:1.2}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#e4d6c6}.dots i.on{background:var(--orange)}
+
+/* taste cards */
+.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(10px,1.8vw,24px);padding:0 3vw calc(4*var(--vh))}
+.tcard{width:clamp(120px,13.5vw,180px);aspect-ratio:.72;background:#fff;border:5px solid var(--purple);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 6px 16px #0002;transition:transform .2s;padding:0}
+.tcard:hover{transform:translateY(-5px) rotate(-1.5deg)}
+.tcard .hd{background:var(--purple);color:#fff;font-size:clamp(12px,1.15vw,16px);font-weight:700;padding:6px 4px}
+.tcard .im{flex:1;min-height:0;display:flex;justify-content:center;align-items:center;padding:8px;overflow:hidden}
+.tcard .im img{max-width:100%;max-height:clamp(80px,10vw,130px);object-fit:contain}
+.tcard .wd{font-size:clamp(22px,2.4vw,32px);font-weight:700;color:var(--purple);padding-bottom:8px;min-height:1.5em}
+.tcard.seen .wd{animation:pop .4s}
+.stage{position:fixed;inset:0;z-index:20;background:#3a2410cc;display:flex;align-items:center;justify-content:center;padding:16px}
+.panel{position:relative;background:#fff;border:8px solid var(--purple);border-radius:36px;width:min(94vw,640px);max-height:96%;text-align:center;box-shadow:0 20px 50px #0005;animation:pop .35s cubic-bezier(.3,1.6,.5,1);overflow:hidden}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.panel .hd{background:var(--purple);color:#fff;font-size:clamp(22px,calc(4.4*var(--vh)),34px);font-weight:700;padding:10px}
+.panel .im{height:calc(36*var(--vh));display:flex;justify-content:center;align-items:center;padding:12px;overflow:hidden}
+.panel .im img{height:100%;width:auto;max-width:85%;object-fit:contain;animation:wig 2.4s ease-in-out infinite}
+@keyframes wig{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-5deg)}92%{transform:rotate(5deg)}}
+.panel .wd{font-size:clamp(40px,calc(9*var(--vh)),76px);font-weight:700;color:var(--purple);min-height:1.3em;line-height:1.2}
+.panel .wd .face{font-size:.8em}
+.close{position:absolute;top:8px;right:10px;width:50px;height:50px;border-radius:50%;background:#fff;font-size:26px;font-weight:700;color:var(--purple)}
+.panel .nav{display:flex;justify-content:center;gap:12px;padding:6px 10px calc(2*var(--vh))}
+
+/* taste plates */
+.foodstage{display:flex;flex-direction:column;align-items:center}
+.food{width:clamp(130px,calc(26*var(--vh)),210px);height:clamp(130px,calc(26*var(--vh)),210px);background:#fff;border-radius:50%;box-shadow:0 8px 20px #0002;display:grid;place-items:center;font-size:clamp(76px,calc(15*var(--vh)),130px);position:relative;transition:transform .5s cubic-bezier(.4,1.3,.5,1),opacity .5s}
+.food img{width:72%;height:72%;object-fit:contain}
+.food.in{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.food.no{animation:no .4s}
+@keyframes no{20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+.foodname{font-size:clamp(24px,calc(4.6*var(--vh)),38px);font-weight:700;margin:8px 0 calc(1.5*var(--vh))}
+.plates{display:flex;justify-content:center;gap:clamp(8px,1.6vw,22px);flex-wrap:wrap;padding:0 2vw calc(3*var(--vh))}
+.plate{width:clamp(130px,15.5vw,200px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff 55%,#eef1f5 56%,#fff 66%,#e3e7ee 100%);box-shadow:0 8px 18px #0002;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform .15s}
+.plate:active{transform:scale(.95)}
+.plate .f{font-size:clamp(32px,3.6vw,48px);line-height:1}
+.plate .n{font-size:clamp(18px,2vw,26px);font-weight:700}
+.plate .pile{position:absolute;inset:auto 0 8% 0;display:flex;justify-content:center;flex-wrap:wrap;gap:0;font-size:clamp(18px,2vw,26px);pointer-events:none;padding:0 16%}
+.plate .pile img{width:clamp(20px,2.2vw,30px);height:clamp(20px,2.2vw,30px);object-fit:contain}
+.plate.right{box-shadow:0 0 0 7px var(--green),0 8px 18px #0002;animation:bounce .5s}
+.plate.wrong{animation:no .4s}
+@keyframes bounce{30%{transform:scale(1.1)}60%{transform:scale(.96)}}
+.stars{text-align:center;font-size:clamp(24px,calc(4.6*var(--vh)),38px);letter-spacing:3px;min-height:1.3em}
+.stars .off{filter:grayscale(1);opacity:.25}
+.done{text-align:center;padding:calc(3*var(--vh)) 20px}
+.done .trophy{font-size:clamp(90px,calc(20*var(--vh)),170px);animation:bounce 1.2s infinite}
+.done h2{font-size:clamp(34px,calc(7*var(--vh)),62px);margin:10px 0;color:var(--purple)}
+
+.confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:40;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(calc(110*var(--vh))) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:520px){.top h1{font-size:34px}.pill{padding:6px 14px}}
+</style></head><body>
+<div class="bubbles" id="bubbles"></div>
+
+<div class="top">
+  <a class="pill" id="backBtn" href="five_senses.html">⬅ 5 Senses</a>
+  <h1 id="title">Taste</h1>
+  <div class="spacer"></div>
+</div>
+
+<!-- MENU -->
+<section id="s-menu">
+  <p class="lead">👅 I taste with my tongue! Yum yum!</p>
+  <div class="menu">
+    <button class="mcard" data-go="how"><div class="ic" style="background:#ffe3ec">👅</div><div class="t">How Do I Taste?</div><div class="d">Tongue, taste buds, brain</div></button>
+    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff">📺</div><div class="t">Watch</div><div class="d">Videos about taste</div></button>
+    <button class="mcard" data-go="cards"><div class="ic" style="background:#f0e6ff">🃏</div><div class="t">Taste Cards</div><div class="d">How does it taste?</div></button>
+    <button class="mcard" data-go="plates"><div class="ic" style="background:#e7f8e3">🍽️</div><div class="t">Taste Plates</div><div class="d">Put the food on the right plate</div></button>
+  </div>
+</section>
+
+<!-- HOW DO I TASTE -->
+<section id="s-how" class="hidden">
+  <div class="storybox">
+    <svg id="story" viewBox="0 0 1000 470" aria-label="How we taste">
+      <!-- message to brain -->
+      <path class="msg" d="M560 345 C 700 330, 700 190, 830 150"/>
+      <!-- mouth -->
+      <g>
+        <ellipse cx="420" cy="320" rx="205" ry="125" fill="#ffd9bd"/>
+        <ellipse cx="420" cy="300" rx="170" ry="50" fill="#e8466a"/>
+        <g id="jaw">
+          <path d="M250 300 Q420 300 590 300 Q420 470 250 300Z" fill="#e8466a"/>
+          <path d="M275 305 Q420 305 565 305 Q420 440 275 305Z" fill="#6b1830"/>
+          <ellipse cx="420" cy="360" rx="105" ry="45" fill="#ff8fa8"/>
+          <line x1="420" y1="330" x2="420" y2="385" stroke="#e86a87" stroke-width="5" stroke-linecap="round"/>
+          <g id="buds" fill="#ffb3c4">
+            <circle cx="350" cy="350" r="7"/><circle cx="380" cy="340" r="6"/><circle cx="395" cy="370" r="7"/><circle cx="445" cy="345" r="6"/>
+            <circle cx="470" cy="368" r="7"/><circle cx="495" cy="348" r="6"/><circle cx="365" cy="380" r="5"/><circle cx="455" cy="388" r="5"/><circle cx="335" cy="368" r="5"/><circle cx="505" cy="372" r="5"/>
+          </g>
+        </g>
+        <path d="M265 300 Q420 285 575 300 L565 318 Q420 302 275 318Z" fill="#fff"/>
+      </g>
+      <text class="em" id="sFood" x="420" y="90" font-size="130">🍫</text>
+      <!-- zoom bubble on taste buds -->
+      <g id="zoomBub">
+        <line x1="250" y1="225" x2="350" y2="345" stroke="#8d55c7" stroke-width="5" stroke-dasharray="8 8"/>
+        <circle cx="160" cy="150" r="110" fill="#ff8fa8" stroke="#8d55c7" stroke-width="8"/>
+        <g fill="#ffe14d" stroke="#e8a400" stroke-width="3">
+          <circle cx="115" cy="120" r="20"/><circle cx="175" cy="105" r="17"/><circle cx="210" cy="155" r="20"/><circle cx="145" cy="170" r="19"/><circle cx="95" cy="180" r="15"/><circle cx="190" cy="205" r="15"/>
+        </g>
+        <text x="160" y="295" text-anchor="middle" font-size="34" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">taste buds</text>
+      </g>
+      <text class="em" x="880" y="95" font-size="110">🧠</text>
+      <g id="noseG"><text class="em" x="700" y="200" font-size="100">👃</text><text class="em" x="740" y="230" font-size="70">🤏</text></g>
+      <g id="bub">
+        <rect x="560" y="15" width="250" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
+        <path d="M800 70 L845 82 L803 95Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
+        <rect x="792" y="66" width="14" height="32" fill="#fff"/>
+        <text id="bubText" x="685" y="62" text-anchor="middle" dominant-baseline="central" font-size="38" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">Sweet! 😋</text>
+      </g>
+    </svg>
+  </div>
+  <div class="steptext" id="stepText"></div>
+  <div class="dots" id="dots"></div>
+  <div class="btns">
+    <button class="big blue" id="stBack">⬅</button>
+    <button class="big green" id="stNext">Next ➡</button>
+    <button class="big orange hidden" id="stOther">🔁 Another one</button>
+    <button class="big pink hidden" id="stNose">🤏 Hold my nose</button>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section id="s-watch" class="hidden">
+  <p class="lead">📺 Watch and learn!</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="videowrap"><video id="vid" controls preload="metadata" playsinline></video></div>
+</section>
+
+<!-- TASTE CARDS -->
+<section id="s-cards" class="hidden">
+  <p class="lead">Tap a card. How does it taste? 🤔</p>
+  <div class="cards" id="cards"></div>
+</section>
+<div class="stage hidden" id="stage">
+  <div class="panel">
+    <div class="hd">How does it taste?</div>
+    <button class="close" id="stClose" aria-label="Close">✕</button>
+    <div class="im"><img id="stImg" alt=""></div>
+    <div class="wd" id="stWord"></div>
+    <div class="nav">
+      <button class="big blue" id="stPrev">⬅</button>
+      <button class="big pink" id="stTell">👅 Tell me!</button>
+      <button class="big blue" id="stNextC">➡</button>
+    </div>
+  </div>
+</div>
+
+<!-- TASTE PLATES -->
+<section id="s-plates" class="hidden">
+  <div class="stars" id="pStars"></div>
+  <div id="pPlay" class="foodstage">
+    <div class="food" id="food"></div>
+    <div class="foodname" id="foodName"></div>
+    <div class="plates" id="plates"></div>
+  </div>
+  <div class="done hidden" id="pDone">
+    <div class="trophy">🏆</div>
+    <h2>Super tasters!</h2>
+    <div class="btns"><button class="big green" id="pAgain">▶ Play again</button><button class="big blue" data-go="menu">🏠 Menu</button></div>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   EASY TO EDIT
+   ============================================================ */
+const IMG='../IMAGENES/TASTE/';
+const VIDEOS=[
+  {title:'🍭 The five basic tastes', src:'../VIDEOS/taste_five_basic_tastes.mp4'},
+  {title:'🍋 How does it taste?',     src:'../VIDEOS/taste_vocabulary.mp4'},
+  {title:'🧪 Taste test experiment',  src:'../VIDEOS/taste_test_experiment.mp4'},
+];
+/* Taste Cards (the flashcards) */
+const CARDS=[
+  {taste:'sour',  food:'lemon',        img:'sour_lemon.png',          face:'😖'},
+  {taste:'salty', food:'crisps',       img:'salty_crisps.png',        face:'🧂'},
+  {taste:'sweet', food:'candyfloss',   img:'sweet_candyfloss.png',    face:'😋'},
+  {taste:'bitter',food:'grapefruit',   img:'bitter_grapefruit.png',   face:'😝'},
+  {taste:'spicy', food:'chilli',       img:'spicy_chilli.png',        face:'🥵'},
+  {taste:'tangy', food:'ketchup',      img:'tangy_ketchup.png',       face:'😬'},
+  {taste:'nutty', food:'peanut butter',img:'nutty_peanut_butter.png', face:'🥜'},
+  {taste:'bland', food:'crackers',     img:'bland_crackers.png',      face:'😐'},
+  {taste:'umami', food:'soup',         img:'umami_soup.png',          face:'🤤'},
+];
+/* Taste Plates game */
+const PLATES=[
+  {id:'sweet', face:'😋'},{id:'salty', face:'🧂'},{id:'sour', face:'😖'},{id:'bitter',face:'😝'},{id:'spicy', face:'🥵'},
+];
+const FOODS=[
+  {name:'chocolate', e:'🍫', t:'sweet'},{name:'ice cream', e:'🍦', t:'sweet'},{name:'donut', e:'🍩', t:'sweet'},
+  {name:'cake', e:'🍰', t:'sweet'},{name:'lollipop', e:'🍭', t:'sweet'},{name:'candyfloss', img:'sweet_candyfloss.png', t:'sweet'},
+  {name:'chips', e:'🍟', t:'salty'},{name:'crisps', img:'salty_crisps.png', t:'salty'},{name:'cheese', e:'🧀', t:'salty'},
+  {name:'popcorn', e:'🍿', t:'salty'},{name:'pretzel', e:'🥨', t:'salty'},{name:'pizza', e:'🍕', t:'salty'},
+  {name:'lemon', img:'sour_lemon.png', t:'sour'},{name:'kiwi', e:'🥝', t:'sour'},{name:'pickle', e:'🥒', t:'sour'},
+  {name:'coffee', e:'☕', t:'bitter'},{name:'grapefruit', img:'bitter_grapefruit.png', t:'bitter'},{name:'broccoli', e:'🥦', t:'bitter'},
+  {name:'chilli', img:'spicy_chilli.png', t:'spicy'},{name:'curry', e:'🍛', t:'spicy'},{name:'hot pepper', e:'🌶️', t:'spicy'},
+];
+const PLATE_ROUNDS=10;
+/* How do I taste? story foods */
+const STORY=[
+  {e:'🍫',name:'chocolate',t:'sweet',bub:'Sweet! 😋'},
+  {e:'🍋',name:'lemon',t:'sour',bub:'Sour! 😖'},
+  {e:'🍟',name:'chips',t:'salty',bub:'Salty! 🧂'},
+  {e:'☕',name:'coffee',t:'bitter',bub:'Bitter! 😝'},
+  {e:'🌶️',name:'chilli',t:'spicy',bub:'Spicy! 🥵'},
+];
+
+/* ============================================================ */
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const art=w=>/^[aeiou]/i.test(w)?'an '+w:'a '+w;
+const plural=w=>/s$/.test(w);
+let voice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/en-GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';if(voice)u.voice=voice;u.rate=.85;u.pitch=1.15;speechSynthesis.speak(u)}catch(e){}}
+function hush(){try{speechSynthesis.cancel()}catch(e){}}
+function confetti(n=60){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7','#ff6fa3'];
+  for(let i=0;i<n;i++){const c=document.createElement('div');c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%7]};animation-duration:${1.6+Math.random()*1.6}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()<.5?'50%':'3px'}`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),3800);}
+}
+const pic=f=>f.img?`<img src="${IMG+f.img}" alt="${f.name}">`:f.e;
+
+const h=$('title');h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7'],box=$('bubbles');
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const s=30+Math.random()*90;
+    b.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${cols[i%6]};animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*25}s`;
+    box.appendChild(b);}
+}
+
+/* ---------- navigation ---------- */
+let current='menu';
+function go(name){
+  hush();$('vid').pause();closeStage();
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  $('s-'+name).classList.remove('hidden');current=name;
+  const back=$('backBtn');
+  if(name==='menu'){back.textContent='⬅ 5 Senses';back.href='five_senses.html';}
+  else{back.textContent='⬅ Back';back.href='#';}
+  if(name==='how')startStory();
+  if(name==='watch'&&!$('vid').getAttribute('src'))pickVideo(0);
+  if(name==='plates')startPlates();
+  scrollTo(0,0);
+}
+$('backBtn').addEventListener('click',e=>{if(current!=='menu'){e.preventDefault();go('menu');}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go)});
+
+/* ---------- HOW DO I TASTE? ---------- */
+const STEPS=[
+  {t:'How do I taste? 🤔', s:"How do I taste? Let's find out!", c:[]},
+  {t:'1. I put the {f} in my mouth', s:'I put the {n} in my mouth.', c:['inmouth']},
+  {t:'2. I chew and chew! 😋', s:'I chew and chew. Yum yum!', c:['inmouth','chewed','chew']},
+  {t:'3. My tongue has tiny bumps: taste buds!', s:'My tongue has lots of tiny bumps. They are my taste buds!', c:['inmouth','chewed','budsOn']},
+  {t:'4. My taste buds send a message to my brain 🧠', s:'My taste buds send a message to my brain.', c:['inmouth','chewed','budsOn','msgOn']},
+  {t:'5. My brain says…', s:'My brain says… {b}', c:['inmouth','chewed','msgOn','bubOn']},
+];
+let st=0,sf=0;
+$('dots').innerHTML=STEPS.map(()=>'<i></i>').join('');
+function startStory(){st=0;showStep();}
+function showStep(){
+  const f=STORY[sf],S=STEPS[st],story=$('story');
+  story.setAttribute('class',S.c.join(' '));
+  $('sFood').textContent=f.e;$('bubText').textContent=f.bub;
+  $('stepText').textContent=S.t.replace('{f}',f.name+' '+f.e);
+  document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=st));
+  $('stBack').disabled=st===0;
+  const last=st===STEPS.length-1;
+  $('stNext').classList.toggle('hidden',last);$('stOther').classList.toggle('hidden',!last);$('stNose').classList.toggle('hidden',!last);
+  $('stNose').textContent='🤏 Hold my nose';
+  say(S.s.replace('{n}',f.name).replace('{b}',`It's ${f.t}!`));
+  if(last)confetti(30);
+}
+$('stNext').onclick=()=>{if(st<STEPS.length-1){st++;showStep();}};
+$('stBack').onclick=()=>{if(st>0){st--;showStep();}};
+$('stOther').onclick=()=>{sf=(sf+1)%STORY.length;st=1;showStep();};
+$('stNose').onclick=()=>{
+  const story=$('story');
+  if(story.classList.contains('nose')){showStep();return;}
+  story.setAttribute('class','inmouth chewed nose bubOn');
+  $('bubText').textContent='Hmm… what is it? 🤔';
+  $('stNose').textContent='👃 Let go';
+  $('stepText').textContent='I hold my nose… it is hard to taste! My nose helps me taste too.';
+  say("I hold my nose… Hmm, what is it? It's hard to taste! My nose helps me taste too.");
+};
+
+/* ---------- WATCH ---------- */
+$('tabs').innerHTML=VIDEOS.map((v,i)=>`<button class="tab" data-v="${i}">${v.title}</button>`).join('');
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)pickVideo(+b.dataset.v)});
+function pickVideo(i){$('vid').src=VIDEOS[i].src;document.querySelectorAll('.tab').forEach((t,k)=>t.classList.toggle('on',k===i));}
+
+/* ---------- TASTE CARDS ---------- */
+let ci=-1;const seen=new Set();
+function drawCards(){$('cards').innerHTML=CARDS.map((c,i)=>`<button class="tcard${seen.has(i)?' seen':''}" data-i="${i}"><div class="hd">How does it taste?</div><div class="im"><img src="${IMG+c.img}" alt="${c.food}"></div><div class="wd">${seen.has(i)?c.taste:'?'}</div></button>`).join('');}
+drawCards();
+$('cards').addEventListener('click',e=>{const b=e.target.closest('.tcard');if(b)openCard(+b.dataset.i)});
+function openCard(i){ci=i;const c=CARDS[i];$('stImg').src=IMG+c.img;$('stImg').alt=c.food;$('stWord').innerHTML='?';$('stTell').disabled=false;
+  $('stage').classList.remove('hidden');say(`${plural(c.food)?'Look! '+c.food[0].toUpperCase()+c.food.slice(1):'Look! '+art(c.food).replace(/^./,x=>x.toUpperCase())}. How does it taste?`);}
+function tell(){const c=CARDS[ci];$('stWord').innerHTML=`${c.taste} <span class="face">${c.face}</span>`;$('stTell').disabled=true;
+  seen.add(ci);drawCards();confetti(35);say(`It tastes ${c.taste}!`);}
+function closeStage(){if(!$('stage').classList.contains('hidden')){$('stage').classList.add('hidden');hush();}}
+$('stTell').onclick=tell;
+$('stPrev').onclick=()=>openCard((ci+CARDS.length-1)%CARDS.length);
+$('stNextC').onclick=()=>openCard((ci+1)%CARDS.length);
+$('stClose').onclick=closeStage;
+$('stage').addEventListener('click',e=>{if(e.target.id==='stage')closeStage()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeStage()});
+
+/* ---------- TASTE PLATES ---------- */
+let pQueue=[],pRound=0,pScore=0,pCur=null,pLock=false;
+$('plates').innerHTML=PLATES.map(p=>`<button class="plate" data-t="${p.id}"><div class="f">${p.face}</div><div class="n">${p.id}</div><div class="pile"></div></button>`).join('');
+function pStars(){$('pStars').innerHTML=Array.from({length:PLATE_ROUNDS},(_,i)=>`<span class="${i<pScore?'':'off'}">⭐</span>`).join('')}
+function startPlates(){
+  // at least one food of each taste, then fill up randomly
+  const one=PLATES.map(p=>shuffle(FOODS.filter(f=>f.t===p.id))[0]);
+  const rest=shuffle(FOODS.filter(f=>!one.includes(f))).slice(0,PLATE_ROUNDS-one.length);
+  pQueue=shuffle([...one,...rest]);pRound=0;pScore=0;
+  document.querySelectorAll('.plate .pile').forEach(p=>p.innerHTML='');
+  $('pDone').classList.add('hidden');$('pPlay').classList.remove('hidden');nextFood();
+}
+function nextFood(){
+  pStars();document.querySelectorAll('.plate').forEach(p=>p.classList.remove('right','wrong'));
+  if(pRound>=pQueue.length){$('pPlay').classList.add('hidden');$('pDone').classList.remove('hidden');confetti(120);say('Well done, super tasters!');return;}
+  pCur=pQueue[pRound];pLock=false;
+  const f=$('food');f.innerHTML=pic(pCur);f.classList.remove('in');void f.offsetWidth;f.classList.add('in');
+  $('foodName').textContent=pCur.name;
+  say(`${pCur.name[0].toUpperCase()+pCur.name.slice(1)}. How does it taste?`);
+}
+$('plates').addEventListener('click',e=>{
+  const b=e.target.closest('.plate');if(!b||pLock)return;
+  b.classList.remove('wrong');void b.offsetWidth;
+  if(b.dataset.t===pCur.t){
+    pLock=true;b.classList.add('right');pScore++;pStars();
+    b.querySelector('.pile').insertAdjacentHTML('beforeend',`<span>${pic(pCur)}</span>`);
+    confetti(30);say(`Yes! ${plural(pCur.name)||pCur.name==='chips'||pCur.name==='crisps'?'They taste':'It tastes'} ${pCur.t}!`);
+    pRound++;setTimeout(nextFood,2000);
+  }else{b.classList.add('wrong');const f=$('food');f.classList.remove('no');void f.offsetWidth;f.classList.add('no');say('Hmm… try again!');}
+});
+$('pAgain').onclick=startPlates;
+</script></body></html>
