@@ -1,0 +1,411 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hearing – Secret Sounds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ef3d45;--yellow:#ffd52a;--blue:#3488e8;--orange:#f28b24;--green:#35b64a;--purple:#8d55c7;--pink:#ff6fa3;--ink:#202020;--vh:1vh}
+@supports(height:1dvh){:root{--vh:1dvh}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Fredoka,"Arial Rounded MT Bold",Arial,sans-serif;color:var(--ink);background:#fff5f8;-webkit-tap-highlight-color:transparent;user-select:none;overflow-x:hidden}
+button{font-family:inherit;color:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;bottom:-120px;border-radius:50%;opacity:.14;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(calc(-120*var(--vh) - 200px))}}
+
+/* top bar */
+.top{position:relative;z-index:3;display:flex;align-items:center;gap:12px;padding:12px 14px 0}
+.pill{background:#fff;border-radius:50px;padding:10px 20px;font-size:clamp(18px,2.6vh,24px);font-weight:700;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px #0002;white-space:nowrap}
+.pill:active{transform:scale(.95)}
+.top h1{flex:1;text-align:center;margin:0;font-size:clamp(34px,calc(8*var(--vh)),72px);line-height:1}
+h1 span{display:inline-block;-webkit-text-stroke:3px #fff;paint-order:stroke;text-shadow:0 4px 0 #0001}
+h1 span:nth-child(6n+1){color:var(--red)}h1 span:nth-child(6n+2){color:var(--orange)}h1 span:nth-child(6n+3){color:var(--yellow)}
+h1 span:nth-child(6n+4){color:var(--green)}h1 span:nth-child(6n+5){color:var(--blue)}h1 span:nth-child(6n+6){color:var(--purple)}
+h1 .sp{width:.3em}
+.spacer{width:110px}
+.hidden{display:none!important}
+section{position:relative;z-index:1}
+.lead{text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);color:#755;margin:calc(1.5*var(--vh)) 10px calc(2*var(--vh))}
+
+/* menu */
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2.4vw,32px);padding:calc(2*var(--vh)) 3vw calc(4*var(--vh))}
+.mcard{width:clamp(170px,21vw,270px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 14px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.mcard:hover{transform:translateY(-6px) rotate(-1deg)}
+.mcard:active{transform:scale(.96)}
+.mcard .ic{width:100%;aspect-ratio:1.15;border-radius:24px;display:grid;place-items:center;font-size:clamp(60px,7vw,100px)}
+.mcard .t{font-size:clamp(22px,2.3vw,30px);font-weight:700;margin-top:10px;text-align:center}
+.mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:0 10px}
+
+/* watch */
+.videowrap{display:flex;justify-content:center;padding:0 3vw}
+video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-radius:24px;background:#000;box-shadow:0 8px 24px #0003;border:6px solid #fff}
+
+/* themes */
+.themes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:calc(2*var(--vh))}
+.theme{background:#fff;border-radius:50px;padding:10px 22px;font-size:clamp(18px,2.8vh,26px);font-weight:700;box-shadow:0 4px 12px #0002;border:4px solid #fff}
+.theme.on{border-color:var(--pink);background:#ffe3ec}
+
+/* gift boxes */
+.boxes{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,3vw,44px) clamp(14px,2.5vw,36px);padding:calc(5*var(--vh)) 3vw calc(5*var(--vh))}
+.gift{--c:#ef3d45;--r:#ffd52a;position:relative;width:clamp(120px,15vw,200px);height:clamp(130px,16vw,215px);background:none;padding:0}
+.gift .body{position:absolute;left:6%;right:6%;bottom:0;height:68%;background:var(--c);border-radius:10px 10px 16px 16px;box-shadow:inset 0 -10px 0 #0002,0 8px 16px #0002}
+.gift .lid{position:absolute;left:0;right:0;top:12%;height:24%;background:var(--c);border-radius:12px;box-shadow:inset 0 -6px 0 #0002,0 4px 8px #0002;z-index:2;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.gift .body::before,.gift .lid::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:18%;transform:translateX(-50%);background:var(--r)}
+.gift .bow{position:absolute;left:50%;top:-2%;width:46%;height:22%;transform:translateX(-50%);z-index:3;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.gift .bow::before,.gift .bow::after{content:"";position:absolute;top:0;width:50%;height:100%;background:var(--r);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;box-shadow:inset 0 -4px 0 #0002}
+.gift .bow::before{left:0;transform:rotate(-18deg)}.gift .bow::after{right:0;transform:rotate(18deg)}
+.gift .q{position:absolute;left:0;right:0;bottom:12%;text-align:center;font-size:clamp(38px,5vw,64px);font-weight:700;color:#fff;-webkit-text-stroke:2px #0003;paint-order:stroke;z-index:1}
+.gift .num{position:absolute;left:50%;bottom:-2px;transform:translate(-50%,50%);background:#fff;border-radius:20px;padding:0 12px;font-size:18px;font-weight:700;box-shadow:0 2px 6px #0002;z-index:4}
+.gift .peek{position:absolute;left:0;right:0;top:-6%;text-align:center;font-size:clamp(50px,6.5vw,86px);z-index:1;opacity:0;transform:translateY(40%) scale(.4);transition:all .5s cubic-bezier(.3,1.6,.5,1)}
+.gift .peek img{width:clamp(70px,8vw,110px);height:clamp(70px,8vw,110px);object-fit:contain}
+.gift.open .lid{transform:translate(55%,-60%) rotate(35deg)}
+.gift.open .bow{transform:translate(20%,-170%) rotate(40deg)}
+.gift.open .peek{opacity:1;transform:translateY(-10%) scale(1)}
+.gift.open .q{opacity:0}
+#boxes .gift.open .lid,#boxes .gift.open .bow{transform:translateY(-30%);opacity:0;transition:all .4s}
+.gift:hover:not(.open){animation:jig .5s}
+.gift:active{transform:scale(.96)}
+@keyframes jig{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+.shake{animation:shake .45s ease-in-out infinite!important}
+@keyframes shake{0%,100%{transform:rotate(0) translateY(0)}20%{transform:rotate(-7deg) translateY(-4px)}40%{transform:rotate(6deg)}60%{transform:rotate(-4deg) translateY(-3px)}80%{transform:rotate(3deg)}}
+
+/* big stage (modal) */
+.stage{position:fixed;inset:0;z-index:20;background:#2a1d3acc;display:flex;align-items:center;justify-content:center;padding:16px}
+.panel{position:relative;background:#fff;border-radius:36px;width:min(94vw,820px);max-height:96%;padding:calc(3*var(--vh)) 24px calc(3*var(--vh));text-align:center;box-shadow:0 20px 50px #0005;animation:pop .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.close{position:absolute;top:12px;right:14px;width:54px;height:54px;border-radius:50%;background:#f1eef4;font-size:28px;font-weight:700}
+.stage .gift{width:clamp(150px,calc(30*var(--vh)),240px);height:clamp(165px,calc(33*var(--vh)),262px);margin:calc(5*var(--vh)) auto calc(2*var(--vh));display:block}
+.stage .gift .q{font-size:clamp(60px,calc(11*var(--vh)),100px)}
+.stage .gift .peek{font-size:clamp(90px,calc(17*var(--vh)),150px);top:-14%}
+.stage .gift .peek img{width:clamp(120px,calc(24*var(--vh)),200px);height:clamp(120px,calc(24*var(--vh)),200px)}
+.reveal{font-size:clamp(34px,calc(7*var(--vh)),60px);font-weight:700;min-height:1.2em;color:var(--purple)}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:calc(1.5*var(--vh))}
+.big{border-radius:50px;padding:14px 30px;font-size:clamp(20px,calc(3.6*var(--vh)),30px);font-weight:700;color:#fff;box-shadow:0 6px 0 #0003;transition:transform .1s}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
+.big.blue{background:var(--blue)}.big.pink{background:var(--pink)}.big.green{background:var(--green)}.big.orange{background:var(--orange)}
+.big[disabled]{opacity:.4;pointer-events:none}
+
+/* sound waves around a speaker/ear */
+.ear{position:relative;width:clamp(120px,calc(24*var(--vh)),190px);height:clamp(120px,calc(24*var(--vh)),190px);margin:0 auto;border-radius:50%;background:#ffe3ec;display:grid;place-items:center;font-size:clamp(64px,calc(13*var(--vh)),104px);box-shadow:0 8px 0 #f6bfd1;transition:transform .15s}
+.ear:active{transform:scale(.94)}
+.ear .w{position:absolute;inset:0;border-radius:50%;border:5px solid var(--pink);opacity:0;pointer-events:none}
+.ear.playing .w{animation:wave 1.5s ease-out infinite}
+.ear.playing .w:nth-child(2){animation-delay:.5s}.ear.playing .w:nth-child(3){animation-delay:1s}
+@keyframes wave{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
+.ear.playing{animation:jig .6s infinite}
+.hint{font-size:clamp(16px,calc(2.6*var(--vh)),22px);color:#99a;margin-top:calc(2.5*var(--vh))}
+
+/* guess game */
+.game{display:flex;align-items:center;justify-content:center;gap:clamp(20px,5vw,70px);padding:0 3vw calc(3*var(--vh));flex-wrap:wrap}
+.opts{display:flex;gap:clamp(12px,2vw,26px);flex-wrap:wrap;justify-content:center}
+.opt{width:clamp(130px,16vw,210px);aspect-ratio:.9;background:#fff;border-radius:28px;box-shadow:0 8px 20px #0002;border:6px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .15s}
+.opt .e{font-size:clamp(60px,7.5vw,104px);line-height:1.1}
+.opt .e img{width:clamp(80px,10vw,140px);height:clamp(80px,10vw,140px);object-fit:contain}
+.opt .l{font-size:clamp(20px,2.2vw,30px);font-weight:700;margin-top:6px}
+.opt:hover{transform:translateY(-4px)}
+.opt.right{border-color:var(--green);background:#e9fbe9;animation:bounce .6s}
+.opt.wrong{border-color:var(--red);background:#ffecec;animation:no .4s;opacity:.55}
+@keyframes bounce{30%{transform:scale(1.12)}60%{transform:scale(.95)}}
+@keyframes no{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.stars{text-align:center;font-size:clamp(28px,calc(5.5*var(--vh)),44px);letter-spacing:4px;min-height:1.3em;margin-bottom:calc(1*var(--vh))}
+.stars .off{filter:grayscale(1);opacity:.25}
+
+/* loud or quiet */
+.lq{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,60px);flex-wrap:wrap;padding:0 3vw}
+.lqbtn{width:clamp(160px,20vw,250px);border-radius:32px;padding:16px 10px;font-weight:700;box-shadow:0 8px 0 #0002;transition:transform .12s}
+.lqbtn:active{transform:translateY(5px);box-shadow:0 3px 0 #0002}
+.lqbtn .e{display:block;line-height:1.1}
+.lqbtn.loud{background:#ffd9c2;font-size:clamp(34px,4.2vw,56px)}.lqbtn.loud .e{font-size:clamp(80px,10vw,130px)}
+.lqbtn.quiet{background:#d8ecff;font-size:clamp(22px,2.4vw,32px);color:#557}.lqbtn.quiet .e{font-size:clamp(46px,5.5vw,72px)}
+.lqbtn.right{outline:6px solid var(--green)}.lqbtn.wrong{animation:no .4s}
+.bins{display:flex;justify-content:center;gap:clamp(14px,3vw,40px);margin:calc(3*var(--vh)) 3vw calc(4*var(--vh));flex-wrap:wrap}
+.bin{min-width:clamp(220px,32vw,420px);min-height:calc(13*var(--vh));background:#fff;border-radius:26px;box-shadow:0 6px 16px #0002;padding:10px 14px}
+.bin h3{margin:0 0 4px;font-size:clamp(20px,2.4vw,28px)}
+.bin .items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:clamp(34px,4vw,52px)}
+.bin .items span{animation:pop .4s cubic-bezier(.3,1.6,.5,1)}
+.bin .items img{width:clamp(40px,4.5vw,60px);height:clamp(40px,4.5vw,60px);object-fit:contain}
+
+.done{text-align:center;padding:calc(3*var(--vh)) 20px}
+.done .trophy{font-size:clamp(90px,calc(20*var(--vh)),170px);animation:bounce 1.2s infinite}
+.done h2{font-size:clamp(34px,calc(7*var(--vh)),62px);margin:10px 0;color:var(--purple)}
+
+.confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:40;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(calc(110*var(--vh))) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:520px){.top h1{font-size:34px}.pill{padding:6px 14px}}
+</style></head><body>
+<div class="bubbles" id="bubbles"></div>
+
+<div class="top">
+  <a class="pill" id="backBtn" href="five_senses.html">⬅ 5 Senses</a>
+  <h1 id="title">Hearing</h1>
+  <div class="spacer"></div>
+</div>
+
+<!-- MENU -->
+<section id="s-menu">
+  <p class="lead">👂 I hear with my ears! What can you hear?</p>
+  <div class="menu">
+    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff">📺</div><div class="t">Watch</div><div class="d">The sense of hearing</div></button>
+    <button class="mcard" data-go="boxes"><div class="ic" style="background:#ffe3ec">🎁</div><div class="t">Secret Boxes</div><div class="d">Listen… what's inside?</div></button>
+    <button class="mcard" data-go="guess"><div class="ic" style="background:#e7f8e3">🎯</div><div class="t">Guess the Sound</div><div class="d">Listen and choose</div></button>
+    <button class="mcard" data-go="loud"><div class="ic" style="background:#fff3d6">📢</div><div class="t">Loud or Quiet?</div><div class="d">Big sound or little sound?</div></button>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section id="s-watch" class="hidden">
+  <p class="lead">📺 Watch and listen!</p>
+  <div class="videowrap"><video id="vid" controls preload="metadata" playsinline src="../VIDEOS/sense_of_hearing.mp4"></video></div>
+</section>
+
+<!-- SECRET BOXES -->
+<section id="s-boxes" class="hidden">
+  <p class="lead">🎁 Tap a box and listen. What's inside?</p>
+  <div class="themes" id="themes"></div>
+  <div class="boxes" id="boxes"></div>
+</section>
+
+<!-- GUESS -->
+<section id="s-guess" class="hidden">
+  <div class="stars" id="gStars"></div>
+  <div id="gPlay">
+    <div class="game">
+      <div style="text-align:center">
+        <button class="ear" id="gEar" aria-label="Play the sound"><span class="w"></span><span class="w"></span><span class="w"></span>👂</button>
+        <div class="hint">Tap the ear to listen</div>
+      </div>
+      <div class="opts" id="gOpts"></div>
+    </div>
+  </div>
+  <div class="done hidden" id="gDone">
+    <div class="trophy">🏆</div>
+    <h2>Super listeners!</h2>
+    <div class="btns"><button class="big green" id="gAgain">▶ Play again</button><button class="big blue" data-go="menu">🏠 Menu</button></div>
+  </div>
+</section>
+
+<!-- LOUD OR QUIET -->
+<section id="s-loud" class="hidden">
+  <p class="lead" id="lLead">Listen! Is it a LOUD sound or a quiet sound?</p>
+  <div id="lPlay">
+    <div class="lq">
+      <button class="lqbtn quiet" data-a="quiet"><span class="e">🐭</span>quiet</button>
+      <div style="text-align:center">
+        <button class="ear" id="lEar" aria-label="Play the sound"><span class="w"></span><span class="w"></span><span class="w"></span>👂</button>
+        <div class="hint">Tap the ear to listen</div>
+      </div>
+      <button class="lqbtn loud" data-a="loud"><span class="e">🦁</span>LOUD</button>
+    </div>
+  </div>
+  <div class="bins">
+    <div class="bin"><h3>🐭 quiet</h3><div class="items" id="binQuiet"></div></div>
+    <div class="bin"><h3>🦁 LOUD</h3><div class="items" id="binLoud"></div></div>
+  </div>
+  <div class="done hidden" id="lDone" style="padding-top:0">
+    <h2>Great job! 🌟</h2>
+    <div class="btns"><button class="big green" id="lAgain">▶ Play again</button><button class="big blue" data-go="menu">🏠 Menu</button></div>
+  </div>
+</section>
+
+<!-- BIG BOX STAGE -->
+<div class="stage hidden" id="stage">
+  <div class="panel">
+    <button class="close" id="stClose" aria-label="Close">✕</button>
+    <div class="gift" id="stGift"><div class="peek" id="stPeek"></div><div class="lid"></div><div class="bow"></div><div class="body"></div><div class="q">?</div></div>
+    <div class="reveal" id="stWord">What can you hear?</div>
+    <div class="btns">
+      <button class="big blue" id="stListen">🔊 Listen again</button>
+      <button class="big pink" id="stOpen">🎁 Open the box!</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   SOUNDS — to add one: put the mp3 in SONIDOS/HEARING and copy a line.
+   word:  what the children see        say: what the voice says when it opens
+   emoji: picture (or put an image path in img, e.g. '../IMAGENES/HEARING/cow.png')
+   theme: animals | home | outside | vehicles
+   lq:    'loud' or 'quiet' for the Loud or Quiet game (leave empty to skip)
+   ============================================================ */
+const SND='../SONIDOS/HEARING/';
+const SOUNDS=[
+  {id:'cow',       word:'cow',         say:"It's a cow! Moo!",            emoji:'🐄', theme:'animals'},
+  {id:'rooster',   word:'rooster',     say:"It's a rooster!",             emoji:'🐓', theme:'animals'},
+  {id:'dog',       word:'dog',         say:"It's a dog! Woof woof!",      emoji:'🐕', theme:'animals'},
+  {id:'pig',       word:'pig',         say:"It's a pig! Oink oink!",      emoji:'🐖', theme:'animals'},
+  {id:'seagulls',  word:'seagulls',    say:"They're seagulls!",           emoji:'🐦', theme:'animals'},
+
+  {id:'baby',      word:'baby',        say:"It's a baby crying!",         emoji:'👶', theme:'home', lq:'loud'},
+  {id:'shower',    word:'shower',      say:"It's the shower!",            emoji:'🚿', theme:'home', lq:'quiet'},
+  {id:'door',      word:'door',        say:"Knock knock! It's the door!", emoji:'🚪', theme:'home', lq:'quiet'},
+  {id:'toothbrush',word:'toothbrush',  say:"It's a toothbrush!",          emoji:'🪥', theme:'home', lq:'quiet'},
+  {id:'clock',     word:'clock',       say:"It's a clock! Tick tock!",    emoji:'⏰', theme:'home', lq:'quiet'},
+  {id:'piano',     word:'piano',       say:"It's a piano!",               emoji:'🎹', theme:'home'},
+  {id:'bubbling',  word:'bubbles',     say:"They're bubbles!",            emoji:'🫧', theme:'home', lq:'quiet'},
+
+  {id:'rain',      word:'rain',        say:"It's the rain!",              emoji:'🌧️', theme:'outside', lq:'quiet'},
+  {id:'wind',      word:'wind',        say:"It's the wind!",              emoji:'🌬️', theme:'outside'},
+  {id:'waves',     word:'waves',       say:"They're the waves!",          emoji:'🌊', theme:'outside'},
+  {id:'children',  word:'children',    say:"Children laughing!",          emoji:'🧒', theme:'outside'},
+  {id:'clapping',  word:'clapping',    say:"Clap clap clap!",             emoji:'👏', theme:'outside'},
+  {id:'bell',      word:'bell',        say:"It's a bell! Ring ring!",     emoji:'🔔', theme:'outside'},
+  {id:'fireworks', word:'fireworks',   say:"They're fireworks! Boom!",    emoji:'🎆', theme:'outside', lq:'loud'},
+
+  {id:'car',       word:'car',         say:"It's a car!",                 emoji:'🚗', theme:'vehicles'},
+  {id:'ambulance', word:'ambulance',   say:"It's an ambulance!",          emoji:'🚑', theme:'vehicles', lq:'loud'},
+  {id:'firetruck', word:'fire engine', say:"It's a fire engine!",         emoji:'🚒', theme:'vehicles', lq:'loud'},
+  {id:'airplane',  word:'plane',       say:"It's a plane!",               emoji:'✈️', theme:'vehicles', lq:'loud'},
+  {id:'train',     word:'train',       say:"It's a train!",               emoji:'🚂', theme:'vehicles', lq:'loud'},
+  {id:'helicopter',word:'helicopter',  say:"It's a helicopter!",          emoji:'🚁', theme:'vehicles', lq:'loud'},
+  {id:'motorcycle',word:'motorbike',   say:"It's a motorbike!",           emoji:'🏍️', theme:'vehicles', lq:'loud'},
+  {id:'bicycle',   word:'bicycle',     say:"It's a bicycle!",             emoji:'🚲', theme:'vehicles'},
+];
+const THEMES=[
+  {id:'animals', name:'🐾 Animals'},
+  {id:'home',    name:'🏠 At home'},
+  {id:'outside', name:'🌳 Outside'},
+  {id:'vehicles',name:'🚗 Vehicles'},
+  {id:'mix',     name:'🎲 Mix!'},
+];
+const GUESS_ROUNDS=8, LOUD_ROUNDS=8;
+const BOX_COLOURS=[['#ef3d45','#ffd52a'],['#3488e8','#ffd52a'],['#35b64a','#ff6fa3'],['#8d55c7','#ffd52a'],['#f28b24','#3488e8'],['#ff6fa3','#ffffff'],['#1fb5ad','#ffd52a'],['#ffd52a','#ef3d45']];
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pic=s=>s.img?`<img src="${s.img}" alt="${s.word}">`:s.emoji;
+
+const player=new Audio();let onEnd=null;
+player.addEventListener('ended',()=>{onEnd&&onEnd();onEnd=null});
+function play(s,whenDone){stopSound();player.src=SND+s.id+'.mp3';onEnd=whenDone||null;player.play().catch(()=>{});}
+function stopSound(){player.pause();if(onEnd){const f=onEnd;onEnd=null;f();}try{speechSynthesis.cancel()}catch(e){}}
+
+let voice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/en-GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';if(voice)u.voice=voice;u.rate=.85;u.pitch=1.15;speechSynthesis.speak(u)}catch(e){}}
+
+function confetti(n=60){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7','#ff6fa3'];
+  for(let i=0;i<n;i++){const c=document.createElement('div');c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%7]};animation-duration:${1.6+Math.random()*1.6}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()<.5?'50%':'3px'}`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),3800);}
+}
+
+/* ---------- title + bubbles ---------- */
+const h=$('title');h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7'],box=$('bubbles');
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const s=30+Math.random()*90;
+    b.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${cols[i%6]};animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*25}s`;
+    box.appendChild(b);}
+}
+
+/* ---------- navigation ---------- */
+let current='menu';
+function go(name){
+  stopSound();$('vid').pause();closeStage();
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  $('s-'+name).classList.remove('hidden');current=name;
+  const back=$('backBtn');
+  if(name==='menu'){back.textContent='⬅ 5 Senses';back.href='five_senses.html';}
+  else{back.textContent='⬅ Back';back.href='#';}
+  if(name==='boxes')showTheme(curTheme);
+  if(name==='guess')startGuess();
+  if(name==='loud')startLoud();
+  scrollTo(0,0);
+}
+$('backBtn').addEventListener('click',e=>{if(current!=='menu'){e.preventDefault();go('menu');}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go)});
+
+/* ---------- SECRET BOXES ---------- */
+let curTheme='animals',boxList=[],opened=new Set(),stIdx=-1;
+$('themes').innerHTML=THEMES.map(t=>`<button class="theme" data-t="${t.id}">${t.name}</button>`).join('');
+$('themes').addEventListener('click',e=>{const b=e.target.closest('.theme');if(b){stopSound();showTheme(b.dataset.t)}});
+function showTheme(t){
+  curTheme=t;opened=new Set();
+  document.querySelectorAll('.theme').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  boxList=t==='mix'?shuffle(SOUNDS).slice(0,8):shuffle(SOUNDS.filter(s=>s.theme===t));
+  $('boxes').innerHTML=boxList.map((s,i)=>{const [c,r]=BOX_COLOURS[i%BOX_COLOURS.length];
+    return `<button class="gift" data-i="${i}" style="--c:${c};--r:${r}" aria-label="Secret box ${i+1}">
+      <div class="peek">${pic(s)}</div><div class="lid"></div><div class="bow"></div><div class="body"></div><div class="q">?</div><div class="num">${i+1}</div></button>`}).join('');
+}
+$('boxes').addEventListener('click',e=>{const g=e.target.closest('.gift');if(g)openStage(+g.dataset.i)});
+
+function openStage(i){
+  stIdx=i;const s=boxList[i],[c,r]=BOX_COLOURS[i%BOX_COLOURS.length],g=$('stGift');
+  g.style.setProperty('--c',c);g.style.setProperty('--r',r);
+  $('stPeek').innerHTML=pic(s);
+  const isOpen=opened.has(i);
+  g.classList.toggle('open',isOpen);
+  $('stWord').textContent=isOpen?s.word:'What can you hear?';
+  $('stOpen').disabled=isOpen;
+  $('stage').classList.remove('hidden');
+  listenBox();
+}
+function listenBox(){const g=$('stGift');g.classList.add('shake');play(boxList[stIdx],()=>g.classList.remove('shake'));}
+function closeStage(){if($('stage').classList.contains('hidden'))return;stopSound();$('stGift').classList.remove('shake');$('stage').classList.add('hidden');}
+$('stListen').onclick=listenBox;
+$('stOpen').onclick=()=>{
+  const s=boxList[stIdx];stopSound();
+  $('stGift').classList.add('open');$('stWord').textContent=s.word;$('stOpen').disabled=true;
+  opened.add(stIdx);document.querySelector(`#boxes .gift[data-i="${stIdx}"]`).classList.add('open');
+  confetti();setTimeout(()=>say(s.say),350);
+};
+$('stClose').onclick=closeStage;
+$('stage').addEventListener('click',e=>{if(e.target.id==='stage')closeStage()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeStage()});
+
+/* ---------- GUESS THE SOUND ---------- */
+let gQueue=[],gRound=0,gScore=0,gCur=null,gLocked=false;
+function stars(el,total,got){el.innerHTML=Array.from({length:total},(_,i)=>`<span class="${i<got?'':'off'}">⭐</span>`).join('')}
+function startGuess(){gQueue=shuffle(SOUNDS).slice(0,GUESS_ROUNDS);gRound=0;gScore=0;$('gDone').classList.add('hidden');$('gPlay').classList.remove('hidden');nextGuess();}
+function nextGuess(){
+  if(gRound>=gQueue.length){$('gPlay').classList.add('hidden');$('gDone').classList.remove('hidden');confetti(120);say('Well done, super listeners!');return;}
+  gCur=gQueue[gRound];gLocked=false;stars($('gStars'),GUESS_ROUNDS,gScore);
+  const others=shuffle(SOUNDS.filter(s=>s.id!==gCur.id)).slice(0,2);
+  $('gOpts').innerHTML=shuffle([gCur,...others]).map(s=>`<button class="opt" data-id="${s.id}"><div class="e">${pic(s)}</div><div class="l">${s.word}</div></button>`).join('');
+  setTimeout(gListen,400);
+}
+function gListen(){const ear=$('gEar');ear.classList.add('playing');play(gCur,()=>ear.classList.remove('playing'));}
+$('gEar').onclick=gListen;
+$('gOpts').addEventListener('click',e=>{
+  const b=e.target.closest('.opt');if(!b||gLocked||b.classList.contains('wrong'))return;
+  if(b.dataset.id===gCur.id){
+    gLocked=true;stopSound();b.classList.add('right');gScore++;stars($('gStars'),GUESS_ROUNDS,gScore);confetti(40);
+    say('Yes! '+gCur.say);gRound++;setTimeout(nextGuess,2600);
+  }else{b.classList.add('wrong');say('Try again!');}
+});
+$('gAgain').onclick=startGuess;
+
+/* ---------- LOUD OR QUIET ---------- */
+let lQueue=[],lRound=0,lCur=null,lLocked=false;
+function startLoud(){
+  const loud=shuffle(SOUNDS.filter(s=>s.lq==='loud')),quiet=shuffle(SOUNDS.filter(s=>s.lq==='quiet'));
+  const half=Math.floor(LOUD_ROUNDS/2);
+  lQueue=shuffle([...loud.slice(0,half),...quiet.slice(0,LOUD_ROUNDS-half)]);lRound=0;
+  $('binLoud').innerHTML='';$('binQuiet').innerHTML='';
+  $('lDone').classList.add('hidden');$('lPlay').classList.remove('hidden');$('lLead').classList.remove('hidden');
+  nextLoud();
+}
+function nextLoud(){
+  document.querySelectorAll('.lqbtn').forEach(b=>b.classList.remove('right','wrong'));
+  if(lRound>=lQueue.length){$('lPlay').classList.add('hidden');$('lLead').classList.add('hidden');$('lDone').classList.remove('hidden');confetti(120);say('Great job!');return;}
+  lCur=lQueue[lRound];lLocked=false;setTimeout(lListen,400);
+}
+function lListen(){const ear=$('lEar');ear.classList.add('playing');play(lCur,()=>ear.classList.remove('playing'));}
+$('lEar').onclick=lListen;
+document.querySelectorAll('.lqbtn').forEach(b=>b.onclick=()=>{
+  if(lLocked||!lCur)return;
+  b.classList.remove('wrong');void b.offsetWidth;
+  if(b.dataset.a===lCur.lq){
+    lLocked=true;stopSound();b.classList.add('right');
+    $(lCur.lq==='loud'?'binLoud':'binQuiet').insertAdjacentHTML('beforeend',`<span title="${lCur.word}">${pic(lCur)}</span>`);
+    say(lCur.lq==='loud'?`${lCur.word}! It's LOUD!`:`${lCur.word}. It's quiet.`);
+    lRound++;setTimeout(nextLoud,2400);
+  }else{b.classList.add('wrong');say('Listen again!');}
+});
+$('lAgain').onclick=startLoud;
+</script></body></html>

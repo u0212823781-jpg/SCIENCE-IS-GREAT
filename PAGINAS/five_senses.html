@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My 5 Senses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ef3d45;--yellow:#ffd52a;--blue:#3488e8;--orange:#f28b24;--green:#35b64a;--purple:#8d55c7;--ink:#202020;--vh:1vh}
+@supports(height:1dvh){:root{--vh:1dvh}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Fredoka,"Arial Rounded MT Bold",Arial,sans-serif;color:var(--ink);background:#fff5f8;-webkit-tap-highlight-color:transparent;user-select:none;overflow-x:hidden}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;bottom:-120px;border-radius:50%;opacity:.16;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(calc(-120*var(--vh) - 200px))}}
+.back{position:fixed;top:14px;left:14px;z-index:5;background:#fff;border-radius:50px;padding:10px 20px;font-size:22px;font-weight:700;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px #0002}
+.back:active{transform:scale(.95)}
+header{position:relative;z-index:1;text-align:center;padding:calc(5*var(--vh)) 20px calc(1*var(--vh))}
+h1{margin:0;font-size:clamp(44px,calc(11*var(--vh)),96px);line-height:1}
+h1 span{display:inline-block;-webkit-text-stroke:3px #fff;paint-order:stroke;text-shadow:0 5px 0 #0001}
+h1 span:nth-child(6n+1){color:var(--red)}h1 span:nth-child(6n+2){color:var(--orange)}h1 span:nth-child(6n+3){color:var(--yellow)}
+h1 span:nth-child(6n+4){color:var(--green)}h1 span:nth-child(6n+5){color:var(--blue)}h1 span:nth-child(6n+6){color:var(--purple)}
+h1 .sp{width:.35em}
+.sub{margin:calc(1.5*var(--vh)) 0 0;font-size:clamp(20px,calc(4*var(--vh)),30px);color:#755}
+main{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2.2vw,30px);padding:calc(4*var(--vh)) 3vw calc(6*var(--vh))}
+.sense{width:clamp(150px,17vw,230px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;padding:18px 10px 16px;border:6px solid #fff;transition:transform .2s}
+.sense:hover{transform:translateY(-6px) rotate(-1.5deg)}
+.sense:active{transform:scale(.96)}
+.sense .ic{width:100%;aspect-ratio:1;border-radius:24px;display:grid;place-items:center;font-size:clamp(64px,8vw,110px)}
+.sense .nm{font-size:clamp(24px,2.6vw,34px);font-weight:700;margin-top:10px}
+.sense .bp{font-size:clamp(15px,1.4vw,19px);color:#778}
+.sense.soon{opacity:.5;pointer-events:none}
+.badge{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:20px;background:#ffe9a8;font-size:14px;font-weight:700;color:#8a6a00}
+.sense:not(.soon) .ic{animation:wig 2.4s ease-in-out infinite}
+@keyframes wig{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-6deg)}90%{transform:rotate(6deg)}95%{transform:rotate(-3deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="bubbles" id="bubbles"></div>
+<a class="back" href="../index.html">⬅ Home</a>
+<header>
+  <h1 id="title">My 5 Senses</h1>
+  <p class="sub">Choose a sense!</p>
+</header>
+<main id="cards"></main>
+<script>
+/* ============================================================
+   SENSES — when a new one is ready, add its link and remove soon:true
+   ============================================================ */
+const SENSES=[
+  {name:'Hearing',part:'ears',icon:'👂',bg:'#ffe3ec',link:'hearing.html'},
+  {name:'Sight',part:'eyes',icon:'👀',bg:'#e3f0ff',soon:true},
+  {name:'Smell',part:'nose',icon:'👃',bg:'#e7f8e3',soon:true},
+  {name:'Taste',part:'tongue',icon:'👅',bg:'#fff3d6',soon:true},
+  {name:'Touch',part:'hands',icon:'✋',bg:'#f0e6ff',soon:true},
+];
+const h=document.getElementById('title');
+h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
+document.getElementById('cards').innerHTML=SENSES.map(s=>`
+  <a class="sense${s.soon?' soon':''}" ${s.soon?'aria-disabled="true"':`href="${s.link}"`}>
+    <div class="ic" style="background:${s.bg}">${s.icon}</div>
+    <div class="nm">${s.name}</div>
+    <div class="bp">my ${s.part}${s.soon?'<br><span class="badge">Coming soon</span>':''}</div>
+  </a>`).join('');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7'],box=document.getElementById('bubbles');
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const s=30+Math.random()*90;
+    b.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${cols[i%6]};animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*25}s`;
+    box.appendChild(b);}
+}
+</script></body></html>
