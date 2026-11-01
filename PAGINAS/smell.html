@@ -1,0 +1,456 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smell – Super Noses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ef3d45;--yellow:#ffd52a;--blue:#3488e8;--orange:#f28b24;--green:#35b64a;--purple:#8d55c7;--pink:#ff6fa3;--ink:#202020;--vh:1vh}
+@supports(height:1dvh){:root{--vh:1dvh}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Fredoka,"Arial Rounded MT Bold",Arial,sans-serif;color:var(--ink);background:#f1fbef;-webkit-tap-highlight-color:transparent;user-select:none;overflow-x:hidden}
+button{font-family:inherit;color:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+img{-webkit-user-drag:none}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;bottom:-120px;border-radius:50%;opacity:.14;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(calc(-120*var(--vh) - 200px))}}
+.top{position:relative;z-index:3;display:flex;align-items:center;gap:12px;padding:12px 14px 0}
+.pill{background:#fff;border-radius:50px;padding:10px 20px;font-size:clamp(18px,2.6vh,24px);font-weight:700;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px #0002;white-space:nowrap}
+.pill:active{transform:scale(.95)}
+.top h1{flex:1;text-align:center;margin:0;font-size:clamp(34px,calc(8*var(--vh)),72px);line-height:1}
+h1 span{display:inline-block;-webkit-text-stroke:3px #fff;paint-order:stroke;text-shadow:0 4px 0 #0001}
+h1 span:nth-child(6n+1){color:var(--red)}h1 span:nth-child(6n+2){color:var(--orange)}h1 span:nth-child(6n+3){color:var(--yellow)}
+h1 span:nth-child(6n+4){color:var(--green)}h1 span:nth-child(6n+5){color:var(--blue)}h1 span:nth-child(6n+6){color:var(--purple)}
+h1 .sp{width:.3em}
+.spacer{width:110px}
+.hidden{display:none!important}
+section{position:relative;z-index:1}
+.lead{text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);color:#575;margin:calc(1.2*var(--vh)) 10px calc(1.6*var(--vh))}
+
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(12px,2.2vw,30px);padding:calc(1.5*var(--vh)) 3vw calc(4*var(--vh))}
+.mcard{width:clamp(150px,17.5vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 12px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.mcard:hover{transform:translateY(-6px) rotate(-1deg)}
+.mcard:active{transform:scale(.96)}
+.mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(56px,6.5vw,96px)}
+.mcard .t{font-size:clamp(20px,2.1vw,28px);font-weight:700;margin-top:8px;text-align:center;line-height:1.1}
+.mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:2px 8px 0}
+
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:calc(1.5*var(--vh)) 0}
+.big{border-radius:50px;padding:12px 26px;font-size:clamp(18px,calc(3.3*var(--vh)),28px);font-weight:700;color:#fff;box-shadow:0 6px 0 #0003;transition:transform .1s}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
+.big.blue{background:var(--blue)}.big.pink{background:var(--pink)}.big.green{background:var(--green)}.big.orange{background:var(--orange)}.big.purple{background:var(--purple)}
+.big[disabled]{opacity:.35;pointer-events:none}
+
+/* watch */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:calc(1.5*var(--vh))}
+.tab{background:#fff;border-radius:50px;padding:9px 20px;font-size:clamp(16px,2.6vh,23px);font-weight:700;box-shadow:0 4px 12px #0002;border:4px solid #fff}
+.tab.on{border-color:var(--green);background:#e7f8e3}
+.videowrap{display:flex;justify-content:center;padding:0 3vw}
+video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-radius:24px;background:#000;box-shadow:0 8px 24px #0003;border:6px solid #fff}
+
+/* how do I smell */
+.storybox{display:flex;justify-content:center;padding:0 3vw;margin-top:calc(1.5*var(--vh))}
+#story{width:min(94vw,calc(118*var(--vh)));height:auto;background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;display:block}
+#story text.em{text-anchor:middle;dominant-baseline:central}
+#bits circle{opacity:0;transition:opacity .5s}
+#story.bitsOn #bits circle{opacity:.9;animation:jiggle 1.2s ease-in-out infinite}
+#story.float #bits circle{animation:drift 2.6s ease-in infinite}
+#bits circle:nth-child(2n){animation-delay:-.5s}#bits circle:nth-child(3n){animation-delay:-1.1s}#bits circle:nth-child(4n){animation-delay:-1.7s}
+@keyframes jiggle{0%,100%{transform:translate(0,0)}25%{transform:translate(8px,-10px)}50%{transform:translate(-6px,-4px)}75%{transform:translate(5px,8px)}}
+@keyframes drift{0%{transform:translate(0,0);opacity:0}15%{opacity:.9}85%{opacity:.9}100%{transform:translate(330px,-15px);opacity:0}}
+#story.cold #bits circle{animation-name:driftBlocked}
+@keyframes driftBlocked{0%{transform:translate(0,0);opacity:0}15%{opacity:.9}70%{transform:translate(300px,-10px);opacity:.6}100%{transform:translate(280px,60px);opacity:0}}
+#sNose{transform-box:fill-box;transform-origin:center}
+#story.sniff #sNose{animation:sniff .7s ease-in-out infinite}
+@keyframes sniff{50%{transform:scale(1.12)}}
+#zoomBub{opacity:0;transform:scale(.3);transform-box:fill-box;transform-origin:bottom left;transition:all .5s cubic-bezier(.3,1.6,.5,1)}
+#story.catch #zoomBub{opacity:1;transform:scale(1)}
+#catchers circle{animation:glow 1s ease-in-out infinite}
+#catchers circle:nth-child(2n){animation-delay:.4s}
+@keyframes glow{50%{fill:#ffe14d}}
+#story .msg{stroke:var(--pink);stroke-width:8;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
+#story.msgOn .msg{opacity:1;animation:march .8s linear infinite}
+@keyframes march{to{stroke-dashoffset:-32}}
+#bub{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:bottom right;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+#story.bubOn #bub{opacity:1;transform:scale(1)}
+#tissue{opacity:0;transition:opacity .4s}#story.cold #tissue{opacity:1}
+.steptext{text-align:center;font-size:clamp(22px,calc(4.4*var(--vh)),38px);font-weight:700;min-height:2.4em;margin:calc(1.4*var(--vh)) 16px 0;line-height:1.2}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#d3e2cf}.dots i.on{background:var(--green)}
+
+/* what can you smell */
+.slide{display:flex;align-items:center;justify-content:center;gap:clamp(10px,3vw,40px);padding:0 3vw;flex-wrap:wrap}
+.slidepic{width:min(46vw,calc(60*var(--vh)));aspect-ratio:1.15;background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;display:flex;align-items:center;justify-content:center;gap:4%;padding:4%;border:6px solid #fff}
+.slidepic img{max-width:100%;max-height:100%;min-width:0;object-fit:contain;animation:wig 2.6s ease-in-out infinite}
+.slidepic.two img{max-width:48%}
+@keyframes wig{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-4deg)}92%{transform:rotate(4deg)}}
+.cloud{position:relative;width:min(40vw,calc(56*var(--vh)));aspect-ratio:1.6;display:grid;place-items:center}
+.cloud img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.cloud .txt{position:relative;text-align:center;font-size:clamp(24px,calc(5.2*var(--vh)),46px);line-height:1.15;padding-left:16%;color:#333}
+.cloud .txt b{display:block;font-size:1.3em;color:#222}
+.cloud.reveal{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.counter{text-align:center;color:#889;font-size:20px}
+
+/* nice or stinky */
+.foodstage{display:flex;flex-direction:column;align-items:center}
+.lq{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,60px);flex-wrap:wrap;padding:0 3vw}
+.item{width:clamp(140px,calc(28*var(--vh)),220px);height:clamp(140px,calc(28*var(--vh)),220px);background:#fff;border-radius:50%;box-shadow:0 8px 20px #0002;display:grid;place-items:center;font-size:clamp(76px,calc(15*var(--vh)),130px);overflow:hidden}
+.item img{width:72%;height:72%;object-fit:contain}
+.item.in{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.itemname{font-size:clamp(24px,calc(4.6*var(--vh)),38px);font-weight:700;margin:8px 0 0;text-align:center}
+.nsbtn{width:clamp(150px,18vw,230px);border-radius:32px;padding:14px 10px;font-weight:700;font-size:clamp(28px,3.2vw,44px);box-shadow:0 8px 0 #0002;transition:transform .12s}
+.nsbtn .e{display:block;font-size:clamp(70px,8.5vw,115px);line-height:1.1}
+.nsbtn:active{transform:translateY(5px);box-shadow:0 3px 0 #0002}
+.nsbtn.nice{background:#ffe0ef;color:#c2185b}.nsbtn.stinky{background:#e3f0c8;color:#55702a}
+.nsbtn.right{outline:6px solid var(--green)}.nsbtn.wrong{animation:no .4s}
+@keyframes no{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.bins{display:flex;justify-content:center;gap:clamp(14px,3vw,40px);margin:calc(2.5*var(--vh)) 3vw calc(4*var(--vh));flex-wrap:wrap}
+.bin{min-width:clamp(220px,32vw,420px);min-height:calc(12*var(--vh));background:#fff;border-radius:26px;box-shadow:0 6px 16px #0002;padding:10px 14px;text-align:center}
+.bin h3{margin:0 0 4px;font-size:clamp(20px,2.4vw,28px)}
+.bin .items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:clamp(34px,4vw,50px)}
+.bin .items span{animation:pop .4s cubic-bezier(.3,1.6,.5,1);display:inline-grid;place-items:center}
+.bin .items img{width:clamp(40px,4.5vw,58px);height:clamp(40px,4.5vw,58px);object-fit:cover;border-radius:10px}
+
+/* match */
+.mrow{display:flex;justify-content:center;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;padding:0 2vw}
+.mrow+.mrow{margin-top:calc(4*var(--vh))}
+.mc{width:clamp(110px,13vw,170px);background:#fff;border-radius:22px;box-shadow:0 6px 16px #0002;border:5px solid #fff;padding:6px;display:flex;flex-direction:column;align-items:center;transition:transform .15s,border-color .2s}
+.mc img{width:100%;aspect-ratio:1.25;object-fit:cover;border-radius:14px;background:#fff}
+.mc .l{font-size:clamp(15px,1.6vw,21px);font-weight:700;margin-top:4px;text-align:center;line-height:1.1;min-height:2.2em;display:grid;place-items:center}
+.mc:hover{transform:translateY(-4px)}
+.mc.sel{border-color:var(--blue);transform:translateY(-8px) scale(1.04);box-shadow:0 0 0 5px #3488e855,0 10px 20px #0003}
+.mc.done{border-color:var(--green);opacity:.9;pointer-events:none}
+.mc.done::after{content:attr(data-n);position:absolute}
+.mc .badge{display:none;margin-top:4px;background:var(--green);color:#fff;border-radius:20px;padding:0 12px;font-weight:700;font-size:18px}
+.mc.done .badge{display:inline-block}
+.mc.wrong{animation:no .4s;border-color:var(--red)}
+.mlabel{text-align:center;font-weight:700;color:#889;font-size:clamp(16px,2.6vh,22px);margin:0 0 6px}
+.say{min-height:1.5em;text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);font-weight:700;color:var(--purple);margin-top:calc(1.5*var(--vh))}
+
+.stars{text-align:center;font-size:clamp(24px,calc(4.6*var(--vh)),38px);letter-spacing:3px;min-height:1.3em}
+.stars .off{filter:grayscale(1);opacity:.25}
+.done2{text-align:center}
+.done2 h2{font-size:clamp(30px,calc(6*var(--vh)),54px);margin:6px 0;color:var(--purple)}
+.confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:40;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(calc(110*var(--vh))) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:520px){.top h1{font-size:34px}.pill{padding:6px 14px}}
+</style></head><body>
+<div class="bubbles" id="bubbles"></div>
+
+<div class="top">
+  <a class="pill" id="backBtn" href="five_senses.html">⬅ 5 Senses</a>
+  <h1 id="title">Smell</h1>
+  <div class="spacer"></div>
+</div>
+
+<!-- MENU -->
+<section id="s-menu">
+  <p class="lead">👃 I smell with my nose! Sniff, sniff!</p>
+  <div class="menu">
+    <button class="mcard" data-go="how"><div class="ic" style="background:#e7f8e3">👃</div><div class="t">How Do I Smell?</div><div class="d">Air, nose, brain</div></button>
+    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff">📺</div><div class="t">Watch</div><div class="d">Videos about smell</div></button>
+    <button class="mcard" data-go="what"><div class="ic" style="background:#ffe3ec">☁️</div><div class="t">What Can You Smell?</div><div class="d">I can smell…</div></button>
+    <button class="mcard" data-go="nice"><div class="ic" style="background:#fff3d6">🌸🧦</div><div class="t">Nice or Stinky?</div><div class="d">Mmm or yuck?</div></button>
+    <button class="mcard" data-go="match"><div class="ic" style="background:#f0e6ff">🌳</div><div class="t">Where Does It Come From?</div><div class="d">Match the pairs</div></button>
+  </div>
+</section>
+
+<!-- HOW DO I SMELL -->
+<section id="s-how" class="hidden">
+  <div class="storybox">
+    <svg id="story" viewBox="0 0 1000 470" aria-label="How we smell">
+      <path class="msg" d="M640 230 C 700 160, 760 200, 830 140"/>
+      <text class="em" id="sSrc" x="150" y="320" font-size="140">🍪</text>
+      <g id="bits">
+        <circle cx="210" cy="250" r="11" fill="#ff9ec4"/><circle cx="235" cy="285" r="9" fill="#9be38a"/><circle cx="200" cy="215" r="8" fill="#ffd34d"/>
+        <circle cx="250" cy="235" r="10" fill="#8ecbff"/><circle cx="225" cy="320" r="8" fill="#c9a2ff"/><circle cx="260" cy="270" r="7" fill="#ffb26b"/>
+        <circle cx="190" cy="270" r="9" fill="#8ecbff"/><circle cx="245" cy="205" r="7" fill="#ff9ec4"/><circle cx="215" cy="300" r="10" fill="#ffd34d"/>
+        <circle cx="270" cy="300" r="8" fill="#9be38a"/>
+      </g>
+      <text class="em" id="sNose" x="600" y="270" font-size="190">👃</text>
+      <g id="tissue"><text class="em" x="655" y="330" font-size="90">🤧</text></g>
+      <g id="zoomBub">
+        <line x1="560" y1="300" x2="420" y2="390" stroke="#8d55c7" stroke-width="5" stroke-dasharray="8 8"/>
+        <circle cx="330" cy="370" r="90" fill="#ffc9b5" stroke="#8d55c7" stroke-width="8"/>
+        <g id="catchers" fill="#ff9ec4" stroke="#d45d8a" stroke-width="3">
+          <circle cx="290" cy="345" r="16"/><circle cx="335" cy="330" r="14"/><circle cx="375" cy="355" r="16"/><circle cx="310" cy="395" r="15"/><circle cx="360" cy="400" r="13"/>
+        </g>
+        <text x="330" y="482" text-anchor="middle" font-size="0" fill="#8d55c7">.</text>
+      </g>
+      <text class="em" x="880" y="90" font-size="110">🧠</text>
+      <g id="bub">
+        <rect x="520" y="15" width="290" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
+        <path d="M800 70 L845 82 L803 95Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
+        <rect x="792" y="66" width="14" height="32" fill="#fff"/>
+        <text id="bubText" x="665" y="62" text-anchor="middle" dominant-baseline="central" font-size="36" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">Mmm! Cookies!</text>
+      </g>
+    </svg>
+  </div>
+  <div class="steptext" id="stepText"></div>
+  <div class="dots" id="dots"></div>
+  <div class="btns">
+    <button class="big blue" id="stBack">⬅</button>
+    <button class="big green" id="stNext">Next ➡</button>
+    <button class="big orange hidden" id="stOther">🔁 Another one</button>
+    <button class="big pink hidden" id="stCold">🤧 I have a cold</button>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section id="s-watch" class="hidden">
+  <p class="lead">📺 Watch and learn!</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="videowrap"><video id="vid" controls preload="metadata" playsinline></video></div>
+</section>
+
+<!-- WHAT CAN YOU SMELL -->
+<section id="s-what" class="hidden">
+  <p class="lead">Look! What can you smell? 🤔</p>
+  <div class="slide">
+    <div class="slidepic" id="wPic"></div>
+    <div class="cloud" id="wCloud"><img src="../IMAGENES/SMELL/cloud.png" alt=""><div class="txt" id="wTxt"></div></div>
+  </div>
+  <div class="btns">
+    <button class="big blue" id="wPrev">⬅</button>
+    <button class="big pink" id="wTell">👃 Tell me!</button>
+    <button class="big blue" id="wNext">➡</button>
+  </div>
+  <div class="counter" id="wCount"></div>
+</section>
+
+<!-- NICE OR STINKY -->
+<section id="s-nice" class="hidden">
+  <div class="stars" id="nStars"></div>
+  <div id="nPlay" class="foodstage">
+    <div class="lq">
+      <button class="nsbtn nice" data-a="nice"><span class="e">😊</span>Nice!</button>
+      <div><div class="item" id="nItem"></div><div class="itemname" id="nName"></div></div>
+      <button class="nsbtn stinky" data-a="stinky"><span class="e">🤢</span>Stinky!</button>
+    </div>
+  </div>
+  <div class="done2 hidden" id="nDone"><h2>Super noses! 🏆</h2><div class="btns"><button class="big green" id="nAgain">▶ Play again</button><button class="big blue" data-go="menu">🏠 Menu</button></div></div>
+  <div class="bins">
+    <div class="bin"><h3>😊 It smells nice</h3><div class="items" id="binNice"></div></div>
+    <div class="bin"><h3>🤢 It smells stinky</h3><div class="items" id="binStinky"></div></div>
+  </div>
+</section>
+
+<!-- MATCH -->
+<section id="s-match" class="hidden">
+  <p class="lead">Tap a smell 👃 and then where it comes from 🌳</p>
+  <div class="mlabel">It smells…</div>
+  <div class="mrow" id="mTop"></div>
+  <div class="mrow" id="mBottom"></div>
+  <div class="say" id="mSay"></div>
+  <div class="btns"><button class="big orange" id="mAgain">🔁 Play again</button></div>
+</section>
+
+<script>
+/* ============================================================
+   EASY TO EDIT
+   ============================================================ */
+const IMG='../IMAGENES/SMELL/';
+const VIDEOS=[
+  {title:'📖 I can smell',            src:'../VIDEOS/smell_i_can_smell.mp4'},
+  {title:'🗣️ The sense of smell',     src:'../VIDEOS/smell_sense_of_smell.mp4'},
+  {title:'❓ Which one? Quiz',         src:'../VIDEOS/smell_which_one_quiz.mp4'},
+  {title:'💡 Teacher idea: smell bottles', src:'../VIDEOS/smell_teacher_idea_bottles.mp4'},
+];
+/* What Can You Smell? (from the PowerPoint) */
+const SLIDES=[
+  {imgs:['flower.png'],          what:'a flower'},
+  {imgs:['fish.png'],            what:'fish'},
+  {imgs:['smoke.png'],           what:'smoke'},
+  {imgs:['cheese.png'],          what:'cheese'},
+  {imgs:['bananas.png'],         what:'bananas'},
+  {imgs:['sheep.png','hen.png'], what:'farm animals'},
+  {imgs:['pizza.png'],           what:'pizza'},
+];
+/* Nice or Stinky? */
+const SMELLS=[
+  {name:'flowers', img:'flower.png', a:'nice'},{name:'perfume', img:'perfume.jpg', a:'nice'},
+  {name:'cookies', e:'🍪', a:'nice'},{name:'pizza', img:'pizza.png', a:'nice'},
+  {name:'shampoo', e:'🧴', a:'nice'},{name:'soap', e:'🧼', a:'nice'},
+  {name:'chocolate', img:'chocolate.jpg', a:'nice'},{name:'bread', e:'🍞', a:'nice'},
+  {name:'socks', e:'🧦', a:'stinky'},{name:'rubbish', e:'🗑️', a:'stinky'},
+  {name:'toilet', e:'🚽', a:'stinky'},{name:'skunk', e:'🦨', a:'stinky'},
+  {name:'stinky cheese', img:'cheese.png', a:'stinky'},{name:'onion', e:'🧅', a:'stinky'},
+  {name:'smoke', img:'smoke.png', a:'stinky'},
+];
+const NICE_ROUNDS=8;
+/* Where does it come from? (from the PDF) */
+const PAIRS=[
+  {smell:'vinegar',   img:'vinegar.jpg',   from:'grapes',       fimg:'grapes.jpg',        say:'Vinegar comes from grapes.'},
+  {smell:'coffee',    img:'coffee.jpg',    from:'coffee plant', fimg:'coffee_plant.jpg',  say:'Coffee comes from the coffee plant.'},
+  {smell:'cinnamon',  img:'cinnamon.jpg',  from:'cinnamon tree',fimg:'cinnamon_tree.jpg', say:'Cinnamon comes from a tree.'},
+  {smell:'perfume',   img:'perfume.jpg',   from:'flowers',      fimg:'roses.jpg',         say:'Perfume is made from flowers.'},
+  {smell:'olive oil', img:'olive_oil.jpg', from:'olive tree',   fimg:'olive_tree.jpg',    say:'Olive oil comes from the olive tree.'},
+  {smell:'chocolate', img:'chocolate.jpg', from:'cocoa beans',  fimg:'cocoa_pods.jpg',    say:'Chocolate comes from cocoa beans.'},
+];
+/* How do I smell? story */
+const STORY=[
+  {e:'🍪',name:'cookies',bub:'Mmm! Cookies! 😋',say:'Mmm! Cookies! They smell nice!'},
+  {e:'🧦',name:'socks',bub:'Yuck! Stinky! 🤢',say:'Yuck! Stinky socks!'},
+  {e:'🌸',name:'flower',bub:'Mmm! A flower! 🌸',say:'Mmm! A flower! It smells lovely!'},
+  {e:'🍕',name:'pizza',bub:'Yummy pizza! 😋',say:'Mmm! Pizza! Yummy!'},
+  {e:'🔥',name:'smoke',bub:'Smoke! Danger! 🚨',say:'Uh-oh! Smoke! Danger! My nose helps keep me safe.'},
+];
+
+/* ============================================================ */
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let voice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/en-GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';if(voice)u.voice=voice;u.rate=.85;u.pitch=1.15;speechSynthesis.speak(u)}catch(e){}}
+function hush(){try{speechSynthesis.cancel()}catch(e){}}
+function confetti(n=60){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7','#ff6fa3'];
+  for(let i=0;i<n;i++){const c=document.createElement('div');c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%7]};animation-duration:${1.6+Math.random()*1.6}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()<.5?'50%':'3px'}`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),3800);}
+}
+const pic=f=>f.img?`<img src="${IMG+f.img}" alt="${f.name}">`:f.e;
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+const h=$('title');h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7'],box=$('bubbles');
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const s=30+Math.random()*90;
+    b.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${cols[i%6]};animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*25}s`;
+    box.appendChild(b);}
+}
+
+/* ---------- navigation ---------- */
+let current='menu';
+function go(name){
+  hush();$('vid').pause();
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  $('s-'+name).classList.remove('hidden');current=name;
+  const back=$('backBtn');
+  if(name==='menu'){back.textContent='⬅ 5 Senses';back.href='five_senses.html';}
+  else{back.textContent='⬅ Back';back.href='#';}
+  if(name==='how')startStory();
+  if(name==='watch'&&!$('vid').getAttribute('src'))pickVideo(0);
+  if(name==='what')showSlide(0);
+  if(name==='nice')startNice();
+  if(name==='match')startMatch();
+  scrollTo(0,0);
+}
+$('backBtn').addEventListener('click',e=>{if(current!=='menu'){e.preventDefault();go('menu');}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go)});
+
+/* ---------- HOW DO I SMELL? ---------- */
+const STEPS=[
+  {t:'How do I smell? 🤔', s:"How do I smell? Let's find out!", c:[]},
+  {t:'1. The {f} {g} off tiny, tiny smell bits', s:"The {n} {g} off tiny, tiny smell bits. We can't see them!", c:['bitsOn']},
+  {t:'2. The smell bits float in the air 〰️', s:'The smell bits float in the air.', c:['bitsOn','float']},
+  {t:'3. I sniff! The smell goes into my nose 👃', s:'Sniff, sniff! The smell goes into my nose.', c:['bitsOn','float','sniff']},
+  {t:'4. Inside my nose, smell catchers catch the smell!', s:'Inside my nose there are tiny smell catchers. They catch the smell!', c:['catch']},
+  {t:'5. My nose sends a message to my brain 🧠', s:'My nose sends a message to my brain.', c:['catch','msgOn']},
+  {t:'6. My brain says…', s:'My brain says… {b}', c:['msgOn','bubOn']},
+];
+let st=0,sf=0;
+$('dots').innerHTML=STEPS.map(()=>'<i></i>').join('');
+function startStory(){st=0;showStep();}
+function showStep(){
+  const f=STORY[sf],S=STEPS[st];
+  $('story').setAttribute('class',S.c.join(' '));
+  $('sSrc').textContent=f.e;$('bubText').textContent=f.bub;
+  const g=['flower','pizza','smoke'].includes(f.name)?'gives':'give';
+  $('stepText').textContent=S.t.replace('{f}',f.name+' '+f.e).replace('{g}',g);
+  document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=st));
+  $('stBack').disabled=st===0;
+  const last=st===STEPS.length-1;
+  $('stNext').classList.toggle('hidden',last);$('stOther').classList.toggle('hidden',!last);$('stCold').classList.toggle('hidden',!last);
+  $('stCold').textContent='🤧 I have a cold';
+  say(S.s.replace('{n}',f.name).replace('{g}',g).replace('{b}',f.say));
+  if(last)confetti(30);
+}
+$('stNext').onclick=()=>{if(st<STEPS.length-1){st++;showStep();}};
+$('stBack').onclick=()=>{if(st>0){st--;showStep();}};
+$('stOther').onclick=()=>{sf=(sf+1)%STORY.length;st=1;showStep();};
+$('stCold').onclick=()=>{
+  const story=$('story');
+  if(story.classList.contains('cold')){showStep();return;}
+  story.setAttribute('class','bitsOn float cold bubOn');
+  $('bubText').textContent="Hmm… I can't smell! 🤔";
+  $('stCold').textContent='😃 I feel better';
+  $('stepText').textContent="I have a cold. My nose is blocked… I can't smell very well!";
+  say("Achoo! I have a cold. My nose is blocked. Hmm… I can't smell very well!");
+};
+
+/* ---------- WATCH ---------- */
+$('tabs').innerHTML=VIDEOS.map((v,i)=>`<button class="tab" data-v="${i}">${v.title}</button>`).join('');
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)pickVideo(+b.dataset.v)});
+function pickVideo(i){$('vid').src=VIDEOS[i].src;document.querySelectorAll('.tab').forEach((t,k)=>t.classList.toggle('on',k===i));}
+
+/* ---------- WHAT CAN YOU SMELL? ---------- */
+let wi=0;
+function showSlide(i){
+  wi=(i+SLIDES.length)%SLIDES.length;const s=SLIDES[wi];
+  const p=$('wPic');p.className='slidepic'+(s.imgs.length>1?' two':'');
+  p.innerHTML=s.imgs.map(x=>`<img src="${IMG+x}" alt="">`).join('');
+  $('wTxt').innerHTML='I can smell<b>…?</b>';$('wTell').disabled=false;
+  $('wCount').textContent=`${wi+1} / ${SLIDES.length}`;
+  say('What can you smell?');
+}
+$('wTell').onclick=()=>{const s=SLIDES[wi],c=$('wCloud');
+  $('wTxt').innerHTML=`I can smell<b>${s.what}</b>`;c.classList.remove('reveal');void c.offsetWidth;c.classList.add('reveal');
+  $('wTell').disabled=true;confetti(30);say(`I can smell ${s.what}!`);};
+$('wPrev').onclick=()=>showSlide(wi-1);
+$('wNext').onclick=()=>showSlide(wi+1);
+
+/* ---------- NICE OR STINKY? ---------- */
+let nQueue=[],nRound=0,nScore=0,nCur=null,nLock=false;
+function nStars(){$('nStars').innerHTML=Array.from({length:NICE_ROUNDS},(_,i)=>`<span class="${i<nScore?'':'off'}">⭐</span>`).join('')}
+function startNice(){
+  const half=NICE_ROUNDS/2;
+  nQueue=shuffle([...shuffle(SMELLS.filter(s=>s.a==='nice')).slice(0,half),...shuffle(SMELLS.filter(s=>s.a==='stinky')).slice(0,NICE_ROUNDS-half)]);
+  nRound=0;nScore=0;$('binNice').innerHTML='';$('binStinky').innerHTML='';
+  $('nDone').classList.add('hidden');$('nPlay').classList.remove('hidden');nextNice();
+}
+function nextNice(){
+  nStars();document.querySelectorAll('.nsbtn').forEach(b=>b.classList.remove('right','wrong'));
+  if(nRound>=nQueue.length){$('nPlay').classList.add('hidden');$('nDone').classList.remove('hidden');confetti(120);say('Well done, super noses!');return;}
+  nCur=nQueue[nRound];nLock=false;
+  const it=$('nItem');it.innerHTML=pic(nCur);it.classList.remove('in');void it.offsetWidth;it.classList.add('in');
+  $('nName').textContent=nCur.name;
+  say(`${cap(nCur.name)}. Sniff, sniff! Nice or stinky?`);
+}
+document.querySelectorAll('.nsbtn').forEach(b=>b.onclick=()=>{
+  if(nLock||!nCur)return;b.classList.remove('wrong');void b.offsetWidth;
+  if(b.dataset.a===nCur.a){
+    nLock=true;b.classList.add('right');nScore++;nStars();
+    $(nCur.a==='nice'?'binNice':'binStinky').insertAdjacentHTML('beforeend',`<span title="${nCur.name}">${pic(nCur)}</span>`);
+    confetti(25);say(nCur.a==='nice'?`Mmm! ${cap(nCur.name)} smell nice!`.replace(/(Perfume|Pizza|Shampoo|Soap|Chocolate|Bread) smell/,'$1 smells'):`Yuck! ${cap(nCur.name)}! Stinky!`);
+    nRound++;setTimeout(nextNice,2100);
+  }else{b.classList.add('wrong');say('Sniff again!');}
+});
+$('nAgain').onclick=startNice;
+
+/* ---------- WHERE DOES IT COME FROM? ---------- */
+let mSel=null,mDone=0;
+function startMatch(){
+  mSel=null;mDone=0;$('mSay').textContent='';
+  $('mTop').innerHTML=shuffle(PAIRS.map((p,i)=>({p,i}))).map(({p,i})=>`<button class="mc" data-side="s" data-i="${i}"><img src="${IMG+p.img}" alt=""><div class="l">${p.smell}</div><span class="badge"></span></button>`).join('');
+  $('mBottom').innerHTML=shuffle(PAIRS.map((p,i)=>({p,i}))).map(({p,i})=>`<button class="mc" data-side="f" data-i="${i}"><img src="${IMG+p.fimg}" alt=""><div class="l">${p.from}</div><span class="badge"></span></button>`).join('');
+}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('.mc');if(!c||current!=='match')return;
+  const i=+c.dataset.i;
+  if(c.dataset.side==='s'){
+    document.querySelectorAll('.mc.sel').forEach(x=>x.classList.remove('sel'));
+    c.classList.add('sel');mSel=i;say(PAIRS[i].smell+'. Where does it come from?');return;
+  }
+  if(mSel===null){say('First choose a smell!');document.querySelectorAll('#mTop .mc:not(.done)').forEach(x=>{x.classList.remove('wrong');void x.offsetWidth;x.classList.add('wrong')});return;}
+  if(i===mSel){
+    mDone++;
+    document.querySelectorAll(`.mc[data-i="${i}"]`).forEach(x=>{x.classList.remove('sel');x.classList.add('done');x.querySelector('.badge').textContent='✔ '+mDone;});
+    $('mSay').textContent=PAIRS[i].say;say('Yes! '+PAIRS[i].say);mSel=null;confetti(30);
+    if(mDone===PAIRS.length){setTimeout(()=>{$('mSay').textContent='You matched them all! 🏆';say('You matched them all! Well done!');confetti(120);},2600);}
+  }else{c.classList.remove('wrong');void c.offsetWidth;c.classList.add('wrong');say('Hmm… try again!');}
+});
+$('mAgain').onclick=startMatch;
+</script></body></html>
