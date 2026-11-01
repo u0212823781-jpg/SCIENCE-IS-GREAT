@@ -1,0 +1,651 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sight – Super Eyes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ef3d45;--yellow:#ffd52a;--blue:#3488e8;--orange:#f28b24;--green:#35b64a;--purple:#8d55c7;--pink:#ff6fa3;--ink:#202020;--vh:1vh}
+@supports(height:1dvh){:root{--vh:1dvh}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Fredoka,"Arial Rounded MT Bold",Arial,sans-serif;color:var(--ink);background:#eef6ff;-webkit-tap-highlight-color:transparent;user-select:none;overflow-x:hidden;transition:background .6s}
+button{font-family:inherit;color:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;bottom:-120px;border-radius:50%;opacity:.14;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(calc(-120*var(--vh) - 200px))}}
+.top{position:relative;z-index:3;display:flex;align-items:center;gap:12px;padding:12px 14px 0}
+.pill{background:#fff;border-radius:50px;padding:10px 20px;font-size:clamp(18px,2.6vh,24px);font-weight:700;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px #0002;white-space:nowrap}
+.pill:active{transform:scale(.95)}
+.top h1{flex:1;text-align:center;margin:0;font-size:clamp(34px,calc(8*var(--vh)),72px);line-height:1}
+h1 span{display:inline-block;-webkit-text-stroke:3px #fff;paint-order:stroke;text-shadow:0 4px 0 #0001}
+h1 span:nth-child(6n+1){color:var(--red)}h1 span:nth-child(6n+2){color:var(--orange)}h1 span:nth-child(6n+3){color:var(--yellow)}
+h1 span:nth-child(6n+4){color:var(--green)}h1 span:nth-child(6n+5){color:var(--blue)}h1 span:nth-child(6n+6){color:var(--purple)}
+h1 .sp{width:.3em}
+.spacer{width:110px}
+.hidden{display:none!important}
+section{position:relative;z-index:1}
+.lead{text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);color:#557;margin:calc(1.2*var(--vh)) 10px calc(1.6*var(--vh))}
+.lead b{color:var(--purple)}
+
+/* menus */
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(12px,2.2vw,30px);padding:calc(1.5*var(--vh)) 3vw calc(4*var(--vh))}
+.mcard{width:clamp(150px,18vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 12px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.mcard:hover{transform:translateY(-6px) rotate(-1deg)}
+.mcard:active{transform:scale(.96)}
+.mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(56px,6.5vw,96px)}
+.mcard .ic svg{width:62%;height:auto}
+.mcard .t{font-size:clamp(20px,2.1vw,28px);font-weight:700;margin-top:8px;text-align:center;line-height:1.1}
+.mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:2px 8px 0}
+
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:calc(1.5*var(--vh)) 0}
+.big{border-radius:50px;padding:12px 26px;font-size:clamp(18px,calc(3.3*var(--vh)),28px);font-weight:700;color:#fff;box-shadow:0 6px 0 #0003;transition:transform .1s}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
+.big.blue{background:var(--blue)}.big.pink{background:var(--pink)}.big.green{background:var(--green)}.big.orange{background:var(--orange)}.big.purple{background:var(--purple)}.big.dark{background:#2b2f45}
+.big[disabled]{opacity:.35;pointer-events:none}
+.big.on{outline:5px solid #fff;box-shadow:0 0 0 9px var(--yellow)}
+
+/* ---------- MY EYES ---------- */
+.eyewrap{display:flex;justify-content:center;align-items:center;gap:clamp(14px,3vw,40px);flex-wrap:wrap;padding:0 3vw}
+.eyecard{background:#fff;border-radius:36px;box-shadow:0 8px 24px #0002;padding:10px;transition:background .6s}
+#eyeSvg{width:min(62vw,calc(95*var(--vh)));height:auto;display:block}
+#eyeSvg .part{cursor:pointer}
+#pupil{transform-box:fill-box;transform-origin:center;transition:transform 1.2s cubic-bezier(.3,1.4,.5,1)}
+body.dark #pupil{transform:scale(1.75)}
+#lid{transform-box:fill-box;transform-origin:top;transform:scaleY(0)}
+#lid.blink{animation:blink .7s ease-in-out}
+@keyframes blink{0%,100%{transform:scaleY(0)}45%,55%{transform:scaleY(1)}}
+#irisC{transition:fill .4s}
+.flash{animation:flash .9s}
+@keyframes flash{0%,100%{filter:none}30%,70%{filter:drop-shadow(0 0 10px #ffd52a) drop-shadow(0 0 4px #ffd52a)}}
+.side{display:flex;flex-direction:column;gap:12px;align-items:center;min-width:200px}
+.label{min-height:2.4em;font-size:clamp(24px,calc(4.6*var(--vh)),40px);font-weight:700;color:var(--purple);text-align:center;max-width:340px;line-height:1.15}
+.swatches{display:flex;gap:10px}
+.sw{width:52px;height:52px;border-radius:50%;border:5px solid #fff;box-shadow:0 3px 8px #0003}
+.sw.on{outline:4px solid var(--purple)}
+body.dark{background:#1b1e33}
+body.dark .lead,body.dark .side .small{color:#c9cdf0}
+body.dark .eyecard{background:#3a3f5c}
+.small{font-size:18px;color:#778}
+
+/* ---------- HOW DO I SEE ---------- */
+.storybox{display:flex;justify-content:center;padding:0 3vw}
+#story{width:min(94vw,calc(118*var(--vh)));height:auto;background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;display:block;transition:background .8s}
+#story .ray{stroke:#ffcf1a;stroke-width:9;stroke-linecap:round;stroke-dasharray:14 18;fill:none;opacity:0;transition:opacity .4s}
+#story .ray.show{opacity:1;animation:march 1s linear infinite}
+#story .msg{stroke:var(--pink);stroke-width:8;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
+#story .msg.show{opacity:1;animation:march .8s linear infinite}
+@keyframes march{to{stroke-dashoffset:-32}}
+#story .glow{opacity:0;transition:opacity .5s}#story .glow.show{opacity:1}
+#story .bubbleS{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:bottom left;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+#story .bubbleS.show{opacity:1;transform:scale(1)}
+#story text.em{font-size:120px;text-anchor:middle;dominant-baseline:central}
+#story.night{background:#0d0f1c}
+#story.night #sObj{opacity:.06}
+#story.night #sSun{opacity:0}
+#story #sSun,#story #sObj{transition:opacity .8s}
+.steptext{text-align:center;font-size:clamp(22px,calc(4.4*var(--vh)),38px);font-weight:700;min-height:2.4em;margin:calc(1.4*var(--vh)) 16px 0;line-height:1.2}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#cfd6e4}.dots i.on{background:var(--blue)}
+
+/* ---------- VIEWERS (scenes + lens) ---------- */
+.viewerbox{display:flex;justify-content:center;padding:0 3vw}
+.viewer{position:relative;width:min(94vw,calc(122*var(--vh)));aspect-ratio:1000/560;border-radius:28px;overflow:hidden;box-shadow:0 8px 24px #0003;background:#fff;touch-action:none;cursor:none;border:6px solid #fff}
+.viewer>svg.base{position:absolute;inset:0;width:100%;height:100%;display:block}
+.dim{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.lens{position:absolute;left:0;top:0;pointer-events:none;will-change:transform}
+.lens svg.zoom{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ring{position:absolute;border-radius:50%;box-sizing:border-box}
+.lens.magnifier .ring{border:12px solid #c0392b;box-shadow:inset 0 0 0 4px #fff8,0 6px 14px #0005}
+.lens.magnifier .handle{position:absolute;width:30px;height:120px;background:#7b4a2a;border-radius:15px;left:calc(50% + 74px);top:calc(50% + 62px);transform:rotate(-45deg);transform-origin:top center;box-shadow:0 4px 10px #0004}
+.lens.magnifier .shine{position:absolute;width:30%;height:14%;left:20%;top:16%;border-radius:50%;background:#ffffff55;transform:rotate(-30deg)}
+.lens.scope .ring{border:14px solid #2b2f45;box-shadow:inset 0 0 18px #000a}
+.lens.micro .ring{border:14px solid #e8e8e8;box-shadow:inset 0 0 22px #0007,0 0 0 4px #9aa}
+.tray{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:calc(1.4*var(--vh)) 0 calc(3*var(--vh))}
+.tray .it{width:clamp(56px,calc(10*var(--vh)),78px);height:clamp(56px,calc(10*var(--vh)),78px);border-radius:20px;background:#fff;box-shadow:0 4px 10px #0002;display:grid;place-items:center;font-size:clamp(32px,calc(6*var(--vh)),46px);filter:grayscale(1) opacity(.35);transition:all .3s}
+.tray .it svg{width:70%;height:70%}
+.tray .it.found{filter:none;transform:scale(1.08);box-shadow:0 0 0 5px var(--green)}
+.tray .it.found::after{content:"✔";position:absolute}
+.pop{position:absolute;pointer-events:none;font-size:46px;animation:popup 1s ease-out forwards;z-index:5}
+@keyframes popup{from{transform:translate(-50%,-50%) scale(.3);opacity:1}to{transform:translate(-50%,-160%) scale(1.4);opacity:0}}
+.bug{animation:wob 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.bug:nth-of-type(2n){animation-duration:2.1s}
+@keyframes wob{0%,100%{transform:rotate(-12deg) translateX(-3px)}50%{transform:rotate(12deg) translateX(3px)}}
+
+/* glasses */
+.glassesbox{position:relative;width:min(94vw,calc(122*var(--vh)));aspect-ratio:1000/560;border-radius:28px;overflow:hidden;box-shadow:0 8px 24px #0003;border:6px solid #fff;margin:0 auto}
+.glassesbox svg.pic{position:absolute;inset:0;width:100%;height:100%;filter:blur(7px);transition:filter .9s}
+.glassesbox.clear svg.pic{filter:none}
+.glassesbox .frame{position:absolute;inset:0;width:100%;height:100%;opacity:0;transform:translateY(-40%);transition:all .7s cubic-bezier(.3,1.4,.5,1);pointer-events:none}
+.glassesbox.clear .frame{opacity:1;transform:none}
+
+/* torch */
+.torchbox{position:relative;width:min(94vw,calc(122*var(--vh)));aspect-ratio:1000/560;border-radius:28px;overflow:hidden;box-shadow:0 8px 24px #0003;border:6px solid #fff;margin:0 auto;touch-action:none;cursor:none}
+.torchbox svg{position:absolute;inset:0;width:100%;height:100%}
+.darkness{position:absolute;inset:0;background:#05060d;--x:50%;--y:50%;-webkit-mask-image:radial-gradient(circle at var(--x) var(--y),transparent 0,transparent 80px,#000 135px);mask-image:radial-gradient(circle at var(--x) var(--y),transparent 0,transparent 80px,#000 135px);transition:opacity .8s;pointer-events:none}
+.torchbox.lit .darkness{opacity:0}
+.torchicon{position:absolute;font-size:54px;pointer-events:none;transform:translate(10px,30px) rotate(-135deg);filter:drop-shadow(0 0 6px #fff8)}
+.torchbox.lit .torchicon{display:none}
+.findme{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:50px;padding:6px 22px;box-shadow:0 4px 12px #0002}
+.findme .e{font-size:1.5em}
+
+/* quiz */
+.qcard{display:flex;flex-direction:column;align-items:center;padding:0 3vw}
+.qpic{font-size:clamp(70px,calc(15*var(--vh)),130px);line-height:1.1}
+.qtext{font-size:clamp(24px,calc(4.6*var(--vh)),40px);font-weight:700;text-align:center;margin:4px 10px calc(2.2*var(--vh));max-width:900px}
+.opts{display:flex;gap:clamp(12px,2vw,26px);flex-wrap:wrap;justify-content:center}
+.opt{width:clamp(130px,16vw,210px);background:#fff;border-radius:28px;box-shadow:0 8px 20px #0002;border:6px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 6px;transition:transform .15s}
+.opt .e{font-size:clamp(56px,6.5vw,92px);line-height:1.1;height:1.15em;display:grid;place-items:center}
+.opt .e svg{width:1.15em;height:auto}
+.opt .l{font-size:clamp(17px,1.8vw,24px);font-weight:700;margin-top:6px;text-align:center;line-height:1.1}
+.opt:hover{transform:translateY(-4px)}
+.opt.right{border-color:var(--green);background:#e9fbe9;animation:bounce .6s}
+.opt.wrong{border-color:var(--red);background:#ffecec;animation:no .4s;opacity:.55}
+@keyframes bounce{30%{transform:scale(1.12)}60%{transform:scale(.95)}}
+@keyframes no{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.stars{text-align:center;font-size:clamp(26px,calc(5*var(--vh)),40px);letter-spacing:4px;min-height:1.3em}
+.stars .off{filter:grayscale(1);opacity:.25}
+.done{text-align:center;padding:calc(3*var(--vh)) 20px}
+.done .trophy{font-size:clamp(90px,calc(20*var(--vh)),170px);animation:bounce 1.2s infinite}
+.done h2{font-size:clamp(34px,calc(7*var(--vh)),62px);margin:10px 0;color:var(--purple)}
+
+.confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:40;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(calc(110*var(--vh))) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:520px){.top h1{font-size:34px}.pill{padding:6px 14px}}
+</style></head><body>
+<div class="bubbles" id="bubbles"></div>
+
+<div class="top">
+  <a class="pill" id="backBtn" href="five_senses.html">⬅ 5 Senses</a>
+  <h1 id="title">Sight</h1>
+  <div class="spacer"></div>
+</div>
+
+<!-- ======================= MENU ======================= -->
+<section id="s-menu">
+  <p class="lead">👀 I see with my eyes!</p>
+  <div class="menu">
+    <button class="mcard" data-go="eyes"><div class="ic" style="background:#e3f0ff">👁️</div><div class="t">My Eyes</div><div class="d">Look at my eye!</div></button>
+    <button class="mcard" data-go="how"><div class="ic" style="background:#fff3d6">💡</div><div class="t">How Do I See?</div><div class="d">Light, eye, brain</div></button>
+    <button class="mcard" data-go="torch"><div class="ic" style="background:#2b2f45">🔦</div><div class="t">Torch Hunt</div><div class="d">Find it in the dark!</div></button>
+    <button class="mcard" data-go="tools"><div class="ic" style="background:#e7f8e3">🔍</div><div class="t">Super Eyes Tools</div><div class="d">Tools to see better</div></button>
+    <button class="mcard" data-go="quiz"><div class="ic" style="background:#ffe3ec">🎯</div><div class="t">Which Tool?</div><div class="d">Choose the right one</div></button>
+  </div>
+</section>
+
+<!-- ======================= MY EYES ======================= -->
+<section id="s-eyes" class="hidden">
+  <p class="lead">Tap the parts of my eye!</p>
+  <div class="eyewrap">
+    <div class="eyecard">
+      <svg id="eyeSvg" viewBox="0 0 600 360" aria-label="A big eye">
+        <defs><clipPath id="eyeClip"><path d="M110 205 Q300 55 490 205 Q300 335 110 205Z"/></clipPath></defs>
+        <rect x="0" y="0" width="600" height="360" rx="30" fill="#ffd9bd"/>
+        <path id="pEyebrow" class="part" data-p="eyebrow" d="M150 92 Q300 18 450 92" stroke="#6b4226" stroke-width="26" stroke-linecap="round" fill="none"/>
+        <path d="M150 92 Q300 18 450 92" stroke="transparent" stroke-width="70" fill="none" class="part" data-p="eyebrow"/>
+        <g id="pLashes" class="part" data-p="eyelashes"></g>
+        <path id="pWhite" class="part" data-p="white" d="M110 205 Q300 55 490 205 Q300 335 110 205Z" fill="#fff" stroke="#e0a983" stroke-width="5"/>
+        <g clip-path="url(#eyeClip)">
+          <g id="pIris" class="part" data-p="iris">
+            <circle id="irisC" cx="300" cy="200" r="74" fill="#8a5a2b"/>
+            <circle cx="300" cy="200" r="74" fill="none" stroke="#0003" stroke-width="8"/>
+            <g stroke="#0002" stroke-width="4">
+              <line x1="300" y1="135" x2="300" y2="160"/><line x1="300" y1="240" x2="300" y2="265"/><line x1="235" y1="200" x2="260" y2="200"/><line x1="340" y1="200" x2="365" y2="200"/>
+              <line x1="254" y1="154" x2="272" y2="172"/><line x1="328" y1="228" x2="346" y2="246"/><line x1="346" y1="154" x2="328" y2="172"/><line x1="254" y1="246" x2="272" y2="228"/>
+            </g>
+          </g>
+          <circle id="pupil" class="part" data-p="pupil" cx="300" cy="200" r="30" fill="#111"/>
+          <circle cx="324" cy="176" r="13" fill="#fff" opacity=".9" pointer-events="none"/>
+          <rect id="lid" class="part" data-p="eyelid" x="100" y="50" width="400" height="300" fill="#f7c9a6"/>
+        </g>
+        <path d="M110 205 Q300 55 490 205" stroke="#c98a63" stroke-width="7" fill="none" pointer-events="none"/>
+      </svg>
+    </div>
+    <div class="side">
+      <div class="label" id="eyeLabel">Tap a part!</div>
+      <button class="big purple" id="blinkBtn">😉 Blink!</button>
+      <div class="btns" style="margin:0">
+        <button class="big orange on" id="lightOn">☀️ Light</button>
+        <button class="big dark" id="lightOff">🌙 Dark</button>
+      </div>
+      <div class="small">My eye colour:</div>
+      <div class="swatches" id="swatches"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= HOW DO I SEE ======================= -->
+<section id="s-how" class="hidden">
+  <div class="storybox" style="margin-top:calc(1.5*var(--vh))">
+    <svg id="story" viewBox="0 0 1000 470" aria-label="How we see">
+      <defs><radialGradient id="eyeGlow"><stop offset="0" stop-color="#ffe26a" stop-opacity=".9"/><stop offset="1" stop-color="#ffe26a" stop-opacity="0"/></radialGradient></defs>
+      <path class="ray" id="r1a" d="M170 130 L390 300"/><path class="ray" id="r1b" d="M150 160 L360 330"/><path class="ray" id="r1c" d="M200 110 L420 270"/>
+      <path class="ray" id="r2a" d="M520 300 L735 300"/><path class="ray" id="r2b" d="M515 335 L735 318"/><path class="ray" id="r2c" d="M515 265 L735 285"/>
+      <path class="msg" id="m1" d="M840 250 C 900 210, 790 180, 850 140"/>
+      <circle class="glow" id="eyeGlowC" cx="800" cy="305" r="95" fill="url(#eyeGlow)"/>
+      <text class="em" id="sSun" x="130" y="100">☀️</text>
+      <text class="em" id="sObj" x="450" y="310">🍎</text>
+      <text class="em" x="800" y="305">👁️</text>
+      <text class="em" x="850" y="80" style="font-size:105px">🧠</text>
+      <g class="bubbleS" id="bub">
+        <rect x="560" y="15" width="220" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
+        <path d="M740 100 L790 120 L755 92Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
+        <rect x="735" y="88" width="30" height="12" fill="#fff"/>
+        <text id="bubText" x="670" y="62" text-anchor="middle" dominant-baseline="central" font-size="36" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">An apple!</text>
+      </g>
+    </svg>
+  </div>
+  <div class="steptext" id="stepText"></div>
+  <div class="dots" id="dots"></div>
+  <div class="btns">
+    <button class="big blue" id="stBack">⬅</button>
+    <button class="big green" id="stNext">Next ➡</button>
+    <button class="big orange hidden" id="stOther">🔁 Another one</button>
+    <button class="big dark hidden" id="stDark">🌙 No light?</button>
+  </div>
+</section>
+
+<!-- ======================= TORCH HUNT ======================= -->
+<section id="s-torch" class="hidden">
+  <p class="lead"><span class="findme" id="findMe">Find the <span class="e">🧸</span></span></p>
+  <div class="torchbox" id="torchBox">
+    <svg viewBox="0 0 1000 560" id="roomSvg"></svg>
+    <div class="darkness" id="darkness"></div>
+    <div class="torchicon" id="torchIcon">🔦</div>
+  </div>
+  <div class="btns"><button class="big orange" id="torchAgain">🔁 Play again</button><button class="big blue" id="torchLight">💡 Lights on</button></div>
+</section>
+
+<!-- ======================= TOOLS MENU ======================= -->
+<section id="s-tools" class="hidden">
+  <p class="lead">These tools help my eyes see better!</p>
+  <div class="menu" id="toolsMenu"></div>
+</section>
+
+<!-- ======================= TOOL: VIEWER ======================= -->
+<section id="s-viewer" class="hidden">
+  <p class="lead" id="vLead"></p>
+  <div class="viewerbox">
+    <div class="viewer" id="viewer">
+      <svg class="base" viewBox="0 0 1000 560" preserveAspectRatio="none"><use id="baseUse" href=""/></svg>
+      <svg class="dim" id="dim"><defs><mask id="dimMask"><rect width="100%" height="100%" fill="#fff"/><g id="dimHoles"></g></mask></defs><rect id="dimRect" width="100%" height="100%" fill="#000" fill-opacity=".72" mask="url(#dimMask)"/></svg>
+      <div class="lens" id="lens"></div>
+    </div>
+  </div>
+  <div class="tray" id="tray"></div>
+</section>
+
+<!-- ======================= TOOL: GLASSES ======================= -->
+<section id="s-glasses" class="hidden">
+  <p class="lead" id="gLead">Everything looks blurry… 😵‍💫</p>
+  <div class="glassesbox" id="glassesBox">
+    <svg class="pic" viewBox="0 0 1000 560">
+      <rect width="1000" height="560" fill="#fdf3e1"/>
+      <rect x="130" y="60" width="740" height="300" rx="16" fill="#2f6b4f" stroke="#a8784f" stroke-width="18"/>
+      <text x="500" y="215" text-anchor="middle" dominant-baseline="central" font-size="150" font-weight="700" fill="#fff" font-family="Fredoka,Arial">A B C</text>
+      <rect x="0" y="420" width="1000" height="140" fill="#e9c99a"/>
+      <text x="180" y="455" font-size="110" text-anchor="middle" dominant-baseline="central">🐱</text>
+      <text x="380" y="470" font-size="90" text-anchor="middle" dominant-baseline="central">🎈</text>
+      <text x="620" y="465" font-size="100" text-anchor="middle" dominant-baseline="central">🌻</text>
+      <text x="830" y="455" font-size="110" text-anchor="middle" dominant-baseline="central">🐶</text>
+    </svg>
+    <svg class="frame" viewBox="0 0 1000 560">
+      <circle cx="300" cy="280" r="215" fill="none" stroke="#e8336b" stroke-width="26"/>
+      <circle cx="700" cy="280" r="215" fill="none" stroke="#e8336b" stroke-width="26"/>
+      <path d="M455 230 Q500 190 545 230" fill="none" stroke="#e8336b" stroke-width="22" stroke-linecap="round"/>
+      <path d="M90 250 L0 215 M910 250 L1000 215" stroke="#e8336b" stroke-width="22" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="btns"><button class="big pink" id="gToggle">👓 Put on my glasses</button></div>
+</section>
+
+<!-- ======================= QUIZ ======================= -->
+<section id="s-quiz" class="hidden">
+  <div class="stars" id="qStars"></div>
+  <div class="qcard" id="qPlay">
+    <div class="qpic" id="qPic"></div>
+    <div class="qtext" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+  </div>
+  <div class="done hidden" id="qDone">
+    <div class="trophy">🏆</div>
+    <h2>Super eyes!</h2>
+    <div class="btns"><button class="big green" id="qAgain">▶ Play again</button><button class="big blue" data-go="menu">🏠 Menu</button></div>
+  </div>
+</section>
+
+<!-- shared scene drawings (used by the tools) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#e2f4ff"/></linearGradient>
+    <linearGradient id="gNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1033"/><stop offset="1" stop-color="#2a2f6b"/></linearGradient>
+    <radialGradient id="gDrop" cx=".4" cy=".35"><stop offset="0" stop-color="#e9fbff"/><stop offset="1" stop-color="#8fd3ef"/></radialGradient>
+    <g id="sc-garden"></g><g id="sc-garden-z"></g>
+    <g id="sc-far"></g><g id="sc-far-z"></g>
+    <g id="sc-sky"></g><g id="sc-sky-z"></g>
+    <g id="sc-drop"></g><g id="sc-drop-z"></g>
+  </defs>
+</svg>
+
+<script>
+/* ============================================================
+   EASY TO EDIT
+   ============================================================ */
+const BINO='<svg viewBox="0 0 100 72"><rect x="8" y="16" width="34" height="50" rx="13" fill="#3a3f4b"/><rect x="58" y="16" width="34" height="50" rx="13" fill="#3a3f4b"/><rect x="38" y="26" width="24" height="16" rx="5" fill="#5b6273"/><rect x="13" y="6" width="24" height="16" rx="5" fill="#5b6273"/><rect x="63" y="6" width="24" height="16" rx="5" fill="#5b6273"/><circle cx="25" cy="52" r="10" fill="#7cc4ff" stroke="#22262e" stroke-width="3"/><circle cx="75" cy="52" r="10" fill="#7cc4ff" stroke="#22262e" stroke-width="3"/></svg>';
+const TOOLS=[
+  {id:'glasses',   name:'glasses',          icon:'👓', bg:'#ffe3ec', desc:'I can see clearly',
+   say:'Glasses help me see clearly.'},
+  {id:'magnifier', name:'magnifying glass', icon:'🔍', bg:'#e7f8e3', desc:'Small things look BIG',
+   say:'A magnifying glass makes small things look big!', scene:'garden', zoom:3,
+   lead:'Move the magnifying glass. Find the little animals!'},
+  {id:'binoculars',name:'binoculars',       icon:BINO, bg:'#fff3d6', desc:'I can see far away',
+   say:'Binoculars help me see things far away.', scene:'far', zoom:4,
+   lead:'Look far away with the binoculars. What can you find?'},
+  {id:'telescope', name:'telescope',        icon:'🔭', bg:'#e6e3ff', desc:'I can see the sky at night',
+   say:'A telescope helps me see the moon and the stars.', scene:'sky', zoom:4,
+   lead:'Look at the night sky with the telescope!'},
+  {id:'microscope',name:'microscope',       icon:'🔬', bg:'#e3f0ff', desc:'I can see tiny, tiny things',
+   say:'A microscope helps me see tiny, tiny things.', scene:'drop', zoom:5,
+   lead:'Look at a drop of water with the microscope. Is anybody there?'},
+];
+/* Which Tool? questions */
+const QUIZ=[
+  {pic:'🌙⭐', text:'I want to see the moon and the stars.', a:'telescope'},
+  {pic:'🐜',   text:'I want to see a tiny ant. It is very small!', a:'magnifier'},
+  {pic:'😵‍💫📖', text:"Everything is blurry. I can't read my book!", a:'glasses'},
+  {pic:'🐦🌳', text:'I want to see a bird. It is far, far away.', a:'binoculars'},
+  {pic:'💧',   text:'I want to see tiny, tiny things in a drop of water.', a:'microscope'},
+  {pic:'🪐',   text:'I want to see a planet in the sky.', a:'telescope'},
+  {pic:'🐞',   text:'I want to see the spots on a ladybird.', a:'magnifier'},
+  {pic:'⛵🌊', text:'I want to see a boat far away on the sea.', a:'binoculars'},
+];
+const QUIZ_ROUNDS=6;
+/* Torch Hunt objects */
+const ROOM=[
+  {e:'🧸',name:'teddy',x:150,y:440,s:95},{e:'⚽',name:'ball',x:420,y:470,s:75},{e:'🐱',name:'cat',x:820,y:430,s:95},
+  {e:'📚',name:'books',x:640,y:205,s:70},{e:'🍎',name:'apple',x:330,y:225,s:60},{e:'🚗',name:'car',x:620,y:480,s:70},{e:'🦆',name:'duck',x:870,y:215,s:65},
+];
+const EYE_COLOURS=[['brown','#8a5a2b'],['blue','#3c8ad8'],['green','#4c9a4c'],['grey','#8b97a6']];
+
+/* ============================================================ */
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let voice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/en-GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';if(voice)u.voice=voice;u.rate=.85;u.pitch=1.15;speechSynthesis.speak(u)}catch(e){}}
+function hush(){try{speechSynthesis.cancel()}catch(e){}}
+function confetti(n=60){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7','#ff6fa3'];
+  for(let i=0;i<n;i++){const c=document.createElement('div');c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%7]};animation-duration:${1.6+Math.random()*1.6}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()<.5?'50%':'3px'}`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),3800);}
+}
+const em=(e,x,y,s,extra='')=>`<text x="${x}" y="${y}" font-size="${s}" text-anchor="middle" dominant-baseline="central" ${extra}>${e}</text>`;
+const article=w=>/^[aeiou]/i.test(w)?'an '+w:'a '+w;
+
+/* title + bubbles */
+const h=$('title');h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cols=['#ef3d45','#ffd52a','#3488e8','#f28b24','#35b64a','#8d55c7'],box=$('bubbles');
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const s=30+Math.random()*90;
+    b.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${cols[i%6]};animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*25}s`;
+    box.appendChild(b);}
+}
+
+/* ---------- navigation ---------- */
+let current='menu',parent='menu';
+const PARENT={viewer:'tools',glasses:'tools'};
+function go(name){
+  hush();setDark(false,true);
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  $('s-'+name).classList.remove('hidden');current=name;parent=PARENT[name]||'menu';
+  const back=$('backBtn');
+  if(name==='menu'){back.textContent='⬅ 5 Senses';back.href='five_senses.html';}
+  else{back.textContent='⬅ Back';back.href='#';}
+  if(name==='how')startStory();
+  if(name==='torch')startTorch();
+  if(name==='quiz')startQuiz();
+  scrollTo(0,0);
+}
+$('backBtn').addEventListener('click',e=>{if(current!=='menu'){e.preventDefault();go(parent);}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.dataset.go)});
+
+/* ======================= MY EYES ======================= */
+(function lashes(){
+  const g=$('pLashes');let html='';
+  const P0=[110,205],P1=[300,55],P2=[490,205];
+  for(let i=0;i<=12;i++){const t=.1+i*.8/12;
+    const x=(1-t)**2*P0[0]+2*(1-t)*t*P1[0]+t*t*P2[0],y=(1-t)**2*P0[1]+2*(1-t)*t*P1[1]+t*t*P2[1];
+    const dx=2*(1-t)*(P1[0]-P0[0])+2*t*(P2[0]-P1[0]),dy=2*(1-t)*(P1[1]-P0[1])+2*t*(P2[1]-P1[1]);
+    const L=Math.hypot(dx,dy),nx=dy/L,ny=-dx/L,len=34;
+    html+=`<path d="M${x} ${y} q${nx*len*.5+dx/L*8} ${ny*len*.5+dy/L*8} ${nx*len+dx/L*10} ${ny*len+dy/L*10}" stroke="#2b1a10" stroke-width="7" stroke-linecap="round" fill="none"/>`;}
+  html+=`<path d="M110 205 Q300 55 490 205" stroke="transparent" stroke-width="60" fill="none"/>`;
+  g.innerHTML=html;
+})();
+const PARTS={
+  eyebrow:{label:'eyebrow',say:'This is my eyebrow.',el:'pEyebrow'},
+  eyelashes:{label:'eyelashes',say:'These are my eyelashes. They keep dust out of my eye.',el:'pLashes'},
+  white:{label:'the white part',say:'This is the white part of my eye.',el:'pWhite'},
+  iris:{label:'iris – the coloured part',say:'This is my iris. It is the coloured part.',el:'pIris'},
+  pupil:{label:'pupil – the little black window',say:'This is my pupil. It is a little black window. The light goes in here!',el:'pupil'},
+  eyelid:{label:'eyelid',say:'This is my eyelid. It closes when I blink.',el:'lid'},
+};
+$('eyeSvg').addEventListener('click',e=>{
+  const p=e.target.closest('.part');if(!p)return;const d=PARTS[p.dataset.p];if(!d)return;
+  $('eyeLabel').textContent=d.label;say(d.say);
+  const el=$(d.el);el.classList.remove('flash');void el.getBoundingClientRect();el.classList.add('flash');
+});
+function blink(){const l=$('lid');l.classList.remove('blink');void l.getBoundingClientRect();l.classList.add('blink');}
+$('blinkBtn').onclick=()=>{blink();$('eyeLabel').textContent='eyelid';say('Blink! My eyelids close and open.');};
+setInterval(()=>{if(current==='eyes'&&Math.random()<.5)blink()},3500);
+function setDark(on,silent){
+  document.body.classList.toggle('dark',on);
+  $('lightOn').classList.toggle('on',!on);$('lightOff').classList.toggle('on',on);
+  if(silent)return;
+  $('eyeLabel').textContent=on?'Dark: my pupil gets BIG!':'Light: my pupil gets small!';
+  say(on?"It's dark! My pupil gets big, to let in more light.":"It's light! My pupil gets small.");
+}
+$('lightOn').onclick=()=>setDark(false);
+$('lightOff').onclick=()=>setDark(true);
+$('swatches').innerHTML=EYE_COLOURS.map(([n,c],i)=>`<button class="sw${i?'':' on'}" style="background:${c}" data-c="${c}" data-n="${n}" aria-label="${n}"></button>`).join('');
+$('swatches').addEventListener('click',e=>{const b=e.target.closest('.sw');if(!b)return;
+  document.querySelectorAll('.sw').forEach(x=>x.classList.toggle('on',x===b));
+  $('irisC').setAttribute('fill',b.dataset.c);$('eyeLabel').textContent=b.dataset.n+' eyes';say('My eyes are '+b.dataset.n+'.');});
+
+/* ======================= HOW DO I SEE ======================= */
+const OBJS=[['🍎','An apple!','apple'],['🐱','A cat!','cat'],['🚗','A car!','car'],['🎈','A balloon!','balloon']];
+let objI=0,step=0;
+const STEPS=[
+  {t:'How do I see? 🤔',          s:'How do I see? Let’s find out!', on:[]},
+  {t:'1. The sun gives us light ☀️', s:'The sun gives us light.', on:['r1a','r1b','r1c']},
+  {t:'2. The light bounces off the {obj}', s:'The light bounces off the {obj}…', on:['r1a','r1b','r1c','r2a','r2b','r2c']},
+  {t:'3. The light goes into my eye 👁️', s:'…and goes into my eye, through the pupil.', on:['r2a','r2b','r2c','eyeGlowC']},
+  {t:'4. My eye sends a message to my brain 🧠', s:'My eye sends a message to my brain.', on:['eyeGlowC','m1']},
+  {t:'5. My brain says…', s:'My brain says… {bub}', on:['m1','bub']},
+];
+$('dots').innerHTML=STEPS.map(()=>'<i></i>').join('');
+function startStory(){step=0;$('story').classList.remove('night');showStep();}
+function showStep(){
+  const o=OBJS[objI],st=STEPS[step];
+  $('sObj').textContent=o[0];$('bubText').textContent=o[1];
+  $('stepText').textContent=st.t.replace('{obj}',o[2]+' '+o[0]);
+  ['r1a','r1b','r1c','r2a','r2b','r2c','m1','eyeGlowC','bub'].forEach(id=>$(id).classList.toggle('show',st.on.includes(id)));
+  document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=step));
+  $('stBack').disabled=step===0;
+  const last=step===STEPS.length-1;
+  $('stNext').classList.toggle('hidden',last);$('stOther').classList.toggle('hidden',!last);$('stDark').classList.toggle('hidden',!last);
+  say(st.s.replace('{obj}',o[2]).replace('{bub}',o[1]));
+  if(last)confetti(30);
+}
+$('stNext').onclick=()=>{$('story').classList.remove('night');if(step<STEPS.length-1){step++;showStep();}};
+$('stBack').onclick=()=>{$('story').classList.remove('night');if(step>0){step--;showStep();}};
+$('stOther').onclick=()=>{objI=(objI+1)%OBJS.length;step=1;$('story').classList.remove('night');showStep();};
+$('stDark').onclick=()=>{
+  const s=$('story');const night=!s.classList.contains('night');s.classList.toggle('night',night);
+  if(night){['r1a','r1b','r1c','r2a','r2b','r2c','m1','eyeGlowC','bub'].forEach(id=>$(id).classList.remove('show'));
+    $('stepText').textContent='No light… I can’t see! 🌙';$('stDark').textContent='☀️ Light again';say("Oh no! No light. I can't see! We need light to see.");}
+  else{$('stDark').textContent='🌙 No light?';showStep();}
+};
+
+/* ======================= TORCH HUNT ======================= */
+let tQueue=[],tCur=null,tBusy=false;
+$('roomSvg').innerHTML=`
+  <rect width="1000" height="330" fill="#ffe7b8"/><rect y="330" width="1000" height="230" fill="#c98f5a"/>
+  <rect x="60" y="60" width="200" height="160" rx="10" fill="#9fd8ff" stroke="#fff" stroke-width="14"/><line x1="160" y1="60" x2="160" y2="220" stroke="#fff" stroke-width="10"/>
+  <rect x="560" y="240" width="380" height="16" fill="#8a5a33"/><rect x="560" y="140" width="380" height="16" fill="#8a5a33" opacity="0"/>
+  <rect x="270" y="270" width="140" height="70" fill="#a86b3c"/><rect x="285" y="340" width="14" height="60" fill="#8a5a33"/><rect x="381" y="340" width="14" height="60" fill="#8a5a33"/>
+  <rect x="450" y="40" width="80" height="100" rx="8" fill="#ff9fb8" stroke="#fff" stroke-width="8"/>
+  ${ROOM.map((o,i)=>em(o.e,o.x,o.y,o.s,`id="room${i}"`)).join('')}`;
+function startTorch(){tQueue=shuffle(ROOM.map((_,i)=>i));$('torchBox').classList.remove('lit');$('torchLight').textContent='💡 Lights on';nextTorch();}
+function nextTorch(){
+  if(!tQueue.length){$('findMe').innerHTML='You found them all! 🎉';say('You found them all! Well done!');confetti(100);$('torchBox').classList.add('lit');return;}
+  tCur=tQueue.shift();tBusy=false;const o=ROOM[tCur];
+  $('findMe').innerHTML=`Find the <span class="e">${o.e}</span>`;say('Use the torch. Find the '+o.name+'!');
+}
+function torchMove(e){
+  const box=$('torchBox'),r=box.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+  $('darkness').style.setProperty('--x',x+'px');$('darkness').style.setProperty('--y',y+'px');
+  $('torchIcon').style.left=x+'px';$('torchIcon').style.top=y+'px';
+  if(tCur===null||tBusy||box.classList.contains('lit'))return;
+  const o=ROOM[tCur],ux=x*1000/r.width,uy=y*560/r.height;
+  if(Math.hypot(ux-o.x,uy-o.y)<70){tBusy=true;
+    const t=$('room'+tCur);t.style.transition='transform .4s';t.style.transformOrigin=`${o.x}px ${o.y}px`;t.style.transform='scale(1.4)';
+    setTimeout(()=>t.style.transform='',700);
+    say('You found the '+o.name+'!');confetti(25);setTimeout(nextTorch,1800);}
+}
+$('torchBox').addEventListener('pointermove',torchMove);$('torchBox').addEventListener('pointerdown',torchMove);
+$('torchAgain').onclick=startTorch;
+$('torchLight').onclick=()=>{const b=$('torchBox');const lit=!b.classList.contains('lit');b.classList.toggle('lit',lit);$('torchLight').textContent=lit?'🌙 Lights off':'💡 Lights on';};
+
+/* ======================= TOOLS MENU ======================= */
+$('toolsMenu').innerHTML=TOOLS.map(t=>`<button class="mcard" data-tool="${t.id}"><div class="ic" style="background:${t.bg}">${t.icon}</div><div class="t">${t.name}</div><div class="d">${t.desc}</div></button>`).join('');
+$('toolsMenu').addEventListener('click',e=>{const b=e.target.closest('[data-tool]');if(b)openTool(b.dataset.tool)});
+function openTool(id){
+  const t=TOOLS.find(x=>x.id===id);
+  if(id==='glasses'){go('glasses');$('glassesBox').classList.remove('clear');$('gToggle').textContent='👓 Put on my glasses';$('gLead').textContent='Everything looks blurry… 😵‍💫';say("Oh! Everything is blurry. I can't see well.");return;}
+  go('viewer');startViewer(t);
+}
+$('gToggle').onclick=()=>{const b=$('glassesBox');const on=!b.classList.contains('clear');b.classList.toggle('clear',on);
+  $('gToggle').textContent=on?'🙈 Take them off':'👓 Put on my glasses';
+  $('gLead').textContent=on?'Now I can see clearly! 😃':'Everything looks blurry… 😵‍💫';
+  say(on?'Now I can see clearly! A, B, C. A cat, a balloon, a flower and a dog!':"Oh! Everything is blurry.");};
+
+/* ---------- scenes ---------- */
+function rnd(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
+function bug(x,y,c,r=9){return `<g class="bug"><ellipse cx="${x}" cy="${y}" rx="${r*1.25}" ry="${r}" fill="${c}" stroke="#0004" stroke-width="1.5"/>
+  <circle cx="${x-r*.4}" cy="${y-r*.25}" r="${r*.28}" fill="#fff"/><circle cx="${x+r*.4}" cy="${y-r*.25}" r="${r*.28}" fill="#fff"/>
+  <circle cx="${x-r*.4}" cy="${y-r*.2}" r="${r*.13}" fill="#111"/><circle cx="${x+r*.4}" cy="${y-r*.2}" r="${r*.13}" fill="#111"/>
+  <path d="M${x-r*.4} ${y+r*.3} q${r*.4} ${r*.35} ${r*.8} 0" stroke="#111" stroke-width="1.4" fill="none"/>
+  <path d="M${x-r*1.2} ${y} l-${r*.5} -${r*.3} M${x-r*1.2} ${y+r*.3} l-${r*.5} ${r*.2}" stroke="${c}" stroke-width="1.6"/></g>`}
+const BUGS=[{x:430,y:250,c:'#6ad35a',name:'a green one'},{x:560,y:300,c:'#ff7fb0',name:'a pink one'},{x:480,y:345,c:'#a07cff',name:'a purple one'},{x:600,y:225,c:'#ffb13b',name:'an orange one'}];
+const SCENES={
+  garden:{targets:[{e:'🐞',name:'ladybird',x:640,y:420,s:17},{e:'🐜',name:'ant',x:230,y:480,s:15},{e:'🐌',name:'snail',x:850,y:330,s:17},{e:'🐛',name:'caterpillar',x:440,y:300,s:15}],
+    draw(){const R=rnd(7);let s=`<rect width="1000" height="560" fill="url(#gSky)"/><circle cx="880" cy="80" r="50" fill="#ffd52a"/><rect y="230" width="1000" height="330" fill="#7ccf5a"/>`;
+      for(let i=0;i<70;i++)s+=`<path d="M${R()*1000} ${560-R()*300} l${R()*8-4} -${12+R()*18}" stroke="#4fa83a" stroke-width="3"/>`;
+      [['🌻',120,250,120],['🌷',330,380,90],['🌼',560,260,90],['🌸',760,470,100],['🌿',940,500,100],['🌷',900,250,80],['🍄',480,470,60],['🌼',60,470,80],['🌿',700,320,80]].forEach(a=>s+=em(...a));
+      return s;}},
+  far:{targets:[{e:'🐦',name:'bird',x:300,y:178,s:12},{e:'⛵',name:'boat',x:820,y:262,s:15},{e:'🐄',name:'cow',x:140,y:355,s:14},{e:'🐿️',name:'squirrel',x:560,y:330,s:12}],
+    draw(){let s=`<rect width="1000" height="560" fill="url(#gSky)"/><rect x="620" y="240" width="380" height="60" fill="#3c9be0"/>
+      <path d="M0 300 Q200 200 420 280 T 700 290 L700 560 L0 560Z" fill="#8fd16a"/><path d="M0 380 Q300 320 600 380 T1000 360 L1000 560 L0 560Z" fill="#6cbf4b"/>
+      <circle cx="120" cy="90" r="40" fill="#ffd52a"/>`;
+      [['🌳',300,200,46],['🌲',360,215,36],['🌳',560,290,42],['🌲',80,320,36],['☁️',520,80,70],['☁️',780,120,55],['🏡',460,330,30],['🌳',200,460,150],['🌾',870,470,130]].forEach(a=>s+=em(...a));
+      return s;}},
+  sky:{targets:[{e:'🌕',name:'moon',x:790,y:120,s:26},{e:'🪐',name:'planet',x:300,y:160,s:13},{e:'☄️',name:'comet',x:540,y:90,s:13},{e:'🚀',name:'rocket',x:150,y:280,s:12},{e:'🛰️',name:'satellite',x:640,y:260,s:12}],
+    draw(){const R=rnd(3);let s=`<rect width="1000" height="560" fill="url(#gNight)"/>`;
+      for(let i=0;i<140;i++)s+=`<circle cx="${R()*1000}" cy="${R()*430}" r="${.8+R()*2.2}" fill="#fff" opacity="${.5+R()*.5}"/>`;
+      s+=`<path d="M0 470 Q250 420 500 460 T1000 440 L1000 560 L0 560Z" fill="#141733"/>`;
+      [['🏠',180,450,60],['🌲',300,445,60],['🏠',720,440,55],['🌲',860,450,70]].forEach(a=>s+=em(...a));
+      return s;}},
+  drop:{targets:BUGS.map(b=>({bug:b,name:b.name,x:b.x,y:b.y})),hidden:true,
+    draw(){let s=`<rect width="1000" height="560" fill="#dfe9f2"/><rect y="400" width="1000" height="160" fill="#b9c6d3"/>
+      <rect x="150" y="360" width="700" height="70" rx="6" fill="#e9f6fb" stroke="#9fb7c6" stroke-width="5" opacity=".9"/>
+      <ellipse cx="515" cy="290" rx="150" ry="110" fill="url(#gDrop)" stroke="#6fb8d6" stroke-width="5"/>
+      <ellipse cx="460" cy="230" rx="40" ry="20" fill="#fff" opacity=".7"/>`;
+      s+=em('💧',860,140,90)+em('🧪',140,180,110);return s;}},
+};
+for(const [k,sc] of Object.entries(SCENES)){
+  const base=sc.draw();
+  const tg=sc.targets.map(t=>t.bug?'':em(t.e,t.x,t.y,t.s)).join('');
+  $('sc-'+k).innerHTML=base+tg;
+  $('sc-'+k+'-z').innerHTML=base+tg+(sc.hidden?sc.targets.map(t=>bug(t.x,t.y,t.bug.c)).join(''):'');
+}
+
+/* ---------- lens viewer ---------- */
+let V=null; // current viewer state
+function startViewer(t){
+  const sc=SCENES[t.scene];
+  V={t,sc,found:new Set(),zoom:t.zoom,kind:t.id,px:0,py:0};
+  $('vLead').innerHTML=`${t.icon.startsWith('<')?'':t.icon+' '}<b>${t.name}</b> – ${t.lead}`;
+  $('baseUse').setAttribute('href','#sc-'+t.scene);
+  const lens=$('lens');
+  const cls={magnifier:'magnifier',binoculars:'scope',telescope:'scope',microscope:'micro'}[t.id];
+  lens.className='lens '+cls;
+  if(t.id==='binoculars'){V.w=330;V.h=200;V.circles=[[100,100,100],[230,100,100]];}
+  else if(t.id==='magnifier'){V.w=220;V.h=220;V.circles=[[110,110,110]];}
+  else{V.w=270;V.h=270;V.circles=[[135,135,135]];}
+  V.dark=t.id!=='magnifier';
+  const mask=V.circles.map(([x,y,r])=>`radial-gradient(circle ${r-6}px at ${x}px ${y}px,#000 99%,transparent 100%)`).join(',');
+  lens.style.width=V.w+'px';lens.style.height=V.h+'px';
+  lens.innerHTML=`<svg class="zoom" id="zoomSvg" style="-webkit-mask-image:${mask};mask-image:${mask}"><use href="#sc-${t.scene}-z"/></svg>`+
+    V.circles.map(([x,y,r])=>`<div class="ring" style="left:${x-r}px;top:${y-r}px;width:${2*r}px;height:${2*r}px"></div>`).join('')+
+    (t.id==='magnifier'?'<div class="shine"></div><div class="handle"></div>':'');
+  $('tray').innerHTML=sc.targets.map((g,i)=>`<div class="it" id="tg${i}" style="position:relative">${g.bug?`<svg viewBox="${g.x-14} ${g.y-12} 28 24">${bug(g.x,g.y,g.bug.c)}</svg>`:g.e}</div>`).join('');
+  say(t.say+' '+t.lead);
+  requestAnimationFrame(()=>{const r=$('viewer').getBoundingClientRect();moveLens(r.width*.5,r.height*.5);});
+}
+function moveLens(x,y){
+  if(!V)return;
+  const vr=$('viewer').getBoundingClientRect(),W=vr.width,H=vr.height;
+  x=Math.max(0,Math.min(W,x));y=Math.max(0,Math.min(H,y));V.px=x;V.py=y;
+  const left=x-V.w/2,top=y-V.h/2;
+  $('lens').style.transform=`translate(${left}px,${top}px)`;
+  const sx=1000/W,sy=560/H,Z=V.zoom;
+  const vw=V.w*sx/Z,vh=V.h*sy/Z,ux=x*sx,uy=y*sy;
+  const zs=$('zoomSvg');zs.setAttribute('viewBox',`${ux-vw/2} ${uy-vh/2} ${vw} ${vh}`);zs.setAttribute('preserveAspectRatio','none');
+  // darkness outside the lens
+  $('dimRect').style.display=V.dark?'':'none';
+  $('dimHoles').innerHTML=V.dark?V.circles.map(([cx,cy,r])=>`<circle cx="${left+cx}" cy="${top+cy}" r="${r-4}" fill="#000"/>`).join(''):'';
+  // found?
+  V.sc.targets.forEach((g,i)=>{
+    if(V.found.has(i))return;
+    for(const [cx,cy,r] of [[V.w/2,V.h/2,V.circles[0][2]],...V.circles]){
+      const X=(left+cx)*sx,Y=(top+cy)*sy,rad=(r*sx/Z)*.6;
+      if(Math.hypot(g.x-X,g.y-Y)<rad){foundTarget(i,left+cx,top+cy);break;}
+    }
+  });
+}
+function foundTarget(i,x,y){
+  V.found.add(i);const g=V.sc.targets[i];
+  $('tg'+i).classList.add('found');
+  const p=document.createElement('div');p.className='pop';p.textContent='⭐';p.style.left=x+'px';p.style.top=y+'px';$('viewer').appendChild(p);setTimeout(()=>p.remove(),1000);
+  if(V.found.size===V.sc.targets.length){say(V.sc.hidden?"Look! "+g.name+". You found all the tiny friends! Well done!":`${article(g.name)}! You found them all! Well done!`);confetti(110);}
+  else say(V.sc.hidden?`Look! A tiny friend: ${g.name}!`:`I can see ${article(g.name)}!`);
+}
+function viewerPointer(e){const r=$('viewer').getBoundingClientRect();moveLens(e.clientX-r.left,e.clientY-r.top);}
+$('viewer').addEventListener('pointermove',viewerPointer);$('viewer').addEventListener('pointerdown',viewerPointer);
+addEventListener('resize',()=>{if(V&&current==='viewer')moveLens(V.px,V.py)});
+
+/* ======================= WHICH TOOL? ======================= */
+let qQueue=[],qRound=0,qScore=0,qCur=null,qLock=false;
+const toolById=id=>TOOLS.find(t=>t.id===id);
+function qStars(){$('qStars').innerHTML=Array.from({length:QUIZ_ROUNDS},(_,i)=>`<span class="${i<qScore?'':'off'}">⭐</span>`).join('')}
+function startQuiz(){qQueue=shuffle(QUIZ).slice(0,QUIZ_ROUNDS);qRound=0;qScore=0;$('qDone').classList.add('hidden');$('qPlay').classList.remove('hidden');nextQ();}
+function nextQ(){
+  qStars();
+  if(qRound>=qQueue.length){$('qPlay').classList.add('hidden');$('qDone').classList.remove('hidden');confetti(120);say('Well done! You have super eyes!');return;}
+  qCur=qQueue[qRound];qLock=false;
+  $('qPic').textContent=qCur.pic;$('qText').textContent=qCur.text;
+  const others=shuffle(TOOLS.filter(t=>t.id!==qCur.a)).slice(0,2);
+  $('qOpts').innerHTML=shuffle([toolById(qCur.a),...others]).map(t=>`<button class="opt" data-id="${t.id}"><div class="e">${t.icon}</div><div class="l">${t.name}</div></button>`).join('');
+  say(qCur.text+' What do I need?');
+}
+$('qOpts').addEventListener('click',e=>{
+  const b=e.target.closest('.opt');if(!b||qLock||b.classList.contains('wrong'))return;
+  if(b.dataset.id===qCur.a){qLock=true;b.classList.add('right');qScore++;qStars();confetti(35);
+    const t=toolById(qCur.a);say('Yes! '+(t.id==='glasses'||t.id==='binoculars'?t.name.charAt(0).toUpperCase()+t.name.slice(1)+'!':article(t.name).replace(/^./,c=>c.toUpperCase())+'!'));
+    qRound++;setTimeout(nextQ,2300);}
+  else{b.classList.add('wrong');say('Try again!');}
+});
+$('qAgain').onclick=startQuiz;
+</script></body></html>
