@@ -556,7 +556,7 @@ function startViewer(t){
   if(t.id==='binoculars'){V.w=330;V.h=200;V.circles=[[100,100,100],[230,100,100]];}
   else if(t.id==='magnifier'){V.w=220;V.h=220;V.circles=[[110,110,110]];}
   else{V.w=270;V.h=270;V.circles=[[135,135,135]];}
-  V.dark=t.id!=='magnifier';
+  V.dark=false; // no darkening around the lens
   const mask=V.circles.map(([x,y,r])=>`radial-gradient(circle ${r-6}px at ${x}px ${y}px,#000 99%,transparent 100%)`).join(',');
   lens.style.width=V.w+'px';lens.style.height=V.h+'px';
   lens.innerHTML=`<svg class="zoom" id="zoomSvg" style="-webkit-mask-image:${mask};mask-image:${mask}"><use href="#sc-${t.scene}-z"/></svg>`+
