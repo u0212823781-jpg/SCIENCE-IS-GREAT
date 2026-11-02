@@ -205,7 +205,7 @@ body.dark .eyecard{background:#3a3f5c}
           </g>
           <circle id="pupil" class="part" data-p="pupil" cx="276" cy="266" r="25" fill="#0b0b0b"/>
           <ellipse cx="282" cy="232" rx="20" ry="11" fill="#fff" opacity=".55" pointer-events="none"/>
-          <g id="lid" class="part" data-p="eyelid">
+          <g id="lid" class="part" data-p="eyelid" style="display:none">
             <rect x="40" y="150" width="490" height="215" fill="url(#lidSkin)"/>
             <path d="M70 300 C 170 205, 380 180, 500 268" stroke="#b97a5e" stroke-width="10" fill="none" opacity=".45" stroke-linecap="round"/>
             <path d="M58 318 C 205 362, 405 348, 507 274" stroke="#2b1a12" stroke-width="7" fill="none" stroke-linecap="round"/>
@@ -216,7 +216,7 @@ body.dark .eyecard{background:#3a3f5c}
     </div>
     <div class="side">
       <div class="label" id="eyeLabel">Tap a part!</div>
-      <button class="big purple" id="blinkBtn">😉 Blink!</button>
+      <button class="big purple hidden" id="blinkBtn">😉 Blink!</button>
       <div class="btns" style="margin:0">
         <button class="big orange on" id="lightOn">☀️ Light</button>
         <button class="big dark" id="lightOff">🌙 Dark</button>
@@ -429,7 +429,7 @@ $('eyeSvg').addEventListener('click',e=>{
 });
 function blink(){const l=$('lid');l.classList.remove('blink');void l.getBoundingClientRect();l.classList.add('blink');}
 $('blinkBtn').onclick=()=>{blink();$('eyeLabel').textContent='eyelid';say('Blink! My eyelids close and open.');};
-setInterval(()=>{if(current==='eyes'&&Math.random()<.5)blink()},3500);
+/* blinking is off until there is a real closed-eye photo */
 function setDark(on,silent){
   document.body.classList.toggle('dark',on);
   $('lightOn').classList.toggle('on',!on);$('lightOff').classList.toggle('on',on);
