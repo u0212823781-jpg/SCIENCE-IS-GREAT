@@ -47,7 +47,7 @@ main{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:cen
    SENSES — when a new one is ready, add its link and remove soon:true
    ============================================================ */
 const SENSES=[
-  {name:'Sight',img:'../IMAGENES/SENSES/sense_sight.png',part:'eyes',icon:'👀',bg:'#e3f0ff',link:'sight.html'},
+  {name:'Sight',img:'../IMAGENES/SENSES/sense_sight_v2.png',wide:true,part:'eyes',icon:'👀',bg:'#e3f0ff',link:'sight.html'},
   {name:'Hearing',img:'../IMAGENES/SENSES/sense_hearing.png',part:'ears',icon:'👂',bg:'#ffe3ec',link:'hearing.html'},
   {name:'Smell',img:'../IMAGENES/SENSES/sense_smell.png',part:'nose',icon:'👃',bg:'#e7f8e3',link:'smell.html'},
   {name:'Taste',img:'../IMAGENES/SENSES/sense_taste.png',part:'tongue',icon:'👅',bg:'#fff3d6',link:'taste.html'},
@@ -57,7 +57,7 @@ const h=document.getElementById('title');
 h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
 document.getElementById('cards').innerHTML=SENSES.map(s=>`
   <a class="sense${s.soon?' soon':''}" ${s.soon?'aria-disabled="true"':`href="${s.link}"`}>
-    <div class="ic" style="background:${s.bg}">${s.img?`<img src="${s.img}" alt="">`:s.icon}</div>
+    <div class="ic" style="background:${s.bg}">${s.img?`<img src="${s.img}" alt=""${s.wide?' style="inset:4%;width:92%;height:92%"':''}>`:s.icon}</div>
     <div class="nm">${s.name}</div>
     <div class="bp">my ${s.part}${s.soon?'<br><span class="badge">Coming soon</span>':''}</div>
   </a>`).join('');
