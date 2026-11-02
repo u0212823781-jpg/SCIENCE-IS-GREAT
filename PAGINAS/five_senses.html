@@ -25,7 +25,8 @@ main{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:cen
 .sense:hover{transform:translateY(-6px) rotate(-1.5deg)}
 .sense:active{transform:scale(.96)}
 .sense .ic{width:100%;aspect-ratio:1;border-radius:24px;display:grid;place-items:center;font-size:clamp(64px,8vw,110px)}
-.sense .ic img{width:78%;height:78%;object-fit:contain;filter:drop-shadow(0 4px 6px #0002)}
+.sense .ic{min-height:0;overflow:hidden;position:relative}
+.sense .ic img{position:absolute;inset:11%;width:78%;height:78%;object-fit:contain;filter:drop-shadow(0 4px 6px #0002)}
 .sense .nm{font-size:clamp(24px,2.6vw,34px);font-weight:700;margin-top:10px}
 .sense .bp{font-size:clamp(15px,1.4vw,19px);color:#778}
 .sense.soon{opacity:.5;pointer-events:none}
