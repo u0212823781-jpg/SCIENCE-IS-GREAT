@@ -531,10 +531,10 @@ function bug(x,y,c,r=9){return `<g class="bug"><ellipse cx="${x}" cy="${y}" rx="
   <path d="M${x-r*1.2} ${y} l-${r*.5} -${r*.3} M${x-r*1.2} ${y+r*.3} l-${r*.5} ${r*.2}" stroke="${c}" stroke-width="1.6"/></g>`}
 const bg=(f,align='xMidYMid')=>`<image href="${IMG+f}" width="1000" height="560" preserveAspectRatio="${align} slice"/>`;
 const SCENES={
-  garden:{bg:bg('sight_bg_garden.jpg'),targets:[{img:'find_ladybird.png',name:'ladybird',x:120,y:490,s:22},{img:'find_snail.png',name:'snail',x:520,y:470,s:24},{img:'find_bee.png',name:'bee',x:930,y:400,s:20},{img:'find_butterfly.png',name:'butterfly',x:310,y:150,s:24},{img:'find_caterpillar.png',name:'caterpillar',x:760,y:345,s:26}]},
-  far:{bg:bg('sight_bg_far.jpg'),targets:[{img:'find_plane.png',name:'plane',x:720,y:45,s:28},{img:'find_tent.png',name:'tent',x:430,y:420,s:20},{img:'find_hen.png',name:'hen',x:700,y:480,s:18},{e:'⛵',name:'boat',x:850,y:320,s:16}]},
-  sky:{bg:bg('sight_bg_sky.jpg'),targets:[{e:'🌕',name:'moon',x:868,y:95,inbg:true},{e:'🪐',name:'planet',x:250,y:40,s:14},{e:'☄️',name:'comet',x:580,y:130,s:14},{e:'🚀',name:'rocket',x:420,y:90,s:13},{e:'🛰️',name:'satellite',x:700,y:250,s:13}]},
-  drop:{bg:bg('sight_bg_drop.jpg'),hidden:true,targets:[{img:'microbe_green.png',name:'a green one',x:450,y:270,s:26},{img:'microbe_pink.png',name:'a pink one',x:520,y:235,s:26},{img:'microbe_purple.png',name:'a purple one',x:580,y:290,s:26},{img:'microbe_orange.png',name:'an orange one',x:495,y:320,s:26}]},
+  garden:{bg:bg('sight_bg_garden_hd.jpg'),targets:[{img:'find_ladybird.png',name:'ladybird',x:120,y:490,s:22},{img:'find_snail.png',name:'snail',x:520,y:470,s:24},{img:'find_bee.png',name:'bee',x:930,y:400,s:20},{img:'find_butterfly.png',name:'butterfly',x:310,y:150,s:24},{img:'find_caterpillar.png',name:'caterpillar',x:760,y:345,s:26}]},
+  far:{bg:bg('sight_bg_far_hd.jpg'),targets:[{img:'find_plane.png',name:'plane',x:720,y:45,s:28},{img:'find_tent.png',name:'tent',x:430,y:420,s:20},{img:'find_hen.png',name:'hen',x:700,y:480,s:18},{e:'⛵',name:'boat',x:850,y:320,s:16}]},
+  sky:{bg:bg('sight_bg_sky_hd.jpg'),targets:[{e:'🌕',name:'moon',x:868,y:95,inbg:true},{e:'🪐',name:'planet',x:250,y:60,s:20},{e:'☄️',name:'comet',x:580,y:130,s:18},{e:'🚀',name:'rocket',x:420,y:90,s:18},{e:'🛰️',name:'satellite',x:700,y:250,s:18}]},
+  drop:{bg:bg('sight_bg_drop_hd.jpg'),hidden:true,targets:[{img:'microbe_green.png',name:'a green one',x:450,y:270,s:26},{img:'microbe_pink.png',name:'a pink one',x:520,y:235,s:26},{img:'microbe_purple.png',name:'a purple one',x:580,y:290,s:26},{img:'microbe_orange.png',name:'an orange one',x:495,y:320,s:26}]},
 };
 const tgt=t=>t.inbg?'':t.img?`<image href="${IMG+t.img}" x="${t.x-t.s/2}" y="${t.y-t.s/2}" width="${t.s}" height="${t.s}"/>`:em(t.e,t.x,t.y,t.s);
 for(const [k,sc] of Object.entries(SCENES)){
