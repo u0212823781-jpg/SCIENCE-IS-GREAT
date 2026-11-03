@@ -115,7 +115,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
 .mrow{display:flex;justify-content:center;gap:clamp(8px,1.4vw,18px);flex-wrap:wrap;padding:0 2vw}
 .mrow+.mrow{margin-top:calc(4*var(--vh))}
 .mc{width:clamp(110px,13vw,170px);background:#fff;border-radius:22px;box-shadow:0 6px 16px #0002;border:5px solid #fff;padding:6px;display:flex;flex-direction:column;align-items:center;transition:transform .15s,border-color .2s}
-.mc img{width:100%;aspect-ratio:1.25;object-fit:cover;border-radius:14px;background:#fff}
+.mc img{width:100%;aspect-ratio:1.25;object-fit:contain;border-radius:14px;background:#fff}
 .mc .l{font-size:clamp(15px,1.6vw,21px);font-weight:700;margin-top:4px;text-align:center;line-height:1.1;min-height:2.2em;display:grid;place-items:center}
 .mc:hover{transform:translateY(-4px)}
 .mc.sel{border-color:var(--blue);transform:translateY(-8px) scale(1.04);box-shadow:0 0 0 5px #3488e855,0 10px 20px #0003}
@@ -170,7 +170,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
         <circle cx="270" cy="300" r="8" fill="#9be38a"/>
       </g>
       <image id="sNose" href="../IMAGENES/SMELL/story_nose.png" x="505" y="140" width="190" height="250"/>
-      <g id="tissue"><text class="em" x="655" y="330" font-size="90">🤧</text></g>
+      <g id="tissue"><image href="../IMAGENES/SMELL/story_cold.png" x="640" y="250" width="120" height="120"/></g>
       <g id="zoomBub">
         <line x1="560" y1="300" x2="420" y2="390" stroke="#8d55c7" stroke-width="5" stroke-dasharray="8 8"/>
         <circle cx="330" cy="370" r="90" fill="#ffc9b5" stroke="#8d55c7" stroke-width="8"/>
@@ -181,10 +181,10 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
       </g>
       <image href="../IMAGENES/SIGHT/story_brain.png" x="800" y="35" width="165" height="120"/>
       <g id="bub">
-        <rect x="520" y="15" width="290" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
+        <rect x="460" y="15" width="350" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
         <path d="M800 70 L845 82 L803 95Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
         <rect x="792" y="66" width="14" height="32" fill="#fff"/>
-        <text id="bubText" x="665" y="62" text-anchor="middle" dominant-baseline="central" font-size="36" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">Mmm! Cookies!</text>
+        <text id="bubText" x="635" y="62" text-anchor="middle" dominant-baseline="central" font-size="36" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">Mmm! Cookies!</text>
       </g>
     </svg>
   </div>
@@ -270,14 +270,14 @@ const SLIDES=[
 ];
 /* Nice or Stinky? */
 const SMELLS=[
-  {name:'flowers', img:'flower.png', a:'nice'},{name:'perfume', img:'perfume.jpg', a:'nice'},
-  {name:'cookies', e:'🍪', a:'nice'},{name:'pizza', img:'pizza.png', a:'nice'},
+  {name:'flowers', img:'flower.png', a:'nice'},{name:'perfume', img:'nice_perfume.png', a:'nice'},
+  {name:'cookies', img:'story_cookies.png', a:'nice'},{name:'pizza', img:'story_pizza.png', a:'nice'},
   {name:'shampoo', e:'🧴', a:'nice'},{name:'soap', e:'🧼', a:'nice'},
   {name:'chocolate', img:'chocolate.jpg', a:'nice'},{name:'bread', e:'🍞', a:'nice'},
   {name:'socks', e:'🧦', a:'stinky'},{name:'rubbish', e:'🗑️', a:'stinky'},
   {name:'toilet', e:'🚽', a:'stinky'},{name:'skunk', e:'🦨', a:'stinky'},
   {name:'stinky cheese', img:'cheese.png', a:'stinky'},{name:'onion', e:'🧅', a:'stinky'},
-  {name:'smoke', img:'smoke.png', a:'stinky'},
+  {name:'smoke', img:'story_smoke.png', a:'stinky'},
 ];
 const NICE_ROUNDS=8;
 /* Where does it come from? (from the PDF) */
@@ -285,7 +285,7 @@ const PAIRS=[
   {smell:'vinegar',   img:'vinegar.jpg',   from:'grapes',       fimg:'grapes.jpg',        say:'Vinegar comes from grapes.'},
   {smell:'coffee',    img:'coffee.jpg',    from:'coffee plant', fimg:'coffee_plant.jpg',  say:'Coffee comes from the coffee plant.'},
   {smell:'cinnamon',  img:'cinnamon.jpg',  from:'cinnamon tree',fimg:'cinnamon_tree.jpg', say:'Cinnamon comes from a tree.'},
-  {smell:'perfume',   img:'perfume.jpg',   from:'flowers',      fimg:'roses.jpg',         say:'Perfume is made from flowers.'},
+  {smell:'perfume',   img:'nice_perfume.png',   from:'flowers',      fimg:'roses.jpg',         say:'Perfume is made from flowers.'},
   {smell:'olive oil', img:'olive_oil.jpg', from:'olive tree',   fimg:'olive_tree.jpg',    say:'Olive oil comes from the olive tree.'},
   {smell:'chocolate', img:'chocolate.jpg', from:'cocoa beans',  fimg:'cocoa_pods.jpg',    say:'Chocolate comes from cocoa beans.'},
 ];
@@ -294,8 +294,8 @@ const STORY=[
   {e:'🍪',img:'story_cookies.png',name:'cookies',bub:'Mmm! Cookies! 😋',say:'Mmm! Cookies! They smell nice!'},
   {e:'🧦',name:'socks',bub:'Yuck! Stinky! 🤢',say:'Yuck! Stinky socks!'},
   {e:'🌸',name:'flower',bub:'Mmm! A flower! 🌸',say:'Mmm! A flower! It smells lovely!'},
-  {e:'🍕',name:'pizza',bub:'Yummy pizza! 😋',say:'Mmm! Pizza! Yummy!'},
-  {e:'🔥',name:'smoke',bub:'Smoke! Danger! 🚨',say:'Uh-oh! Smoke! Danger! My nose helps keep me safe.'},
+  {e:'🍕',img:'story_pizza.png',name:'pizza',bub:'Yummy pizza! 😋',say:'Mmm! Pizza! Yummy!'},
+  {e:'🔥',img:'story_smoke.png',name:'smoke',bub:'Smoke! Danger! 🚨',say:'Uh-oh! Smoke! Danger! My nose helps keep me safe.'},
 ];
 
 /* ============================================================ */
