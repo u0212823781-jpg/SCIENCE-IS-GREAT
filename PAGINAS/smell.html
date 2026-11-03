@@ -26,11 +26,13 @@ h1 .sp{width:.3em}
 section{position:relative;z-index:1}
 .lead{text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);color:#575;margin:calc(1.2*var(--vh)) 10px calc(1.6*var(--vh))}
 
-.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(12px,2.2vw,30px);padding:calc(1.5*var(--vh)) 3vw calc(4*var(--vh))}
-.mcard{width:clamp(150px,17.5vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 12px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(10px,1.6vw,26px);padding:calc(1.5*var(--vh)) 2.5vw calc(4*var(--vh))}
+.mcard{width:clamp(140px,16.5vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 12px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
 .mcard:hover{transform:translateY(-6px) rotate(-1deg)}
 .mcard:active{transform:scale(.96)}
-.mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(56px,6.5vw,96px)}
+.mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(56px,6.5vw,96px);min-height:0;overflow:hidden;position:relative}
+.mcard .ic img{position:absolute;inset:12%;width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 4px 6px #0002)}
+.nsbtn .e img{height:1.05em;width:auto;display:block;margin:0 auto 4px;object-fit:contain}
 .mcard .t{font-size:clamp(20px,2.1vw,28px);font-weight:700;margin-top:8px;text-align:center;line-height:1.1}
 .mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:2px 8px 0}
 
@@ -148,11 +150,11 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
 <section id="s-menu">
   <p class="lead">👃 I smell with my nose! Sniff, sniff!</p>
   <div class="menu">
-    <button class="mcard" data-go="how"><div class="ic" style="background:#e7f8e3">👃</div><div class="t">How Do I Smell?</div><div class="d">Air, nose, brain</div></button>
-    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff">📺</div><div class="t">Watch</div><div class="d">Videos about smell</div></button>
-    <button class="mcard" data-go="what"><div class="ic" style="background:#ffe3ec">☁️</div><div class="t">What Can You Smell?</div><div class="d">I can smell…</div></button>
-    <button class="mcard" data-go="nice"><div class="ic" style="background:#fff3d6">🌸🧦</div><div class="t">Nice or Stinky?</div><div class="d">Mmm or yuck?</div></button>
-    <button class="mcard" data-go="match"><div class="ic" style="background:#f0e6ff">🌳</div><div class="t">Where Does It Come From?</div><div class="d">Match the pairs</div></button>
+    <button class="mcard" data-go="how"><div class="ic" style="background:#e7f8e3"><img src="../IMAGENES/SMELL/smell_menu_nose.png" alt=""></div><div class="t">How Do I Smell?</div><div class="d">Air, nose, brain</div></button>
+    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff"><img src="../IMAGENES/SMELL/smell_menu_tv.png" alt=""></div><div class="t">Watch</div><div class="d">Videos about smell</div></button>
+    <button class="mcard" data-go="what"><div class="ic" style="background:#ffe3ec"><img src="../IMAGENES/SMELL/cloud.png" alt=""></div><div class="t">What Can You Smell?</div><div class="d">I can smell…</div></button>
+    <button class="mcard" data-go="nice"><div class="ic" style="background:#fff3d6"><img src="../IMAGENES/SMELL/smell_menu_nice2.png" alt=""></div><div class="t">Nice or Stinky?</div><div class="d">Mmm or yuck?</div></button>
+    <button class="mcard" data-go="match"><div class="ic" style="background:#f0e6ff"><img src="../IMAGENES/SMELL/smell_menu_tree.png" alt=""></div><div class="t">Where Does It Come From?</div><div class="d">Match the pairs</div></button>
   </div>
 </section>
 
@@ -225,9 +227,9 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
   <div class="stars" id="nStars"></div>
   <div id="nPlay" class="foodstage">
     <div class="lq">
-      <button class="nsbtn nice" data-a="nice"><span class="e">😊</span>Nice!</button>
+      <button class="nsbtn nice" data-a="nice"><span class="e"><img src="../IMAGENES/SMELL/story_flower.png" alt=""></span>Nice!</button>
       <div><div class="item" id="nItem"></div><div class="itemname" id="nName"></div></div>
-      <button class="nsbtn stinky" data-a="stinky"><span class="e">🤢</span>Stinky!</button>
+      <button class="nsbtn stinky" data-a="stinky"><span class="e"><img src="../IMAGENES/SMELL/smell_btn_stinky.png" alt=""></span>Stinky!</button>
     </div>
   </div>
   <div class="done2 hidden" id="nDone"><h2>Super noses! 🏆</h2><div class="btns"><button class="big green" id="nAgain">▶ Play again</button><button class="big blue" data-go="menu">🏠 Menu</button></div></div>
@@ -293,7 +295,7 @@ const PAIRS=[
 const STORY=[
   {e:'🍪',img:'story_cookies.png',name:'cookies',bub:'Mmm! Cookies! 😋',say:'Mmm! Cookies! They smell nice!'},
   {e:'🧦',name:'socks',bub:'Yuck! Stinky! 🤢',say:'Yuck! Stinky socks!'},
-  {e:'🌸',name:'flower',bub:'Mmm! A flower! 🌸',say:'Mmm! A flower! It smells lovely!'},
+  {e:'🌸',img:'story_flower.png',name:'flower',bub:'Mmm! A flower! 🌸',say:'Mmm! A flower! It smells lovely!'},
   {e:'🍕',img:'story_pizza.png',name:'pizza',bub:'Yummy pizza! 😋',say:'Mmm! Pizza! Yummy!'},
   {e:'🔥',img:'story_smoke.png',name:'smoke',bub:'Smoke! Danger! 🚨',say:'Uh-oh! Smoke! Danger! My nose helps keep me safe.'},
 ];
