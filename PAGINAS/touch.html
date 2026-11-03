@@ -31,6 +31,10 @@ section{position:relative;z-index:1}
 .mcard:hover{transform:translateY(-6px) rotate(-1deg)}
 .mcard:active{transform:scale(.96)}
 .mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(58px,7vw,98px)}
+.mcard .ic{min-height:0;overflow:hidden;position:relative}
+.mcard .ic img{position:absolute;inset:12%;width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 4px 6px #0002)}
+.obtn .e img{height:1.05em;width:auto;max-width:100%;object-fit:contain;display:block;margin:0 auto}
+.panel .wd .face img{height:1.1em;width:auto;vertical-align:middle}
 .mcard .t{font-size:clamp(20px,2.2vw,29px);font-weight:700;margin-top:8px;text-align:center;line-height:1.1}
 .mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:2px 8px 0}
 
@@ -142,10 +146,10 @@ section{position:relative;z-index:1}
 <section id="s-menu">
   <p class="lead">✋ I touch and feel with my skin!</p>
   <div class="menu">
-    <button class="mcard" data-go="how"><div class="ic" style="background:#f0e6ff">✋</div><div class="t">How Do I Feel?</div><div class="d">Skin, nerves, brain</div></button>
-    <button class="mcard" data-go="cards"><div class="ic" style="background:#e3f0ff">🃏</div><div class="t">Touch Cards</div><div class="d">How does it feel?</div></button>
-    <button class="mcard" data-go="bag"><div class="ic" style="background:#fff3d6">🛍️</div><div class="t">Feely Bag</div><div class="d">What's in the bag?</div></button>
-    <button class="mcard" data-go="opp"><div class="ic" style="background:#ffe3ec">🔥❄️</div><div class="t">Opposites</div><div class="d">Hot or cold? Soft or hard?</div></button>
+    <button class="mcard" data-go="how"><div class="ic" style="background:#f0e6ff"><img src="../IMAGENES/TOUCH/touch_menu_hand.png" alt=""></div><div class="t">How Do I Feel?</div><div class="d">Skin, nerves, brain</div></button>
+    <button class="mcard" data-go="cards"><div class="ic" style="background:#e3f0ff"><img src="../IMAGENES/TOUCH/touch_menu_cards.png" alt=""></div><div class="t">Touch Cards</div><div class="d">How does it feel?</div></button>
+    <button class="mcard" data-go="bag"><div class="ic" style="background:#fff3d6"><img src="../IMAGENES/TOUCH/touch_bag.jpg" alt=""></div><div class="t">Feely Bag</div><div class="d">What's in the bag?</div></button>
+    <button class="mcard" data-go="opp"><div class="ic" style="background:#ffe3ec"><img src="../IMAGENES/TOUCH/touch_menu_opposites.png" alt=""></div><div class="t">Opposites</div><div class="d">Hot or cold? Soft or hard?</div></button>
   </div>
 </section>
 
@@ -253,14 +257,14 @@ section{position:relative;z-index:1}
 const IMG='../IMAGENES/TOUCH/';
 /* Touch Cards (from the flashcards) */
 const CARDS=[
-  {word:'soft',   img:'soft.jpg',   face:'🧸', thing:'a towel'},
-  {word:'hard',   img:'hard.jpg',   face:'🪨', thing:'a walnut'},
-  {word:'smooth', img:'smooth.jpg', face:'✨', thing:'stones'},
-  {word:'rough',  img:'rough.jpg',  face:'🌳', thing:'tree bark'},
-  {word:'slimy',  img:'slimy.jpg',  face:'🤢', thing:'slime'},
-  {word:'prickly',img:'prickly.jpg',face:'🌵', thing:'a cactus'},
-  {word:'hot',    img:'hot.jpg',    face:'🥵', thing:'a hot pot'},
-  {word:'cold',   img:'cold.jpg',   face:'🥶', thing:'ice'},
+  {word:'soft',   img:'soft.jpg',   face:'🧸',fimg:'touch_teddy.png', thing:'a towel'},
+  {word:'hard',   img:'hard.jpg',   face:'🪨',fimg:'touch_rock.png', thing:'a walnut'},
+  {word:'smooth', img:'smooth.jpg', face:'✨',fimg:'touch_sparkles.png', thing:'stones'},
+  {word:'rough',  img:'rough.jpg',  face:'🌳',fimg:'opp_tree.png', thing:'tree bark'},
+  {word:'slimy',  img:'slimy.jpg',  face:'🤢',fimg:'face_slimy.png', thing:'slime'},
+  {word:'prickly',img:'prickly.jpg',face:'🌵',fimg:'face_prickly.png', thing:'a cactus'},
+  {word:'hot',    img:'hot.jpg',    face:'🥵',fimg:'face_hot.png', thing:'a hot pot'},
+  {word:'cold',   img:'cold.jpg',   face:'🥶',fimg:'face_cold.png', thing:'ice'},
 ];
 /* How do I feel? story */
 const STORY=[
@@ -272,29 +276,29 @@ const STORY=[
 ];
 /* Feely Bag */
 const BAG=[
-  {name:'teddy',    e:'🧸', clue:'It feels soft and fluffy.'},
+  {name:'teddy',    img:'touch_teddy2.png', clue:'It feels soft and fluffy.'},
   {name:'cactus',   img:'prickly.jpg', clue:'It feels prickly. Ouch!'},
   {name:'ice',      img:'cold.jpg', clue:'It feels cold and hard.'},
   {name:'slime',    img:'slimy.jpg', clue:'It feels slimy and wet. Yuck!'},
-  {name:'ball',     e:'⚽', clue:'It feels round and smooth.'},
+  {name:'ball',     img:'bag_ball.png', clue:'It feels round and smooth.'},
   {name:'walnut',   img:'hard.jpg', clue:'It feels hard and bumpy.'},
-  {name:'feather',  e:'🪶', clue:'It feels soft and light. It tickles!'},
+  {name:'feather',  img:'bag_feather.png', clue:'It feels soft and light. It tickles!'},
   {name:'stone',    img:'smooth.jpg', clue:'It feels hard and smooth.'},
-  {name:'sponge',   e:'🧽', clue:'It feels soft and squishy.'},
-  {name:'brick',    e:'🧱', clue:'It feels hard and rough.'},
+  {name:'sponge',   img:'bag_sponge.png', clue:'It feels soft and squishy.'},
+  {name:'brick',    img:'bag_brick.png', clue:'It feels hard and rough.'},
 ];
 const BAG_ROUNDS=6;
 /* Opposites */
 const OPP=[
-  {a:['hot','🔥'], b:['cold','❄️'], items:[
-    {name:'sun',e:'☀️',x:'hot'},{name:'hot pot',img:'hot.jpg',x:'hot'},{name:'fire',e:'🔥',x:'hot'},{name:'soup',e:'🍲',x:'hot'},
-    {name:'ice',img:'cold.jpg',x:'cold'},{name:'snowman',e:'⛄',x:'cold'},{name:'ice cream',e:'🍦',x:'cold'},{name:'snow',e:'🌨️',x:'cold'}]},
-  {a:['soft','🧸'], b:['hard','🪨'], items:[
-    {name:'towel',img:'soft.jpg',x:'soft'},{name:'pillow',e:'🛏️',x:'soft'},{name:'cat',e:'🐈',x:'soft'},{name:'feather',e:'🪶',x:'soft'},
-    {name:'walnut',img:'hard.jpg',x:'hard'},{name:'rock',e:'🪨',x:'hard'},{name:'brick',e:'🧱',x:'hard'},{name:'hammer',e:'🔨',x:'hard'}]},
-  {a:['smooth','✨'], b:['rough','🌳'], items:[
-    {name:'stones',img:'smooth.jpg',x:'smooth'},{name:'apple',e:'🍎',x:'smooth'},{name:'balloon',e:'🎈',x:'smooth'},{name:'egg',e:'🥚',x:'smooth'},
-    {name:'tree bark',img:'rough.jpg',x:'rough'},{name:'pineapple',e:'🍍',x:'rough'},{name:'crocodile',e:'🐊',x:'rough'},{name:'brick',e:'🧱',x:'rough'}]},
+  {a:['hot','🔥','opp_hot_btn.png'], b:['cold','❄️','opp_cold_btn.png'], items:[
+    {name:'sun',img:'opp_sun.png',x:'hot'},{name:'hot pot',img:'hot.jpg',x:'hot'},{name:'fire',img:'opp_hot_btn.png',x:'hot'},{name:'candle',img:'opp_candle.png',x:'hot'},
+    {name:'ice',img:'cold.jpg',x:'cold'},{name:'snowman',img:'opp_snowman.jpg',x:'cold'},{name:'ice cream',img:'opp_icecream.jpg',x:'cold'},{name:'ice cube',img:'opp_cold_btn.png',x:'cold'}]},
+  {a:['soft','🧸','touch_teddy.png'], b:['hard','🪨','touch_rock.png'], items:[
+    {name:'towel',img:'soft.jpg',x:'soft'},{name:'bed',img:'opp_bed.png',x:'soft'},{name:'cat',img:'../SIGHT/room_cat.png',x:'soft'},{name:'feather',img:'bag_feather.png',x:'soft'},
+    {name:'walnut',img:'hard.jpg',x:'hard'},{name:'rock',img:'touch_rock.png',x:'hard'},{name:'brick',img:'bag_brick.png',x:'hard'},{name:'hammer',img:'opp_hammer.jpg',x:'hard'}]},
+  {a:['smooth','✨','touch_sparkles.png'], b:['rough','🌳','opp_tree.png'], items:[
+    {name:'stones',img:'smooth.jpg',x:'smooth'},{name:'apple',img:'../SIGHT/story_apple.png',x:'smooth'},{name:'balloon',img:'../SIGHT/story_balloon.png',x:'smooth'},{name:'egg',img:'opp_egg.jpg',x:'smooth'},
+    {name:'tree bark',img:'rough.jpg',x:'rough'},{name:'pineapple',img:'opp_pineapple.jpg',x:'rough'},{name:'crocodile',img:'opp_crocodile.jpg',x:'rough'},{name:'brick',img:'bag_brick.png',x:'rough'}]},
 ];
 const OPP_ROUNDS=9;
 
@@ -384,7 +388,7 @@ drawCards();
 $('cards').addEventListener('click',e=>{const b=e.target.closest('.tcard');if(b)openCard(+b.dataset.i)});
 function openCard(i){ci=i;const c=CARDS[i];$('stImg').src=IMG+c.img;$('stWord').innerHTML='?';$('stTell').disabled=false;
   $('stage').classList.remove('hidden');say(`Look! ${cap(c.thing)}. How does it feel?`);}
-$('stTell').onclick=()=>{const c=CARDS[ci];$('stWord').innerHTML=`${c.word} <span class="face">${c.face}</span>`;$('stTell').disabled=true;
+$('stTell').onclick=()=>{const c=CARDS[ci];$('stWord').innerHTML=`${c.word} <span class="face">${c.fimg?`<img src="${IMG+c.fimg}" alt="">`:c.face}</span>`;$('stTell').disabled=true;
   seen.add(ci);drawCards();confetti(35);say(`It feels ${c.word}!`);};
 function closeStage(){if(!$('stage').classList.contains('hidden')){$('stage').classList.add('hidden');hush();}}
 $('stPrev').onclick=()=>openCard((ci+CARDS.length-1)%CARDS.length);
@@ -428,8 +432,8 @@ function nextOpp(){
   if(oRound>=oQueue.length){$('oPlay').classList.add('hidden');$('oDone').classList.remove('hidden');confetti(120);say('Well done!');return;}
   oCur=oQueue[oRound];oLock=false;const {p,it}=oCur;
   $('oQ').textContent=`${cap(p.a[0])} or ${p.b[0]}?`;
-  $('oA').innerHTML=`<span class="e">${p.a[1]}</span>${p.a[0]}`;$('oA').dataset.x=p.a[0];
-  $('oB').innerHTML=`<span class="e">${p.b[1]}</span>${p.b[0]}`;$('oB').dataset.x=p.b[0];
+  $('oA').innerHTML=`<span class="e">${p.a[2]?`<img src="${IMG+p.a[2]}" alt="">`:p.a[1]}</span>${p.a[0]}`;$('oA').dataset.x=p.a[0];
+  $('oB').innerHTML=`<span class="e">${p.b[2]?`<img src="${IMG+p.b[2]}" alt="">`:p.b[1]}</span>${p.b[0]}`;$('oB').dataset.x=p.b[0];
   const el=$('oItem');el.innerHTML=pic(it);el.classList.remove('in');void el.offsetWidth;el.classList.add('in');
   $('oName').textContent=it.name;
   say(`${cap(it.name)}. Is it ${p.a[0]} or ${p.b[0]}?`);
