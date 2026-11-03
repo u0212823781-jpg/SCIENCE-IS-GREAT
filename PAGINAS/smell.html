@@ -162,13 +162,14 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
     <svg id="story" viewBox="0 0 1000 470" aria-label="How we smell">
       <path class="msg" d="M640 230 C 700 160, 760 200, 830 140"/>
       <text class="em" id="sSrc" x="150" y="320" font-size="140">🍪</text>
+      <image id="sSrcImg" x="55" y="225" width="190" height="190" href=""/>
       <g id="bits">
         <circle cx="210" cy="250" r="11" fill="#ff9ec4"/><circle cx="235" cy="285" r="9" fill="#9be38a"/><circle cx="200" cy="215" r="8" fill="#ffd34d"/>
         <circle cx="250" cy="235" r="10" fill="#8ecbff"/><circle cx="225" cy="320" r="8" fill="#c9a2ff"/><circle cx="260" cy="270" r="7" fill="#ffb26b"/>
         <circle cx="190" cy="270" r="9" fill="#8ecbff"/><circle cx="245" cy="205" r="7" fill="#ff9ec4"/><circle cx="215" cy="300" r="10" fill="#ffd34d"/>
         <circle cx="270" cy="300" r="8" fill="#9be38a"/>
       </g>
-      <text class="em" id="sNose" x="600" y="270" font-size="190">👃</text>
+      <image id="sNose" href="../IMAGENES/SMELL/story_nose.png" x="505" y="140" width="190" height="250"/>
       <g id="tissue"><text class="em" x="655" y="330" font-size="90">🤧</text></g>
       <g id="zoomBub">
         <line x1="560" y1="300" x2="420" y2="390" stroke="#8d55c7" stroke-width="5" stroke-dasharray="8 8"/>
@@ -178,7 +179,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
         </g>
         <text x="330" y="482" text-anchor="middle" font-size="0" fill="#8d55c7">.</text>
       </g>
-      <text class="em" x="880" y="90" font-size="110">🧠</text>
+      <image href="../IMAGENES/SIGHT/story_brain.png" x="800" y="35" width="165" height="120"/>
       <g id="bub">
         <rect x="520" y="15" width="290" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
         <path d="M800 70 L845 82 L803 95Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
@@ -290,7 +291,7 @@ const PAIRS=[
 ];
 /* How do I smell? story */
 const STORY=[
-  {e:'🍪',name:'cookies',bub:'Mmm! Cookies! 😋',say:'Mmm! Cookies! They smell nice!'},
+  {e:'🍪',img:'story_cookies.png',name:'cookies',bub:'Mmm! Cookies! 😋',say:'Mmm! Cookies! They smell nice!'},
   {e:'🧦',name:'socks',bub:'Yuck! Stinky! 🤢',say:'Yuck! Stinky socks!'},
   {e:'🌸',name:'flower',bub:'Mmm! A flower! 🌸',say:'Mmm! A flower! It smells lovely!'},
   {e:'🍕',name:'pizza',bub:'Yummy pizza! 😋',say:'Mmm! Pizza! Yummy!'},
@@ -357,7 +358,7 @@ function startStory(){st=0;showStep();}
 function showStep(){
   const f=STORY[sf],S=STEPS[st];
   $('story').setAttribute('class',S.c.join(' '));
-  $('sSrc').textContent=f.e;$('bubText').textContent=f.bub;
+  $('sSrc').textContent=f.img?'':f.e;$('sSrcImg').setAttribute('href',f.img?'../IMAGENES/SMELL/'+f.img:'');$('bubText').textContent=f.bub;
   const g=['flower','pizza','smoke'].includes(f.name)?'gives':'give';
   $('stepText').textContent=S.t.replace('{f}',f.name+' '+f.e).replace('{g}',g);
   document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=st));
