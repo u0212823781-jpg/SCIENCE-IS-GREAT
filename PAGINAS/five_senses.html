@@ -48,10 +48,10 @@ main{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:cen
    ============================================================ */
 const SENSES=[
   {name:'Sight',img:'../IMAGENES/SENSES/sense_sight_v2.png',wide:true,part:'eyes',icon:'👀',bg:'#e3f0ff',link:'sight.html'},
+  {name:'Touch',img:'../IMAGENES/SENSES/sense_touch.png',part:'hands',icon:'✋',bg:'#f0e6ff',link:'touch.html'},
   {name:'Hearing',img:'../IMAGENES/SENSES/sense_hearing.png',part:'ears',icon:'👂',bg:'#ffe3ec',link:'hearing.html'},
   {name:'Smell',img:'../IMAGENES/SENSES/sense_smell.png',part:'nose',icon:'👃',bg:'#e7f8e3',link:'smell.html'},
   {name:'Taste',img:'../IMAGENES/SENSES/sense_taste.png',part:'tongue',icon:'👅',bg:'#fff3d6',link:'taste.html'},
-  {name:'Touch',img:'../IMAGENES/SENSES/sense_touch.png',part:'hands',icon:'✋',bg:'#f0e6ff',link:'touch.html'},
 ];
 const h=document.getElementById('title');
 h.innerHTML=[...h.textContent].map(ch=>ch===' '?'<span class="sp"> </span>':`<span>${ch}</span>`).join('');
