@@ -49,10 +49,10 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 .storybox{display:flex;justify-content:center;padding:0 3vw;margin-top:calc(1.5*var(--vh))}
 #story{width:min(94vw,calc(118*var(--vh)));height:auto;background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;display:block}
 #story text.em{text-anchor:middle;dominant-baseline:central}
-#story .waves path{fill:none;stroke:#3488e8;stroke-width:9;stroke-linecap:round;opacity:0}
+#story .waves path{fill:none;stroke:#7cc0ff;stroke-width:18;stroke-linecap:round;opacity:0}
 #story .waves.show path{animation:travel 1.5s linear infinite}
 #story .waves.show path:nth-child(2){animation-delay:.5s}#story .waves.show path:nth-child(3){animation-delay:1s}
-@keyframes travel{0%{transform:translateX(0);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(300px);opacity:0}}
+@keyframes travel{0%{transform:translateX(0);opacity:0}15%{opacity:.9}85%{opacity:.9}100%{transform:translateX(270px);opacity:0}}
 #story.covered .waves.show path{animation-name:travelBlocked}
 @keyframes travelBlocked{0%{transform:translateX(0);opacity:0}15%{opacity:.5}60%{opacity:.25}100%{transform:translateX(250px);opacity:0}}
 #hands{opacity:0;transform:translateY(-60px);transition:all .5s cubic-bezier(.3,1.5,.5,1)}
@@ -63,12 +63,12 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 #drum.buzz{animation:drum .18s infinite}
 @keyframes drum{50%{transform:scaleX(.55)}}
 #story .hl{opacity:0;transition:opacity .4s}#story .hl.show{opacity:1}
-#story .msg{stroke:var(--pink);stroke-width:8;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
+#story .msg{stroke:var(--pink);stroke-width:14;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
 #story .msg.show{opacity:1;animation:march .8s linear infinite}
 @keyframes march{to{stroke-dashoffset:-32}}
 #story .bubbleS{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:bottom right;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
 #story .bubbleS.show{opacity:1;transform:scale(1)}
-#story .tag{font-family:Fredoka,Arial;font-weight:700;font-size:30px;fill:#8d55c7;opacity:0;transition:opacity .4s}
+#story .tag{font-family:Fredoka,Arial;font-weight:700;font-size:52px;fill:#8d55c7;opacity:0;transition:opacity .4s}
 #story .tag.show{opacity:1}
 .steptext{text-align:center;font-size:clamp(22px,calc(4.4*var(--vh)),38px);font-weight:700;min-height:2.4em;margin:calc(1.4*var(--vh)) 16px 0;line-height:1.2}
 .dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
@@ -86,6 +86,8 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 .gift .q{position:absolute;left:0;right:0;bottom:12%;text-align:center;font-size:clamp(38px,5vw,64px);font-weight:700;color:#fff;-webkit-text-stroke:2px #0003;paint-order:stroke;z-index:1}
 .gift .num{position:absolute;left:50%;bottom:-2px;transform:translate(-50%,50%);background:#fff;border-radius:20px;padding:0 12px;font-size:18px;font-weight:700;box-shadow:0 2px 6px #0002;z-index:4}
 .gift .peek{position:absolute;left:0;right:0;top:-6%;text-align:center;font-size:clamp(50px,6.5vw,86px);z-index:1;opacity:0;transform:translateY(40%) scale(.4);transition:all .5s cubic-bezier(.3,1.6,.5,1)}
+.gift .gimg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:hue-rotate(var(--h,0deg)) drop-shadow(0 8px 10px #0002);transition:all .5s cubic-bezier(.3,1.4,.5,1);z-index:2}
+.gift.open .gimg{opacity:0;transform:translateY(-25%) scale(.6) rotate(-12deg)}
 .gift .peek img{width:clamp(70px,8vw,110px);height:clamp(70px,8vw,110px);object-fit:contain}
 .gift.open .lid{transform:translate(55%,-60%) rotate(35deg)}
 .gift.open .bow{transform:translate(20%,-170%) rotate(40deg)}
@@ -192,30 +194,28 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 <!-- HOW DO I HEAR -->
 <section id="s-how" class="hidden">
   <div class="storybox">
-    <svg id="story" viewBox="0 0 1000 470" aria-label="How we hear">
+    <svg id="story" viewBox="0 0 1774 887" aria-label="How we hear">
+      <image href="../IMAGENES/HEARING/hear_story_scene.jpg" x="0" y="0" width="1774" height="887"/>
+      <g id="srcCover"><rect x="0" y="260" width="485" height="627" fill="#fff"/></g>
+      <text class="em" id="sSrc" x="240" y="590" font-size="300">🐕</text>
+      <circle class="hl" id="hlSrc" cx="420" cy="470" r="70" fill="#ffe26a" opacity=".45"/>
       <g class="waves" id="waves">
-        <path d="M230 230 q40 70 0 140"/><path d="M230 230 q40 70 0 140"/><path d="M230 230 q40 70 0 140"/>
+        <path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/>
       </g>
-      <text class="em" id="sSrc" x="130" y="300" font-size="130">🐕</text>
-      <!-- the ear -->
       <g id="ear">
-        <circle class="hl" id="hlOuter" cx="610" cy="300" r="120" fill="#ffe26a" opacity=".5"/>
-        <path d="M640 170 C540 160 520 260 560 300 C590 330 560 360 590 400 C620 440 680 420 680 380" fill="#ffc9a8" stroke="#d98c66" stroke-width="10" stroke-linecap="round"/>
-        <path d="M630 215 C585 215 580 270 610 290" fill="none" stroke="#d98c66" stroke-width="8" stroke-linecap="round"/>
-        <rect x="640" y="285" width="130" height="40" rx="20" fill="#ffb995" stroke="#d98c66" stroke-width="6"/>
-        <rect class="hl" id="hlCanal" x="640" y="285" width="130" height="40" rx="20" fill="#ffe26a"/>
-        <ellipse id="drum" cx="782" cy="305" rx="12" ry="40" fill="#ff6fa3" stroke="#c43d72" stroke-width="5"/>
+        <circle class="hl" id="hlOuter" cx="890" cy="480" r="200" fill="#ffe26a" opacity=".35"/>
+        <rect class="hl" id="hlCanal" x="965" y="462" width="200" height="95" rx="47" fill="#ffe26a" opacity=".55"/>
+        <ellipse id="drum" cx="1188" cy="515" rx="30" ry="72" fill="#ff6fa3" opacity=".75"/>
       </g>
-      <text class="tag" id="tagOuter" x="600" y="455" text-anchor="middle">my ear</text>
-      <text class="tag" id="tagDrum" x="800" y="380" text-anchor="middle">eardrum</text>
-      <path class="msg" id="m1" d="M800 262 C 860 220, 800 190, 860 150"/>
-      <text class="em" x="880" y="85" font-size="105">🧠</text>
-      <g id="hands"><text class="em" x="560" y="300" font-size="150">✋</text></g>
+      <text class="tag" id="tagOuter" x="880" y="860" text-anchor="middle">my ear</text>
+      <text class="tag" id="tagDrum" x="1190" y="672" text-anchor="middle" stroke="#fff" stroke-width="10" paint-order="stroke">eardrum</text>
+      <path class="msg" id="m1" d="M1340 490 C 1430 470, 1500 360, 1550 240"/>
+      <g id="hands"><text class="em" x="880" y="470" font-size="320">✋</text></g>
       <g class="bubbleS" id="bub">
-        <rect x="560" y="15" width="220" height="90" rx="40" fill="#fff" stroke="#8d55c7" stroke-width="6"/>
-        <path d="M770 70 L835 85 L775 95Z" fill="#fff" stroke="#8d55c7" stroke-width="6" stroke-linejoin="round"/>
-        <rect x="762" y="66" width="14" height="32" fill="#fff"/>
-        <text id="bubText" x="670" y="62" text-anchor="middle" dominant-baseline="central" font-size="36" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">A dog!</text>
+        <rect x="960" y="30" width="340" height="120" rx="58" fill="#fff" stroke="#8d55c7" stroke-width="8"/>
+        <path d="M1285 95 L1350 120 L1290 125Z" fill="#fff" stroke="#8d55c7" stroke-width="8" stroke-linejoin="round"/>
+        <rect x="1275" y="92" width="22" height="40" fill="#fff"/>
+        <text id="bubText" x="1130" y="92" text-anchor="middle" dominant-baseline="central" font-size="56" font-weight="700" fill="#8d55c7" font-family="Fredoka,Arial">A dog!</text>
       </g>
     </svg>
   </div>
@@ -282,7 +282,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 <div class="stage hidden" id="stage">
   <div class="panel">
     <button class="close" id="stClose" aria-label="Close">✕</button>
-    <div class="gift" id="stGift"><div class="peek" id="stPeek"></div><div class="lid"></div><div class="bow"></div><div class="body"></div><div class="q">?</div></div>
+    <div class="gift" id="stGift"><div class="peek" id="stPeek"></div><img class="gimg" src="../IMAGENES/HEARING/hear_gift.png" alt=""></div>
     <div class="reveal" id="stWord">What can you hear?</div>
     <div class="btns">
       <button class="big blue" id="stListen">🔊 Listen again</button>
@@ -409,9 +409,9 @@ function startStory(){hs=0;showHStep();}
 function showHStep(){
   const o=curStory(),st=HSTEPS[hs],on=st.on,story=$('story');
   story.classList.remove('covered');$('stCover').textContent='🙉 Cover my ears!';player.volume=1;
-  $('sSrc').textContent=o.emoji;$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
+  const dog=o.id==='dog';$('srcCover').style.display=dog?'none':'';$('sSrc').style.display=dog?'none':'';$('sSrc').textContent=o.emoji;$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
   $('stepText').textContent=st.t.replace('{w}',o.word+' '+o.emoji);
-  $('sSrc').classList.toggle('buzz',on.includes('src'));
+  $('sSrc').classList.toggle('buzz',on.includes('src'));$('hlSrc').classList.toggle('show',on.includes('src')&&dog);
   $('waves').classList.toggle('show',on.includes('waves'));
   $('drum').classList.toggle('buzz',on.includes('drum'));
   ['hlOuter','hlCanal','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
@@ -438,6 +438,7 @@ $('stCover').onclick=()=>{
 };
 
 /* ---------- SECRET BOXES ---------- */
+const GIFT_HUES=[0,210,120,270,35,320,175,60];
 let curTheme='animals',boxList=[],opened=new Set(),stIdx=-1;
 $('themes').innerHTML=THEMES.map(t=>`<button class="theme" data-t="${t.id}">${t.name}</button>`).join('');
 $('themes').addEventListener('click',e=>{const b=e.target.closest('.theme');if(b){stopSound();showTheme(b.dataset.t)}});
@@ -446,14 +447,14 @@ function showTheme(t){
   document.querySelectorAll('.theme').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
   boxList=t==='mix'?shuffle(SOUNDS).slice(0,8):shuffle(SOUNDS.filter(s=>s.theme===t));
   $('boxes').innerHTML=boxList.map((s,i)=>{const [c,r]=BOX_COLOURS[i%BOX_COLOURS.length];
-    return `<button class="gift" data-i="${i}" style="--c:${c};--r:${r}" aria-label="Secret box ${i+1}">
-      <div class="peek">${pic(s)}</div><div class="lid"></div><div class="bow"></div><div class="body"></div><div class="q">?</div><div class="num">${i+1}</div></button>`}).join('');
+    return `<button class="gift" data-i="${i}" style="--c:${c};--r:${r};--h:${GIFT_HUES[i%GIFT_HUES.length]}deg" aria-label="Secret box ${i+1}">
+      <div class="peek">${pic(s)}</div><img class="gimg" src="../IMAGENES/HEARING/hear_gift.png" alt=""><div class="num">${i+1}</div></button>`}).join('');
 }
 $('boxes').addEventListener('click',e=>{const g=e.target.closest('.gift');if(g)openStage(+g.dataset.i)});
 
 function openStage(i){
   stIdx=i;const s=boxList[i],[c,r]=BOX_COLOURS[i%BOX_COLOURS.length],g=$('stGift');
-  g.style.setProperty('--c',c);g.style.setProperty('--r',r);
+  g.style.setProperty('--c',c);g.style.setProperty('--r',r);g.style.setProperty('--h',GIFT_HUES[i%GIFT_HUES.length]+'deg');
   $('stPeek').innerHTML=pic(s);
   const isOpen=opened.has(i);
   g.classList.toggle('open',isOpen);
