@@ -28,11 +28,15 @@ section{position:relative;z-index:1}
 .lead{text-align:center;font-size:clamp(20px,calc(3.8*var(--vh)),32px);color:#755;margin:calc(1.5*var(--vh)) 10px calc(2*var(--vh))}
 
 /* menu */
-.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,2.4vw,32px);padding:calc(2*var(--vh)) 3vw calc(4*var(--vh))}
-.mcard{width:clamp(150px,17.5vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 14px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
+.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(10px,1.6vw,26px);padding:calc(2*var(--vh)) 2.5vw calc(4*var(--vh))}
+.mcard{width:clamp(140px,16.5vw,240px);background:#fff;border-radius:30px;box-shadow:0 8px 24px #0002;border:6px solid #fff;padding:0 0 14px;display:flex;flex-direction:column;align-items:center;transition:transform .2s}
 .mcard:hover{transform:translateY(-6px) rotate(-1deg)}
 .mcard:active{transform:scale(.96)}
-.mcard .ic{width:100%;aspect-ratio:1.15;border-radius:24px;display:grid;place-items:center;font-size:clamp(60px,7vw,100px)}
+.mcard .ic{width:100%;aspect-ratio:1.15;border-radius:24px;display:grid;place-items:center;font-size:clamp(60px,7vw,100px);min-height:0;overflow:hidden;position:relative}
+.mcard .ic img{position:absolute;inset:12%;width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 4px 6px #0002)}
+.ear img{width:64%;height:64%;object-fit:contain;position:relative;z-index:1}
+.lqbtn .e img{height:1.05em;width:auto;display:block;margin:0 auto 4px;object-fit:contain}
+.theme img{height:1.5em;width:auto;vertical-align:middle;margin-right:4px}
 .mcard .t{font-size:clamp(22px,2.3vw,30px);font-weight:700;margin-top:10px;text-align:center}
 .mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:0 10px}
 
@@ -177,11 +181,11 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 <section id="s-menu">
   <p class="lead">👂 I hear with my ears! What can you hear?</p>
   <div class="menu">
-    <button class="mcard" data-go="how"><div class="ic" style="background:#f0e6ff">🦻</div><div class="t">How Do I Hear?</div><div class="d">Sound, ear, brain</div></button>
-    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff">📺</div><div class="t">Watch</div><div class="d">The sense of hearing</div></button>
-    <button class="mcard" data-go="boxes"><div class="ic" style="background:#ffe3ec">🎁</div><div class="t">Secret Boxes</div><div class="d">Listen… what's inside?</div></button>
-    <button class="mcard" data-go="guess"><div class="ic" style="background:#e7f8e3">🎯</div><div class="t">Guess the Sound</div><div class="d">Listen and choose</div></button>
-    <button class="mcard" data-go="loud"><div class="ic" style="background:#fff3d6">📢</div><div class="t">Loud or Quiet?</div><div class="d">Big sound or little sound?</div></button>
+    <button class="mcard" data-go="how"><div class="ic" style="background:#f0e6ff"><img src="../IMAGENES/HEARING/hear_ear.png" alt=""></div><div class="t">How Do I Hear?</div><div class="d">Sound, ear, brain</div></button>
+    <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff"><img src="../IMAGENES/HEARING/hear_menu_watch.png" alt=""></div><div class="t">Watch</div><div class="d">The sense of hearing</div></button>
+    <button class="mcard" data-go="boxes"><div class="ic" style="background:#ffe3ec"><img src="../IMAGENES/HEARING/hear_menu_boxes.png" alt=""></div><div class="t">Secret Boxes</div><div class="d">Listen… what's inside?</div></button>
+    <button class="mcard" data-go="guess"><div class="ic" style="background:#e7f8e3"><img src="../IMAGENES/HEARING/hear_menu_guess.png" alt=""></div><div class="t">Guess the Sound</div><div class="d">Listen and choose</div></button>
+    <button class="mcard" data-go="loud"><div class="ic" style="background:#fff3d6"><img src="../IMAGENES/HEARING/hear_menu_loud.png" alt=""></div><div class="t">Loud or Quiet?</div><div class="d">Big sound or little sound?</div></button>
   </div>
 </section>
 
@@ -197,7 +201,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
     <svg id="story" viewBox="0 0 1774 887" aria-label="How we hear">
       <image href="../IMAGENES/HEARING/hear_story_scene.jpg" x="0" y="0" width="1774" height="887"/>
       <g id="srcCover"><rect x="0" y="260" width="485" height="627" fill="#fff"/></g>
-      <text class="em" id="sSrc" x="240" y="590" font-size="300">🐕</text>
+      <image id="sSrc" x="40" y="380" width="420" height="420" href=""/>
       <circle class="hl" id="hlSrc" cx="420" cy="470" r="70" fill="#ffe26a" opacity=".45"/>
       <g class="waves" id="waves">
         <path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/>
@@ -242,7 +246,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
   <div id="gPlay">
     <div class="game">
       <div style="text-align:center">
-        <button class="ear" id="gEar" aria-label="Play the sound"><span class="w"></span><span class="w"></span><span class="w"></span>👂</button>
+        <button class="ear" id="gEar" aria-label="Play the sound"><span class="w"></span><span class="w"></span><span class="w"></span><img src="../IMAGENES/HEARING/hear_ear.png" alt=""></button>
         <div class="hint">Tap the ear to listen</div>
       </div>
       <div class="opts" id="gOpts"></div>
@@ -260,12 +264,12 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
   <p class="lead" id="lLead">Listen! Is it a LOUD sound or a quiet sound?</p>
   <div id="lPlay">
     <div class="lq">
-      <button class="lqbtn quiet" data-a="quiet"><span class="e">🐭</span>quiet</button>
+      <button class="lqbtn quiet" data-a="quiet"><span class="e"><img src="../IMAGENES/HEARING/hear_quiet.png" alt=""></span>quiet</button>
       <div style="text-align:center">
-        <button class="ear" id="lEar" aria-label="Play the sound"><span class="w"></span><span class="w"></span><span class="w"></span>👂</button>
+        <button class="ear" id="lEar" aria-label="Play the sound"><span class="w"></span><span class="w"></span><span class="w"></span><img src="../IMAGENES/HEARING/hear_ear.png" alt=""></button>
         <div class="hint">Tap the ear to listen</div>
       </div>
-      <button class="lqbtn loud" data-a="loud"><span class="e">🦁</span>LOUD</button>
+      <button class="lqbtn loud" data-a="loud"><span class="e"><img src="../IMAGENES/HEARING/hear_loud.png" alt=""></span>LOUD</button>
     </div>
   </div>
   <div class="bins">
@@ -301,43 +305,43 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
    ============================================================ */
 const SND='../SONIDOS/HEARING/';
 const SOUNDS=[
-  {id:'cow',       word:'cow',         say:"It's a cow! Moo!",            emoji:'🐄', theme:'animals'},
-  {id:'rooster',   word:'rooster',     say:"It's a rooster!",             emoji:'🐓', theme:'animals'},
-  {id:'dog',       word:'dog',         say:"It's a dog! Woof woof!",      emoji:'🐕', theme:'animals'},
-  {id:'pig',       word:'pig',         say:"It's a pig! Oink oink!",      emoji:'🐖', theme:'animals'},
-  {id:'seagulls',  word:'seagulls',    say:"They're seagulls!",           emoji:'🐦', theme:'animals'},
+  {id:'cow',       word:'cow',         say:"It's a cow! Moo!",            emoji:'🐄', img:'../IMAGENES/HEARING/snd_cow.png', theme:'animals'},
+  {id:'rooster',   word:'rooster',     say:"It's a rooster!",             emoji:'🐓', img:'../IMAGENES/HEARING/snd_rooster.png', theme:'animals'},
+  {id:'dog',       word:'dog',         say:"It's a dog! Woof woof!",      emoji:'🐕', img:'../IMAGENES/HEARING/snd_dog.png', theme:'animals'},
+  {id:'pig',       word:'pig',         say:"It's a pig! Oink oink!",      emoji:'🐖', img:'../IMAGENES/HEARING/snd_pig.png', theme:'animals'},
+  {id:'seagulls',  word:'seagulls',    say:"They're seagulls!",           emoji:'🐦', img:'../IMAGENES/HEARING/snd_bird.png', theme:'animals'},
 
-  {id:'baby',      word:'baby',        say:"It's a baby crying!",         emoji:'👶', theme:'home', lq:'loud'},
-  {id:'shower',    word:'shower',      say:"It's the shower!",            emoji:'🚿', theme:'home', lq:'quiet'},
-  {id:'door',      word:'door',        say:"Knock knock! It's the door!", emoji:'🚪', theme:'home', lq:'quiet'},
-  {id:'toothbrush',word:'toothbrush',  say:"It's a toothbrush!",          emoji:'🪥', theme:'home', lq:'quiet'},
-  {id:'clock',     word:'clock',       say:"It's a clock! Tick tock!",    emoji:'⏰', theme:'home', lq:'quiet'},
-  {id:'piano',     word:'piano',       say:"It's a piano!",               emoji:'🎹', theme:'home'},
-  {id:'bubbling',  word:'bubbles',     say:"They're bubbles!",            emoji:'🫧', theme:'home', lq:'quiet'},
+  {id:'baby',      word:'baby',        say:"It's a baby crying!",         emoji:'👶', img:'../IMAGENES/HEARING/snd_baby.jpg', theme:'home', lq:'loud'},
+  {id:'shower',    word:'shower',      say:"It's the shower!",            emoji:'🚿', img:'../IMAGENES/HEARING/snd_shower.jpg', theme:'home', lq:'quiet'},
+  {id:'door',      word:'door',        say:"Knock knock! It's the door!", emoji:'🚪', img:'../IMAGENES/HEARING/snd_door.jpg', theme:'home', lq:'quiet'},
+  {id:'toothbrush',word:'toothbrush',  say:"It's a toothbrush!",          emoji:'🪥', img:'../IMAGENES/HEARING/snd_toothbrush.jpg', theme:'home', lq:'quiet'},
+  {id:'clock',     word:'clock',       say:"It's a clock! Tick tock!",    emoji:'⏰', img:'../IMAGENES/HEARING/snd_clock.jpg', theme:'home', lq:'quiet'},
+  {id:'piano',     word:'piano',       say:"It's a piano!",               emoji:'🎹', img:'../IMAGENES/HEARING/snd_piano.jpg', theme:'home'},
+  {id:'bubbling',  word:'bubbles',     say:"They're bubbles!",            emoji:'🫧', img:'../IMAGENES/HEARING/snd_bubbling.jpg', theme:'home', lq:'quiet'},
 
-  {id:'rain',      word:'rain',        say:"It's the rain!",              emoji:'🌧️', theme:'outside', lq:'quiet'},
-  {id:'wind',      word:'wind',        say:"It's the wind!",              emoji:'🌬️', theme:'outside'},
-  {id:'waves',     word:'waves',       say:"They're the waves!",          emoji:'🌊', theme:'outside'},
-  {id:'children',  word:'children',    say:"Children laughing!",          emoji:'🧒', theme:'outside'},
-  {id:'clapping',  word:'clapping',    say:"Clap clap clap!",             emoji:'👏', theme:'outside'},
-  {id:'bell',      word:'bell',        say:"It's a bell! Ring ring!",     emoji:'🔔', theme:'outside'},
-  {id:'fireworks', word:'fireworks',   say:"They're fireworks! Boom!",    emoji:'🎆', theme:'outside', lq:'loud'},
+  {id:'rain',      word:'rain',        say:"It's the rain!",              emoji:'🌧️', img:'../IMAGENES/HEARING/snd_rain.jpg', theme:'outside', lq:'quiet'},
+  {id:'wind',      word:'wind',        say:"It's the wind!",              emoji:'🌬️', img:'../IMAGENES/HEARING/snd_wind.jpg', theme:'outside'},
+  {id:'waves',     word:'waves',       say:"They're the waves!",          emoji:'🌊', img:'../IMAGENES/HEARING/snd_waves.jpg', theme:'outside'},
+  {id:'children',  word:'children',    say:"Children laughing!",          emoji:'🧒', img:'../IMAGENES/HEARING/snd_children.jpg', theme:'outside'},
+  {id:'clapping',  word:'clapping',    say:"Clap clap clap!",             emoji:'👏', img:'../IMAGENES/HEARING/snd_clapping.jpg', theme:'outside'},
+  {id:'bell',      word:'bell',        say:"It's a bell! Ring ring!",     emoji:'🔔', img:'../IMAGENES/HEARING/snd_bell.jpg', theme:'outside'},
+  {id:'fireworks', word:'fireworks',   say:"They're fireworks! Boom!",    emoji:'🎆', img:'../IMAGENES/HEARING/snd_fireworks.jpg', theme:'outside', lq:'loud'},
 
-  {id:'car',       word:'car',         say:"It's a car!",                 emoji:'🚗', theme:'vehicles'},
-  {id:'ambulance', word:'ambulance',   say:"It's an ambulance!",          emoji:'🚑', theme:'vehicles', lq:'loud'},
-  {id:'firetruck', word:'fire engine', say:"It's a fire engine!",         emoji:'🚒', theme:'vehicles', lq:'loud'},
-  {id:'airplane',  word:'plane',       say:"It's a plane!",               emoji:'✈️', theme:'vehicles', lq:'loud'},
-  {id:'train',     word:'train',       say:"It's a train!",               emoji:'🚂', theme:'vehicles', lq:'loud'},
-  {id:'helicopter',word:'helicopter',  say:"It's a helicopter!",          emoji:'🚁', theme:'vehicles', lq:'loud'},
-  {id:'motorcycle',word:'motorbike',   say:"It's a motorbike!",           emoji:'🏍️', theme:'vehicles', lq:'loud'},
-  {id:'bicycle',   word:'bicycle',     say:"It's a bicycle!",             emoji:'🚲', theme:'vehicles'},
+  {id:'car',       word:'car',         say:"It's a car!",                 emoji:'🚗', img:'../IMAGENES/HEARING/snd_car.jpg', theme:'vehicles'},
+  {id:'ambulance', word:'ambulance',   say:"It's an ambulance!",          emoji:'🚑', img:'../IMAGENES/HEARING/snd_ambulance.jpg', theme:'vehicles', lq:'loud'},
+  {id:'firetruck', word:'fire engine', say:"It's a fire engine!",         emoji:'🚒', img:'../IMAGENES/HEARING/snd_firetruck.jpg', theme:'vehicles', lq:'loud'},
+  {id:'airplane',  word:'plane',       say:"It's a plane!",               emoji:'✈️', img:'../IMAGENES/HEARING/snd_airplane.jpg', theme:'vehicles', lq:'loud'},
+  {id:'train',     word:'train',       say:"It's a train!",               emoji:'🚂', img:'../IMAGENES/HEARING/snd_train.jpg', theme:'vehicles', lq:'loud'},
+  {id:'helicopter',word:'helicopter',  say:"It's a helicopter!",          emoji:'🚁', img:'../IMAGENES/HEARING/snd_helicopter.jpg', theme:'vehicles', lq:'loud'},
+  {id:'motorcycle',word:'motorbike',   say:"It's a motorbike!",           emoji:'🏍️', img:'../IMAGENES/HEARING/snd_motorcycle.jpg', theme:'vehicles', lq:'loud'},
+  {id:'bicycle',   word:'bicycle',     say:"It's a bicycle!",             emoji:'🚲', img:'../IMAGENES/HEARING/snd_bicycle.jpg', theme:'vehicles'},
 ];
 const THEMES=[
-  {id:'animals', name:'🐾 Animals'},
-  {id:'home',    name:'🏠 At home'},
-  {id:'outside', name:'🌳 Outside'},
-  {id:'vehicles',name:'🚗 Vehicles'},
-  {id:'mix',     name:'🎲 Mix!'},
+  {id:'animals', name:'<img src="../IMAGENES/HEARING/theme_animals.png" alt="">Animals'},
+  {id:'home', name:'<img src="../IMAGENES/HEARING/theme_home.png" alt="">At home'},
+  {id:'outside', name:'<img src="../IMAGENES/HEARING/theme_outside.png" alt="">Outside'},
+  {id:'vehicles', name:'<img src="../IMAGENES/HEARING/../SIGHT/story_car.png" alt="">Vehicles'},
+  {id:'mix', name:'<img src="../IMAGENES/HEARING/theme_mix.png" alt="">Mix!'},
 ];
 const GUESS_ROUNDS=8, LOUD_ROUNDS=8;
 const BOX_COLOURS=[['#ef3d45','#ffd52a'],['#3488e8','#ffd52a'],['#35b64a','#ff6fa3'],['#8d55c7','#ffd52a'],['#f28b24','#3488e8'],['#ff6fa3','#ffffff'],['#1fb5ad','#ffd52a'],['#ffd52a','#ef3d45']];
@@ -409,7 +413,7 @@ function startStory(){hs=0;showHStep();}
 function showHStep(){
   const o=curStory(),st=HSTEPS[hs],on=st.on,story=$('story');
   story.classList.remove('covered');$('stCover').textContent='🙉 Cover my ears!';player.volume=1;
-  const dog=o.id==='dog';$('srcCover').style.display=dog?'none':'';$('sSrc').style.display=dog?'none':'';$('sSrc').textContent=o.emoji;$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
+  const dog=o.id==='dog';$('srcCover').style.display=dog?'none':'';$('sSrc').style.display=dog?'none':'';$('sSrc').setAttribute('href',o.img||'');$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
   $('stepText').textContent=st.t.replace('{w}',o.word+' '+o.emoji);
   $('sSrc').classList.toggle('buzz',on.includes('src'));$('hlSrc').classList.toggle('show',on.includes('src')&&dog);
   $('waves').classList.toggle('show',on.includes('waves'));
