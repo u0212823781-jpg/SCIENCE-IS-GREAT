@@ -33,6 +33,7 @@ section{position:relative;z-index:1}
 .mcard .ic{width:100%;aspect-ratio:1.1;border-radius:24px;display:grid;place-items:center;font-size:clamp(56px,6.5vw,96px);min-height:0;overflow:hidden;position:relative}
 .mcard .ic img{position:absolute;inset:12%;width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 4px 6px #0002)}
 .nsbtn .e img{height:1.05em;width:auto;display:block;margin:0 auto 4px;object-fit:contain}
+.nsbtn .e img.photo{width:100%;height:1.05em;object-fit:cover;border-radius:18px}
 .mcard .t{font-size:clamp(20px,2.1vw,28px);font-weight:700;margin-top:8px;text-align:center;line-height:1.1}
 .mcard .d{font-size:clamp(14px,1.3vw,18px);color:#778;text-align:center;padding:2px 8px 0}
 
@@ -227,7 +228,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
   <div class="stars" id="nStars"></div>
   <div id="nPlay" class="foodstage">
     <div class="lq">
-      <button class="nsbtn nice" data-a="nice"><span class="e"><img src="../IMAGENES/SMELL/story_flower.png" alt=""></span>Nice!</button>
+      <button class="nsbtn nice" data-a="nice"><span class="e"><img class="photo" src="../IMAGENES/SMELL/nice_boy.jpg" alt=""></span>Nice!</button>
       <div><div class="item" id="nItem"></div><div class="itemname" id="nName"></div></div>
       <button class="nsbtn stinky" data-a="stinky"><span class="e"><img src="../IMAGENES/SMELL/smell_btn_stinky.png" alt=""></span>Stinky!</button>
     </div>
@@ -274,8 +275,8 @@ const SLIDES=[
 const SMELLS=[
   {name:'flowers', img:'flower.png', a:'nice'},{name:'perfume', img:'nice_perfume.png', a:'nice'},
   {name:'cookies', img:'story_cookies.png', a:'nice'},{name:'pizza', img:'story_pizza.png', a:'nice'},
-  {name:'shampoo', e:'🧴', a:'nice'},{name:'soap', e:'🧼', a:'nice'},
-  {name:'chocolate', img:'chocolate.jpg', a:'nice'},{name:'bread', e:'🍞', a:'nice'},
+  {name:'shampoo', img:'nice_shampoo.png', a:'nice'},{name:'soap', img:'nice_soap.png', a:'nice'},
+  {name:'chocolate', img:'nice_chocolate.png', a:'nice'},{name:'bread', img:'nice_bread.png', a:'nice'},
   {name:'socks', e:'🧦', a:'stinky'},{name:'rubbish', e:'🗑️', a:'stinky'},
   {name:'toilet', e:'🚽', a:'stinky'},{name:'skunk', e:'🦨', a:'stinky'},
   {name:'stinky cheese', img:'cheese.png', a:'stinky'},{name:'onion', e:'🧅', a:'stinky'},
@@ -289,7 +290,7 @@ const PAIRS=[
   {smell:'cinnamon',  img:'cinnamon.jpg',  from:'cinnamon tree',fimg:'cinnamon_tree.jpg', say:'Cinnamon comes from a tree.'},
   {smell:'perfume',   img:'nice_perfume.png',   from:'flowers',      fimg:'roses.jpg',         say:'Perfume is made from flowers.'},
   {smell:'olive oil', img:'olive_oil.jpg', from:'olive tree',   fimg:'olive_tree.jpg',    say:'Olive oil comes from the olive tree.'},
-  {smell:'chocolate', img:'chocolate.jpg', from:'cocoa beans',  fimg:'cocoa_pods.jpg',    say:'Chocolate comes from cocoa beans.'},
+  {smell:'chocolate', img:'nice_chocolate.png', from:'cocoa beans',  fimg:'cocoa_pods.jpg',    say:'Chocolate comes from cocoa beans.'},
 ];
 /* How do I smell? story */
 const STORY=[
