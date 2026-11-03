@@ -88,7 +88,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
 @keyframes wig{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-4deg)}92%{transform:rotate(4deg)}}
 .cloud{position:relative;width:min(40vw,calc(56*var(--vh)));aspect-ratio:1.6;display:grid;place-items:center}
 .cloud img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.cloud .txt{position:relative;text-align:center;font-size:clamp(24px,calc(5.2*var(--vh)),46px);line-height:1.15;padding-left:16%;color:#333}
+.cloud .txt{position:relative;text-align:center;font-size:clamp(24px,calc(5.2*var(--vh)),46px);line-height:1.15;padding:0 6% 4%;color:#333}
 .cloud .txt b{display:block;font-size:1.3em;color:#222}
 .cloud.reveal{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
 @keyframes pop{from{transform:scale(.6);opacity:0}}
@@ -153,7 +153,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
   <div class="menu">
     <button class="mcard" data-go="how"><div class="ic" style="background:#e7f8e3"><img src="../IMAGENES/SMELL/smell_menu_nose.png" alt=""></div><div class="t">How Do I Smell?</div><div class="d">Air, nose, brain</div></button>
     <button class="mcard" data-go="watch"><div class="ic" style="background:#e3f0ff"><img src="../IMAGENES/SMELL/smell_menu_tv.png" alt=""></div><div class="t">Watch</div><div class="d">Videos about smell</div></button>
-    <button class="mcard" data-go="what"><div class="ic" style="background:#ffe3ec"><img src="../IMAGENES/SMELL/cloud.png" alt=""></div><div class="t">What Can You Smell?</div><div class="d">I can smell…</div></button>
+    <button class="mcard" data-go="what"><div class="ic" style="background:#ffe3ec"><img src="../IMAGENES/SMELL/cloud_pink.png" alt=""></div><div class="t">What Can You Smell?</div><div class="d">I can smell…</div></button>
     <button class="mcard" data-go="nice"><div class="ic" style="background:#fff3d6"><img src="../IMAGENES/SMELL/smell_menu_nice2.png" alt=""></div><div class="t">Nice or Stinky?</div><div class="d">Mmm or yuck?</div></button>
     <button class="mcard" data-go="match"><div class="ic" style="background:#f0e6ff"><img src="../IMAGENES/SMELL/smell_menu_tree.png" alt=""></div><div class="t">Where Does It Come From?</div><div class="d">Match the pairs</div></button>
   </div>
@@ -213,7 +213,7 @@ video{width:min(92vw,calc(125*var(--vh)));max-height:calc(72*var(--vh));border-r
   <p class="lead">Look! What can you smell? 🤔</p>
   <div class="slide">
     <div class="slidepic" id="wPic"></div>
-    <div class="cloud" id="wCloud"><img src="../IMAGENES/SMELL/cloud.png" alt=""><div class="txt" id="wTxt"></div></div>
+    <div class="cloud" id="wCloud"><img src="../IMAGENES/SMELL/cloud_pink.png" alt=""><div class="txt" id="wTxt"></div></div>
   </div>
   <div class="btns">
     <button class="big blue" id="wPrev">⬅</button>
@@ -263,13 +263,13 @@ const VIDEOS=[
 ];
 /* What Can You Smell? (from the PowerPoint) */
 const SLIDES=[
-  {imgs:['what_flower2.jpg'],          what:'a flower'},
-  {imgs:['what_fish2.jpg'],            what:'fish'},
-  {imgs:['what_smoke2.jpg'],           what:'smoke'},
-  {imgs:['what_cheese2.jpg'],          what:'cheese'},
-  {imgs:['what_bananas2.jpg'],         what:'bananas'},
-  {imgs:['what_farm2.jpg'], what:'farm animals'},
-  {imgs:['what_pizza2.jpg'],           what:'pizza'},
+  {imgs:['what_flower3.jpg'],          what:'a flower'},
+  {imgs:['what_fish3.jpg'],            what:'fish'},
+  {imgs:['what_smoke3.jpg'],           what:'smoke'},
+  {imgs:['what_cheese3.jpg'],          what:'cheese'},
+  {imgs:['what_bananas3.jpg'],         what:'bananas'},
+  {imgs:['what_farm3.jpg'], what:'farm animals'},
+  {imgs:['what_pizza3.jpg'],           what:'pizza'},
 ];
 /* Nice or Stinky? */
 const SMELLS=[
