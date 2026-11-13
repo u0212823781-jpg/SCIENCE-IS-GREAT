@@ -66,6 +66,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 #drum{transform-box:fill-box;transform-origin:center}
 #drum.buzz{animation:drum .18s infinite}
 @keyframes drum{50%{transform:scaleX(.55)}}
+#waveCover{transition:opacity .5s}#story.wavesOn #waveCover{opacity:0}
 #story .hl{opacity:0;transition:opacity .4s}#story .hl.show{opacity:1}
 #story #drum{opacity:0;transition:opacity .4s}#story #drum.show{opacity:.75}
 #story .msg{stroke:var(--pink);stroke-width:14;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
@@ -201,6 +202,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
   <div class="storybox">
     <svg id="story" viewBox="0 0 1774 887" aria-label="How we hear">
       <image href="../IMAGENES/HEARING/hear_story_scene.jpg" x="0" y="0" width="1774" height="887"/>
+      <rect id="waveCover" x="485" y="340" width="278" height="360" fill="#fff"/>
       <g id="srcCover"><rect x="0" y="260" width="485" height="627" fill="#fff"/></g>
       <image id="sSrc" x="40" y="380" width="420" height="420" href=""/>
       <g class="waves" id="waves">
@@ -414,7 +416,7 @@ function showHStep(){
   const dog=o.id==='dog';$('srcCover').style.display=dog?'none':'';$('sSrc').style.display=dog?'none':'';$('sSrc').setAttribute('href',o.img||'');$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
   $('stepText').textContent=st.t.replace('{w}',o.word+' '+o.emoji);
   $('sSrc').classList.toggle('buzz',on.includes('src'));
-  $('waves').classList.toggle('show',on.includes('waves'));
+  $('waves').classList.toggle('show',on.includes('waves'));story.classList.toggle('wavesOn',on.includes('waves'));
   $('drum').classList.toggle('buzz',on.includes('drum'));
   ['drum','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
   document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=hs));
