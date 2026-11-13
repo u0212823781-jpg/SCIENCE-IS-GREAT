@@ -66,6 +66,8 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 #drum{transform-box:fill-box;transform-origin:center}
 #drum.buzz{animation:drum .18s infinite}
 @keyframes drum{50%{transform:scaleX(.55)}}
+#dotsImg{opacity:0;transition:opacity .5s}#story.msgOn #dotsImg{opacity:1;animation:dotsPulse 1.2s ease-in-out infinite}
+@keyframes dotsPulse{50%{opacity:.45}}
 #waveCover{transition:opacity .5s}#story.wavesOn #waveCover{opacity:0}
 #story .hl{opacity:0;transition:opacity .4s}#story .hl.show{opacity:1}
 #story #drum{opacity:0;transition:opacity .4s}#story #drum.show{opacity:.75}
@@ -201,7 +203,8 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 <section id="s-how" class="hidden">
   <div class="storybox">
     <svg id="story" viewBox="0 0 1774 887" aria-label="How we hear">
-      <image href="../IMAGENES/HEARING/hear_story_scene.jpg" x="0" y="0" width="1774" height="887"/>
+      <image href="../IMAGENES/HEARING/hear_story_clean.jpg" x="0" y="0" width="1774" height="887"/>
+      <image id="dotsImg" href="../IMAGENES/HEARING/hear_story_dots.png" x="1215" y="163" width="345" height="454"/>
       <rect id="waveCover" x="485" y="340" width="278" height="360" fill="#fff"/>
       <g id="srcCover"><rect x="0" y="260" width="485" height="627" fill="#fff"/></g>
       <image id="sSrc" x="40" y="380" width="420" height="420" href=""/>
@@ -213,7 +216,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
       </g>
       <text class="tag" id="tagOuter" x="880" y="860" text-anchor="middle">my ear</text>
       <text class="tag" id="tagDrum" x="1190" y="672" text-anchor="middle" stroke="#fff" stroke-width="10" paint-order="stroke">eardrum</text>
-      <path class="msg" id="m1" d="M1340 490 C 1430 470, 1500 360, 1550 240"/>
+      <path class="msg" id="m1" d="M1340 490 C 1430 470, 1500 360, 1550 240" style="display:none"/>
       <g id="hands"><text class="em" x="880" y="470" font-size="320">✋</text></g>
       <g class="bubbleS" id="bub">
         <rect x="960" y="30" width="340" height="120" rx="58" fill="#fff" stroke="#8d55c7" stroke-width="8"/>
@@ -416,7 +419,7 @@ function showHStep(){
   const dog=o.id==='dog';$('srcCover').style.display=dog?'none':'';$('sSrc').style.display=dog?'none':'';$('sSrc').setAttribute('href',o.img||'');$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
   $('stepText').textContent=st.t.replace('{w}',o.word+' '+o.emoji);
   $('sSrc').classList.toggle('buzz',on.includes('src'));
-  $('waves').classList.toggle('show',on.includes('waves'));story.classList.toggle('wavesOn',on.includes('waves'));
+  $('waves').classList.toggle('show',on.includes('waves'));story.classList.toggle('wavesOn',on.includes('waves'));story.classList.toggle('msgOn',on.includes('m1'));
   $('drum').classList.toggle('buzz',on.includes('drum'));
   ['drum','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
   document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=hs));
