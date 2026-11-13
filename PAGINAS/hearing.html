@@ -66,7 +66,10 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 #drum{transform-box:fill-box;transform-origin:center}
 #drum.buzz{animation:drum .18s infinite}
 @keyframes drum{50%{transform:scaleX(.55)}}
-#dotsImg{opacity:0;transition:opacity .5s}#story.msgOn #dotsImg{opacity:1;animation:dotsPulse 1.2s ease-in-out infinite}
+#dotsImg{opacity:0;transition:opacity .5s}#story.msgOn #dotsImg{opacity:.35}
+#signal{opacity:0;transition:opacity .4s}#story.msgOn #signal{opacity:1;filter:drop-shadow(0 0 10px #ff2e93)}
+#sigPath{animation:sigMarch .5s linear infinite}@keyframes sigMarch{to{stroke-dashoffset:-30}}
+#story.msgOn #brainFlash{animation:brainFlash 1.3s ease-in-out infinite}@keyframes brainFlash{0%,60%{opacity:0}80%{opacity:.45}100%{opacity:0}}
 @keyframes dotsPulse{50%{opacity:.45}}
 #waveCover{transition:opacity .5s}#story.wavesOn #waveCover{opacity:0}
 #story .hl{opacity:0;transition:opacity .4s}#story .hl.show{opacity:1}
@@ -205,6 +208,13 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
     <svg id="story" viewBox="0 0 1774 887" aria-label="How we hear">
       <image href="../IMAGENES/HEARING/hear_story_clean2.jpg" x="0" y="0" width="1774" height="887"/>
       <image id="dotsImg" href="../IMAGENES/HEARING/hear_story_dots.png" x="1215" y="163" width="345" height="454"/>
+      <g id="signal">
+        <path id="sigPath" d="M1235 505 C 1300 492, 1370 486, 1411 461 S 1450 395, 1474 358 S 1535 320, 1546 270 S 1546 200, 1545 168" fill="none" stroke="#ff2e93" stroke-width="20" stroke-linecap="round" stroke-dasharray="6 28"/>
+        <circle r="34" fill="#ff2e93" stroke="#fff" stroke-width="6"><animateMotion dur="1.3s" repeatCount="indefinite" rotate="auto"><mpath href="#sigPath"/></animateMotion></circle>
+        <circle r="26" fill="#ff7cc0" stroke="#fff" stroke-width="5"><animateMotion dur="1.3s" begin="-0.43s" repeatCount="indefinite"><mpath href="#sigPath"/></animateMotion></circle>
+        <circle r="26" fill="#ff7cc0" stroke="#fff" stroke-width="5"><animateMotion dur="1.3s" begin="-0.86s" repeatCount="indefinite"><mpath href="#sigPath"/></animateMotion></circle>
+        <circle id="brainFlash" cx="1545" cy="150" r="95" fill="#ffd52a" opacity="0"/>
+      </g>
       <g id="srcCover"><rect x="0" y="260" width="485" height="627" fill="#fff"/></g>
       <image id="sSrc" x="40" y="380" width="420" height="420" href=""/>
       <g class="waves" id="waves">
