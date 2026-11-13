@@ -203,7 +203,6 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
       <image href="../IMAGENES/HEARING/hear_story_scene.jpg" x="0" y="0" width="1774" height="887"/>
       <g id="srcCover"><rect x="0" y="260" width="485" height="627" fill="#fff"/></g>
       <image id="sSrc" x="40" y="380" width="420" height="420" href=""/>
-      <circle class="hl" id="hlSrc" cx="420" cy="470" r="70" fill="#ffe26a" opacity=".45"/>
       <g class="waves" id="waves">
         <path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/>
       </g>
@@ -414,7 +413,7 @@ function showHStep(){
   story.classList.remove('covered');$('stCover').textContent='🙉 Cover my ears!';player.volume=1;
   const dog=o.id==='dog';$('srcCover').style.display=dog?'none':'';$('sSrc').style.display=dog?'none':'';$('sSrc').setAttribute('href',o.img||'');$('bubText').textContent=o.word.charAt(0).toUpperCase()+o.word.slice(1)+'!';
   $('stepText').textContent=st.t.replace('{w}',o.word+' '+o.emoji);
-  $('sSrc').classList.toggle('buzz',on.includes('src'));$('hlSrc').classList.toggle('show',on.includes('src')&&dog);
+  $('sSrc').classList.toggle('buzz',on.includes('src'));
   $('waves').classList.toggle('show',on.includes('waves'));
   $('drum').classList.toggle('buzz',on.includes('drum'));
   ['drum','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
