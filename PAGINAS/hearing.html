@@ -67,6 +67,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
 #drum.buzz{animation:drum .18s infinite}
 @keyframes drum{50%{transform:scaleX(.55)}}
 #story .hl{opacity:0;transition:opacity .4s}#story .hl.show{opacity:1}
+#story #drum{opacity:0;transition:opacity .4s}#story #drum.show{opacity:.75}
 #story .msg{stroke:var(--pink);stroke-width:14;stroke-linecap:round;stroke-dasharray:2 16;fill:none;opacity:0;transition:opacity .4s}
 #story .msg.show{opacity:1;animation:march .8s linear infinite}
 @keyframes march{to{stroke-dashoffset:-32}}
@@ -207,9 +208,7 @@ video{width:min(92vw,calc(130*var(--vh)));max-height:calc(76*var(--vh));border-r
         <path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/><path d="M500 400 q 50 110 0 220"/>
       </g>
       <g id="ear">
-        <circle class="hl" id="hlOuter" cx="890" cy="480" r="200" fill="#ffe26a" opacity=".35"/>
-        <rect class="hl" id="hlCanal" x="965" y="462" width="200" height="95" rx="47" fill="#ffe26a" opacity=".55"/>
-        <ellipse id="drum" cx="1188" cy="515" rx="30" ry="72" fill="#ff6fa3" opacity=".75"/>
+        <ellipse id="drum" class="hl" cx="1188" cy="515" rx="30" ry="72" fill="#ff6fa3" opacity=".75"/>
       </g>
       <text class="tag" id="tagOuter" x="880" y="860" text-anchor="middle">my ear</text>
       <text class="tag" id="tagDrum" x="1190" y="672" text-anchor="middle" stroke="#fff" stroke-width="10" paint-order="stroke">eardrum</text>
@@ -401,7 +400,7 @@ const HSTEPS=[
   {t:'How do I hear? 🤔', s:"How do I hear? Let's find out!", on:[]},
   {t:'1. The {w} makes a sound 🔊', s:'The {w} makes a sound.', on:['src'], play:1},
   {t:'2. The sound travels through the air 〰️', s:'The sound travels through the air, like little waves.', on:['src','waves'], play:1},
-  {t:'3. My ear catches the sound 👂', s:'My ear catches the sound.', on:['waves','hlOuter','tagOuter','hlCanal'], play:1},
+  {t:'3. My ear catches the sound 👂', s:'My ear catches the sound.', on:['waves','tagOuter'], play:1},
   {t:'4. The eardrum wiggles! 🥁', s:'Inside my ear there is a tiny drum. The eardrum! It wiggles.', on:['waves','drum','tagDrum'], play:1},
   {t:'5. My ear sends a message to my brain 🧠', s:'My ear sends a message to my brain.', on:['drum','m1']},
   {t:'6. My brain says…', s:'My brain says… {b}', on:['m1','bub']},
@@ -418,7 +417,7 @@ function showHStep(){
   $('sSrc').classList.toggle('buzz',on.includes('src'));$('hlSrc').classList.toggle('show',on.includes('src')&&dog);
   $('waves').classList.toggle('show',on.includes('waves'));
   $('drum').classList.toggle('buzz',on.includes('drum'));
-  ['hlOuter','hlCanal','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
+  ['drum','m1','bub','tagOuter','tagDrum'].forEach(id=>$(id).classList.toggle('show',on.includes(id)));
   document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<=hs));
   $('stBack').disabled=hs===0;
   const last=hs===HSTEPS.length-1;
